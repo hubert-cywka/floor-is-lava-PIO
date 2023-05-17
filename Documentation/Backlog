@@ -1,0 +1,22 @@
+Backlog
+● Utworzenie planszy
+● Utworzenie graczy
+● Ekran dołączania do gry
+● Lobby dołączania do gry (lub dołączanie do gry w trybie obserwatora)
+● Mechanika poruszania się
+● Mechanika zmiany koloru planszy
+● Implementacja power-upów
+● Fizyka kolizji
+● Endpoint do dołączania do gry
+● Endpoint do wysyłania danych o rozgrywce
+● Postawienie bazy danych
+● Implementacja systemu rund
+● Implementacja win-condition
+● Dodanie trybu obserwatora
+● Ekran “Game Over”
+● Tablica wyświetlająca graczy w danej rozgrywce
+● Sygnalizowanie opóźnień, strat pakietów
+● Instrukcja w grze
+● Dodanie zegara
+● Wyróżnienie aktualnego gracza
+● Dodanie muzyki
