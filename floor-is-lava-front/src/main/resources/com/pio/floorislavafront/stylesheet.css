@@ -1,0 +1,23 @@
+.quit-game-button {
+	-fx-background-color: linear-gradient(to top, #ef0b49, #f07c4d);
+}
+
+.join-game-button {
+	-fx-background-color: linear-gradient(to top, #0edb96, #2dff9a);
+}
+
+.show-instructions-button {
+	-fx-background-color: linear-gradient(to top, #f07c4d, #ebc54d);
+}
+
+.quit-game-button, .join-game-button, .show-instructions-button {
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 25px;
+	-fx-font-weight: bold;
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+}
+
+.initial-screen-container {
+	-fx-background-color: radial-gradient(center 50% 50%, radius 50%, #a400ff 0%, #220065 100%);
+}

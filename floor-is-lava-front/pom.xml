@@ -6,7 +6,7 @@
 
     <groupId>com.pio</groupId>
     <artifactId>floor-is-lava-front</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>floor-is-lava-front</name>
 
     <properties>
@@ -133,7 +133,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.pio.floorislavafront/com.pio.floorislavafront.HelloApplication</mainClass>
+                            <mainClass>com.pio.floorislavafront/com.pio.floorislavafront.FloorIsLavaApp</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
