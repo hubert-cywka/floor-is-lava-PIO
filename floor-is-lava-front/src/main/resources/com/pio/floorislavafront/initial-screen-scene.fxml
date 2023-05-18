@@ -15,33 +15,32 @@
             <styleClass>
                 <String fx:value="buttons-container"/>
             </styleClass>
-            <Button layoutX="225.0" layoutY="434.0" mnemonicParsing="false" onAction="#onQuitButtonClick"
-                    prefHeight="65.0" prefWidth="218.0" text="QUIT">
+            <Button layoutX="190.0" layoutY="434.0" mnemonicParsing="false" onAction="#onQuitButtonClick"
+                    prefHeight="65.0" prefWidth="300.0" text="WYJDŹ">
                 <styleClass>
                     <String fx:value="quit-game-button"/>
                     <String fx:value="button"/>
                 </styleClass>
             </Button>
-            <Button layoutX="225.0" layoutY="354.0"
-                    mnemonicParsing="false" prefHeight="65.0" prefWidth="218.0" text="INSTRUCTIONS">
+            <Button layoutX="190.0" layoutY="354.0"
+                    mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="INSTRUKCJA" onAction="#onInstructionsButtonClick">
                 <styleClass>
                     <String fx:value="show-instructions-button"/>
                     <String fx:value="button"/>
                 </styleClass>
             </Button>
-            <Button layoutX="225.0" layoutY="224.0"
-                    mnemonicParsing="false" prefHeight="65.0" prefWidth="218.0" text="JOIN GAME"
+            <Button layoutX="190.0" layoutY="224.0"
+                    mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="DOŁĄCZ DO GRY"
                     textAlignment="JUSTIFY">
                 <styleClass>
                     <String fx:value="join-game-button"/>
                     <String fx:value="button"/>
                 </styleClass>
             </Button>
-            <TextField layoutX="294.0" layoutY="147.0"/>
-            <TextField layoutX="294.0" layoutY="184.0"/>
-            <Label layoutX="220.0" layoutY="150.0" styleClass="initial-screen-label" text="Username:"/>
-            <Label layoutX="225.0" layoutY="186.0" prefHeight="21.0" prefWidth="60.0"
-                   styleClass="initial-screen-label" text="Server IP:"/>
+            <TextField layoutX="280.0" layoutY="147.0" prefWidth="200"/>
+            <TextField layoutX="280.0" layoutY="184.0" prefWidth="200"/>
+            <Label prefWidth="100" layoutX="195.0" layoutY="150.0" styleClass="initial-screen-label" text="Username:"/>
+            <Label prefWidth="100" layoutX="195.0" layoutY="186.0" styleClass="initial-screen-label" text="IP Serwera:"/>
         </Pane>
     </GridPane>
 </VBox>
