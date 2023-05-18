@@ -10,14 +10,28 @@
 	-fx-background-color: linear-gradient(to top, #f07c4d, #ebc54d);
 }
 
-.quit-game-button, .join-game-button, .show-instructions-button {
+.button {
 	-fx-text-fill: #ffffff;
 	-fx-font-size: 25px;
 	-fx-font-weight: bold;
 	-fx-background-radius: 20px;
 	-fx-border-radius: 20px;
+	-fx-cursor: pointer;
 }
 
 .initial-screen-container {
-	-fx-background-color: radial-gradient(center 50% 50%, radius 50%, #a400ff 0%, #220065 100%);
+	-fx-content-display: center;
+	-fx-padding: 10 ;
+	-fx-background-color: radial-gradient(center 50% 50%, radius 80%, #a400ff 0%, #220065 100%);
+}
+
+.initial-screen-label {
+	-fx-font-size: 13px;
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: bold;
+}
+
+.buttons-container {
+	-fx-content-display: center;
+	-fx-padding: 10 ;
 }
