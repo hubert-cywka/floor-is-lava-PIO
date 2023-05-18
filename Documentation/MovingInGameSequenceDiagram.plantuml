@@ -1,0 +1,13 @@
+@startuml
+Gracz -> Interfejs : Wciska klawisz ruchu
+Interfejs -> Backend : Wysyła informację o ruchu
+alt Ruch niepoprawny
+Backend ---> Interfejs : Ruch nie został wykonany
+Interfejs ---> Gracz : Ruch nie został wykonany
+else Ruch poprawny
+Backend ---> Interfejs : Ruch został wykonany
+Interfejs ---> Gracz : Ruch został wykonany
+end
+Backend ---> Interfejs : Wysyła aktualne dane gry
+Interfejs ---> Gracz : Wyświetla aktualne dane gry
+@enduml

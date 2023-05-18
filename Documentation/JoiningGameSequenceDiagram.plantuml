@@ -1,0 +1,18 @@
+@startuml
+Gracz -> Interfejs : Wpisuje nazwę użytkownika i adres ip serwera
+Interfejs -> Interfejs : Waliduje poprawność wpisanych danych
+alt Niepoprawne dane
+Interfejs ---> Gracz : Niepoprawne dane
+else Poprawne dane
+Interfejs ---> Gracz : Poprawne dane
+Gracz -> Interfejs : Klika przycisk "Dołącz do gry"
+Interfejs -> Backend : Wysyła prośbę o dołączenie do gry
+alt Wolne miejsca
+Backend ---> Interfejs : Wysyła dane o aktualnej grze
+Interfejs -> Gracz : Wyświetla informację o aktualnej grze
+else Brak wolnego miejsca
+Backend ---> Interfejs : Nie można dołączyć do gry
+Interfejs -> Gracz : Informuje o braku możliwości dołączenia do gry
+end
+end
+@enduml
