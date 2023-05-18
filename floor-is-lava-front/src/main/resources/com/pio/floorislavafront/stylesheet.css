@@ -35,3 +35,14 @@
 	-fx-content-display: center;
 	-fx-padding: 10 ;
 }
+
+.instructions-label {
+	-fx-font-size: 30px;
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: bold;
+	-fx-text-alignment: center;
+}
+
+.instruction-paragraph {
+	-fx-text-fill: #ffffff;
+}

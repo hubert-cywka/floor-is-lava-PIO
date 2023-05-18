@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pio.floorislavafront.FloorIsLavaController">
+    <GridPane alignment="CENTER" styleClass="initial-screen-container" stylesheets="@stylesheet.css" VBox.vgrow="ALWAYS">
+        <Pane prefHeight="535.0" prefWidth="668.0" VBox.vgrow="ALWAYS">
+            <styleClass>
+                <String fx:value="buttons-container" />
+            </styleClass>
+            <Button layoutX="195.0" layoutY="441.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="WRÓĆ" onAction="#onGoBackButtonClick">
+                <styleClass>
+                    <String fx:value="show-instructions-button" />
+                    <String fx:value="button" />
+                </styleClass>
+            </Button>
+         <Label layoutX="240.0" layoutY="56.0" prefHeight="45.0" prefWidth="188.0" styleClass="instructions-label" text="INSTRUKCJA" />
+         <Label layoutX="23.0" layoutY="110.0" prefHeight="56.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Czterech graczy musi zająć bezpieczną pozycję zanim skończy się czas. W drodze na odpowiednie pole staną ci przeszkody, które będziesz musiał ominąć przy pomocy różnych power-upów, takich jak przyspieszenie czy przenikanie przez ściany. Każda kolejna runda jest coraz szybsza, a osoba która przetrwa najdłużej wygrywa." textAlignment="JUSTIFY" wrapText="true" />
+         <Label layoutX="23.0" layoutY="166.0" prefHeight="56.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Każdy gracz widzi z góry planszę z innymi graczami w czasie rzeczywistym, zegar odliczający czas do końca rundy oraz aktualnie podniesione przez gracza powerupy." textAlignment="JUSTIFY" wrapText="true" />
+         <Label layoutX="23.0" layoutY="215.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Gra podzielona jest na rundy W każdej z nich wyznaczany jest bezpieczny i zagrożony obszar (zagrożony podświetlany na czerwony kolor). Odliczany jest również czas, po którym sprawdzane jest położenie każdego gracza. Jeśli ten znajduje się na bezpiecznym polu – kontynuuje rozgrywkę. W przeciwnym wypadku jego status zmieniany jest na przegranego – odpada z rozgrywki." textAlignment="JUSTIFY" wrapText="true" />
+         <Label layoutX="23.0" layoutY="285.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Poruszając się po mapie, użytkownik jest w stanie znaleźć kilka pól z efektami ułatwiającymi zabawę. Zbierając jeden z nich, aktywowany jest podniesiony efekt na określony czas. Opisane bonusy generowane są na planszy w losowych miejscach." textAlignment="JUSTIFY" wrapText="true" />
+         <Label layoutX="23.0" layoutY="331.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Rozgrywka dobiega końca, gdy na planszy zostanie jedna osoba." textAlignment="JUSTIFY" wrapText="true" />
+        </Pane>
+      <columnConstraints>
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+</VBox>
