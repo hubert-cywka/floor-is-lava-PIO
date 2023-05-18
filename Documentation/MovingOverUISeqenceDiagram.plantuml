@@ -1,0 +1,7 @@
+@startuml
+Gracz -> Interfejs : Klika przycisk "Instrukcja"
+Interfejs ---> Gracz : Wyświetla instrukcję gry
+Gracz -> Interfejs : Klika przycisk "Wyjdź"
+Interfejs ---> Gracz : Zamyka ekran aplikacji
+@enduml
+
