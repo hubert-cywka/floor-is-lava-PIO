@@ -4,43 +4,47 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.pio.floorislavafront.FloorIsLavaController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pio.floorislavafront.FloorIsLavaController">
     <GridPane alignment="CENTER" styleClass="initial-screen-container" stylesheets="@stylesheet.css" VBox.vgrow="ALWAYS">
         <Pane prefHeight="535.0" prefWidth="668.0" VBox.vgrow="ALWAYS">
             <styleClass>
-                <String fx:value="buttons-container"/>
+                <String fx:value="buttons-container" />
             </styleClass>
-            <Button layoutX="190.0" layoutY="434.0" mnemonicParsing="false" onAction="#onQuitButtonClick"
-                    prefHeight="65.0" prefWidth="300.0" text="WYJDŹ">
+            <Button layoutX="190.0" layoutY="434.0" mnemonicParsing="false" onAction="#onQuitButtonClick" prefHeight="65.0" prefWidth="300.0" text="WYJDŹ">
                 <styleClass>
-                    <String fx:value="quit-game-button"/>
-                    <String fx:value="button"/>
+                    <String fx:value="quit-game-button" />
+                    <String fx:value="button" />
                 </styleClass>
             </Button>
-            <Button layoutX="190.0" layoutY="354.0"
-                    mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="INSTRUKCJA" onAction="#onInstructionsButtonClick">
+            <Button layoutX="190.0" layoutY="354.0" mnemonicParsing="false" onAction="#onInstructionsButtonClick" prefHeight="65.0" prefWidth="300.0" text="INSTRUKCJA">
                 <styleClass>
-                    <String fx:value="show-instructions-button"/>
-                    <String fx:value="button"/>
+                    <String fx:value="show-instructions-button" />
+                    <String fx:value="button" />
                 </styleClass>
             </Button>
-            <Button layoutX="190.0" layoutY="224.0"
-                    mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="DOŁĄCZ DO GRY"
-                    textAlignment="JUSTIFY">
+            <Button layoutX="190.0" layoutY="224.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="DOŁĄCZ DO GRY" textAlignment="JUSTIFY" onAction="#onJoinGameButtonClick">
                 <styleClass>
-                    <String fx:value="join-game-button"/>
-                    <String fx:value="button"/>
+                    <String fx:value="join-game-button" />
+                    <String fx:value="button" />
                 </styleClass>
             </Button>
-            <TextField layoutX="280.0" layoutY="147.0" prefWidth="200"/>
-            <TextField layoutX="280.0" layoutY="184.0" prefWidth="200"/>
-            <Label prefWidth="100" layoutX="195.0" layoutY="150.0" styleClass="initial-screen-label" text="Username:"/>
-            <Label prefWidth="100" layoutX="195.0" layoutY="186.0" styleClass="initial-screen-label" text="IP Serwera:"/>
+            <TextField layoutX="280.0" layoutY="147.0" prefWidth="200" fx:id="usernameTextField" onMouseClicked="#onUsernameTextFieldClick" />
+            <TextField layoutX="280.0" layoutY="184.0" prefWidth="200" fx:id="serverTextField" onMouseClicked="#onServerAddressTextFieldClick"  />
+            <Label layoutX="195.0" layoutY="150.0" prefWidth="100" styleClass="initial-screen-label" text="Username:"/>
+            <Label layoutX="195.0" layoutY="186.0" prefWidth="100" styleClass="initial-screen-label" text="IP Serwera:" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="135.0" layoutY="80.0" prefHeight="47.0" prefWidth="400.0" styleClass="join-game-helper-text" wrapText="true" textAlignment="JUSTIFY" textFill="WHITE" fx:id="joinGameHelperLabel" />
         </Pane>
+      <columnConstraints>
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 </VBox>

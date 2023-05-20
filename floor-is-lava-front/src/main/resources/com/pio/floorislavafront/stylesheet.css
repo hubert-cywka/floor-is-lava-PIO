@@ -46,3 +46,9 @@
 .instruction-paragraph {
 	-fx-text-fill: #ffffff;
 }
+
+.join-game-helper-text {
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	-fx-text-fill: #ffffff;
+}
