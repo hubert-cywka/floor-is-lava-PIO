@@ -2,9 +2,45 @@ import java.io.Serializable;
 import java.net.Socket;
 
 public class Player implements Serializable {
-
     private String nickname;
     private Socket socket;
+    private boolean isConnected;
+    private int posX;
+    private int posY;
+    private boolean isAlive;
+    private boolean isMoving;
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
 
     public Player(String nickname, Socket socket){
         this.nickname = nickname;
