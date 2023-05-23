@@ -9,6 +9,11 @@ public class Player implements Serializable {
     private int posY;
     private boolean isAlive;
     private boolean isMoving;
+    private int ID;
+
+    public int getID() {
+        return ID;
+    }
 
     public boolean isConnected() {
         return isConnected;
@@ -42,6 +47,7 @@ public class Player implements Serializable {
         return isAlive;
     }
 
+    //NEED CHANGES LATER
     public Player(String nickname, Socket socket){
         this.nickname = nickname;
         this.socket = socket;
