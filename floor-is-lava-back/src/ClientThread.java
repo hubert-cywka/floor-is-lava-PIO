@@ -30,6 +30,7 @@ public class ClientThread implements Runnable {
     public void run() {
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream())) {
 
@@ -47,9 +48,8 @@ public class ClientThread implements Runnable {
             debug.message("Server status has been sent");
 
             debug.message("Getting basic client data");
-            // TODO: create method to get client basic data
-            // example: this.nickname = getBasicClientData();
-            debug.message("Basic client data received");
+            this.nickname = receiveNickname(bufferedReader);
+            debug.message("Basic client data received: " + nickname);
 
             debug.message("Adding new Player to the Game");
             if (!addPlayerToTheGame()) {
@@ -62,19 +62,25 @@ public class ClientThread implements Runnable {
 
             sendServerStatus(bufferedWriter, READY_TO_RECEIVE_DATA);
 
+            int licznik = 0;
             while (true) {
 
-                debug.message("Waiting for client action");
-                // TODO: create method to receive data from client
-                debug.message("Client action received");
+                // DZIAŁA
+                String clientAction = (String) objectInputStream.readObject();
+                System.out.println(clientAction + licznik);
+                licznik++;
 
-                debug.message("Client data validation process..");
-                // TODO: create method to validate client action
-                debug.message("Client Data validated properly");
-
-                // TODO: create method for checking if client wants to disconnected etc.
-
-                // TODO: create method to update data
+//                debug.message("Waiting for client action");
+//                // TODO: create method to receive data from client
+//                debug.message("Client action received");
+//
+//                debug.message("Client data validation process..");
+//                // TODO: create method to validate client action
+//                debug.message("Client Data validated properly");
+//
+//                // TODO: create method for checking if client wants to disconnected etc.
+//
+//                // TODO: create method to update data
             }
 
 
@@ -82,6 +88,8 @@ public class ClientThread implements Runnable {
             // Connection lost
             removePlayerFromTheGame();
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -106,6 +114,10 @@ public class ClientThread implements Runnable {
 
     private void removePlayerFromTheGame() {
         game.removePlayer(nickname);
+    }
+
+    private String receiveNickname(BufferedReader bufferedReader) throws IOException {
+        return bufferedReader.readLine();
     }
 
 }

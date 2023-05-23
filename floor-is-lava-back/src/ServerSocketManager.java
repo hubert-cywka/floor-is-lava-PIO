@@ -1,5 +1,6 @@
 import DebugUtils.Debug;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,12 +9,12 @@ import java.net.Socket;
 
 public class ServerSocketManager {
 
-    private final int REFRESH_TIME = 250;
+    private final int REFRESH_TIME = 5000;
 
     private final Debug debug;
     private final boolean isDebugActivated = true;
 
-    private ServerThread serverThread;
+    private Thread serverThread;
     private final int port;
     private final Game game;
     private ObjectInputStream objectInputStream;
@@ -31,7 +32,8 @@ public class ServerSocketManager {
 
 
     private void startServerThread() {
-        serverThread = new ServerThread();
+        serverThread = new Thread(new ServerThread());
+        serverThread.start();
     }
 
     private void startJoinHandler() {
@@ -63,17 +65,30 @@ public class ServerSocketManager {
         @Override
         public void run() {
 
-            // Data source must be Game class!
-            debug.message("Preparing informations to send to clients");
+            debug.errorMessage("Preparing informations to send to clients");
             // TODO: create method which prepare informations to send
 
             while (true) {
+
+                System.out.println("ONLINE: " + game.getNumberOfPlayers());
 
                 for (int i = 0; i < game.getNumberOfPlayers(); i++) {
 
                     Socket playerSocket = getPlayerSocket(i);
 
                     debug.message("Sending informations");
+
+                    try {
+
+                        ExampleObject exampleObject = new ExampleObject(69);
+                        ObjectOutputStream out = new ObjectOutputStream(playerSocket.getOutputStream());
+                        out.writeObject(exampleObject);
+                        out.flush();
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     // TODO: create method sending informations to clients
                     debug.message("Data has been sent");
 

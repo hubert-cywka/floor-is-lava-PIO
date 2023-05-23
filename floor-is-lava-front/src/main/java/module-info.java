@@ -13,4 +13,6 @@ module com.pio.floorislavafront {
 
     opens com.pio.floorislavafront to javafx.fxml;
     exports com.pio.floorislavafront;
+    exports com.pio.floorislavafront.ServerConnection;
+    opens com.pio.floorislavafront.ServerConnection to javafx.fxml;
 }

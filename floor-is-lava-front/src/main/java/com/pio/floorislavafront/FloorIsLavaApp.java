@@ -1,5 +1,6 @@
 package com.pio.floorislavafront;
 
+import com.pio.floorislavafront.ServerConnection.ClientApplication;
 import com.pio.floorislavafront.soundtrack.SoundtrackManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -20,10 +21,15 @@ public class FloorIsLavaApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        setPrimaryStage(stage);
-        FloorIsLavaController.setScene("initial-screen-scene.fxml");
-        stage.setTitle("Floor is Lava!");
-        stage.show();
+
+        // TEST
+        new ClientApplication("localhost", 8080, "Mati");
+        // TEST
+
+//        setPrimaryStage(stage);
+//        FloorIsLavaController.setScene("initial-screen-scene.fxml");
+//        stage.setTitle("Floor is Lava!");
+//        stage.show();
     }
 
     public static void main(String[] args) {
