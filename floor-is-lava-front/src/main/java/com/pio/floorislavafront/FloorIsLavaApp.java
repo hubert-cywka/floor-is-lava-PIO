@@ -1,5 +1,6 @@
 package com.pio.floorislavafront;
 
+import com.pio.floorislavafront.soundtrack.SoundtrackManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -7,6 +8,7 @@ import java.io.IOException;
 
 public class FloorIsLavaApp extends Application {
     private static Stage primaryStage;
+    private final SoundtrackManager soundtrackManager = new SoundtrackManager();
 
     private static void setPrimaryStage(Stage stage) {
         FloorIsLavaApp.primaryStage = stage;

@@ -13,8 +13,8 @@ import javafx.stage.Screen;
 import java.util.regex.Pattern;
 
 public class FloorIsLavaController {
-    private final String INITIAL_SCREEN = "initial-screen-scene.fxml";
-    private final String INSTRUCTIONS_SCREEN = "instructions-scene.fxml";
+    private static final String INITIAL_SCREEN = "initial-screen-scene.fxml";
+    private static final String INSTRUCTIONS_SCREEN = "instructions-scene.fxml";
     private final String USERNAME_NOT_VALID = "Nazwa użytkownika nie może pozostać pusta!";
     private final String SERVER_ADDRESS_NOT_VALID = "Adres serwera jest nieprawidłowy. Poprawny format to X.X.X.X:XXXX, np.: 192.168.0.1:8080";
     private final String USERNAME_HELPER_TEXT = "Jak się chcesz nazywać?";
