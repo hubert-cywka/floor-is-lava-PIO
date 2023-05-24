@@ -1,16 +1,18 @@
-package back;
+package common;
+
+import back.Position;
 
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 
 public class Player implements Serializable {
-    private String nickname;
-    private ObjectOutputStream objectOutputStream;
+    private final String nickname;
+    private final ObjectOutputStream objectOutputStream;
     public Position position;
     private boolean isAlive;
     private boolean isMoving;
-    private int ID;
+    private final int ID;
 
 
     public int getID() {
