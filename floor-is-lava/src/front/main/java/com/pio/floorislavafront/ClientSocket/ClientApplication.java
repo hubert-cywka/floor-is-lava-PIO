@@ -47,6 +47,7 @@ public class ClientApplication {
                 debug.message("Server is full. Closing the connection..");
                 closeIOStreams();
                 socket.close();
+                return;
                 // TODO: method which displays FULL SERVER information
             }
             debug.message("Server has free slot");
@@ -57,8 +58,11 @@ public class ClientApplication {
 
             debug.message("Waiting for READY command");
             if (!serverIsReady()) {
-                debug.errorMessage("Unexpected error...");
+                debug.errorMessage("Nickname Conflict");
+                closeIOStreams();
                 socket.close();
+                return;
+                // TODO: method which display NICKNAME CONFLICT information
             }
 
             debug.message("Server is ready");

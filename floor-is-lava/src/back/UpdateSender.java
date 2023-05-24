@@ -25,7 +25,7 @@ public class UpdateSender implements Runnable {
             while (true) {
                 Thread.sleep(REFRESH_TIME);
 
-                for (int i = 0; i < game.getNumberOfPlayers(); i++) {
+                for (int i = 0; i < game.playersList.size(); i++) {
                     ObjectOutputStream objectOutputStream = getPlayerOutputStream(i);
                     debug.message("Sending update");
                     objectOutputStream.writeObject(new Packet("new update to client"));
