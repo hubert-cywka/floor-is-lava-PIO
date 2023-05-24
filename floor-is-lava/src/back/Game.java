@@ -2,7 +2,6 @@ package back;
 
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
@@ -20,11 +19,37 @@ public class Game implements Serializable {
         if (numberOfPlayers >= MAX_PLAYERS || hasSomeoneTheSameNickname(nickname))
             return false;
 
-        Player player = new Player(nickname, objectOutputStream);
+        int id = getFirstFreeID();
+
+        Player player = new Player(nickname, id, objectOutputStream);
         playersList.add(player);
         numberOfPlayers++;
 
         return true;
+    }
+
+    private int getFirstFreeID() {
+
+        if (playersList.size() == 0)
+            return 0;
+
+        for (int i=0; i<MAX_PLAYERS; i++){
+
+            int busyFlag = 0;
+
+            for (Player player : playersList){
+                if (i == player.getID()){
+                    busyFlag = 1;
+                    break;
+                }
+            }
+
+            if (busyFlag == 0)
+                return i;
+
+        }
+
+        return 9;
     }
 
     public void removePlayer(String nickname) {
