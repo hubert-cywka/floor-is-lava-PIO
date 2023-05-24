@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 public class UpdateSender implements Runnable {
 
-    private final int REFRESH_TIME = 8000;
+    private final int REFRESH_TIME = 1000;
 
     private final Game game;
     private final Debug debug;
@@ -28,7 +28,7 @@ public class UpdateSender implements Runnable {
                 for (int i = 0; i < game.playersList.size(); i++) {
                     ObjectOutputStream objectOutputStream = getPlayerOutputStream(i);
                     debug.message("Sending update");
-                    objectOutputStream.writeObject(new Packet("new update to client"));
+                    objectOutputStream.writeObject(new Packet("new update to client", game.gamemap.getMap()));
                     debug.message("Update has been sent");
                 }
             }

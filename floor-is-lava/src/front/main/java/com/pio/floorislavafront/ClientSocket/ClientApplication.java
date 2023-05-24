@@ -73,7 +73,6 @@ public class ClientApplication {
         }
 
         startUpdateReceiverThread();
-
         try {
             while (true) {
                 Thread.sleep(3000);
