@@ -23,13 +23,13 @@ public class FloorIsLavaApp extends Application {
     public void start(Stage stage) throws IOException {
 
         setPrimaryStage(stage);
-        FloorIsLavaController.setScene("initial-screen-scene.fxml");
+        FloorIsLavaController.setScene("scenes/initial-screen-scene.fxml");
         stage.setTitle("Floor is Lava!");
         stage.show();
     }
 
     public static void main(String[] args) {
-        new ClientApplication("localhost", 8080, "MyNickname");
-        //launch();
+//        new ClientApplication("localhost", 8080, "MyNickname");
+        launch();
     }
 }

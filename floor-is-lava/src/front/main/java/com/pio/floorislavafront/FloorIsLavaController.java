@@ -13,8 +13,8 @@ import javafx.stage.Screen;
 import java.util.regex.Pattern;
 
 public class FloorIsLavaController {
-    private static final String INITIAL_SCREEN = "initial-screen-scene.fxml";
-    private static final String INSTRUCTIONS_SCREEN = "instructions-scene.fxml";
+    private static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
+    private static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
     private final String USERNAME_NOT_VALID = "Nazwa użytkownika nie może pozostać pusta!";
     private final String SERVER_ADDRESS_NOT_VALID = "Adres serwera jest nieprawidłowy. Poprawny format to X.X.X.X:XXXX, np.: 192.168.0.1:8080";
     private final String USERNAME_HELPER_TEXT = "Jak się chcesz nazywać?";
@@ -34,8 +34,8 @@ public class FloorIsLavaController {
     public static void setScene(String sceneFXML) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        FXMLLoader fxmlLoader = new FXMLLoader(FloorIsLavaApp.class.getResource(sceneFXML));
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(FloorIsLavaApp.class.getResource(sceneFXML));
             FloorIsLavaApp.getPrimaryStage().setScene(new Scene(fxmlLoader.load(), bounds.getWidth(), bounds.getHeight() - 20));
         } catch (Exception e) {
             System.out.println(e.getMessage());
