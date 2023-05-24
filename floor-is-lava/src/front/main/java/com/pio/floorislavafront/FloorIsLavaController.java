@@ -1,5 +1,6 @@
 package front.main.java.com.pio.floorislavafront;
 
+import front.main.java.com.pio.floorislavafront.ClientSocket.StartConnection;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +13,12 @@ import javafx.stage.Screen;
 
 import java.util.regex.Pattern;
 
+import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
+
 public class FloorIsLavaController {
     private static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
     private static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
+    public static final String GAME_SCREEN = "scenes/game-scene.fxml";
     private final String USERNAME_NOT_VALID = "Nazwa użytkownika nie może pozostać pusta!";
     private final String SERVER_ADDRESS_NOT_VALID = "Adres serwera jest nieprawidłowy. Poprawny format to X.X.X.X:XXXX, np.: 192.168.0.1:8080";
     private final String USERNAME_HELPER_TEXT = "Jak się chcesz nazywać?";
@@ -36,7 +40,7 @@ public class FloorIsLavaController {
         Rectangle2D bounds = screen.getVisualBounds();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(FloorIsLavaApp.class.getResource(sceneFXML));
-            FloorIsLavaApp.getPrimaryStage().setScene(new Scene(fxmlLoader.load(), bounds.getWidth(), bounds.getHeight() - 20));
+            getPrimaryStage().setScene(new Scene(fxmlLoader.load(), bounds.getWidth(), bounds.getHeight() - 20));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -50,7 +54,7 @@ public class FloorIsLavaController {
             joinGameHelperLabel.setText(USERNAME_NOT_VALID);
             joinGameHelperLabel.setTextFill(Color.RED);
             return false;
-        } else if (!SERVER_ADDRESS_PATTERN.matcher(serverAddress).find()) {
+        } else if (!SERVER_ADDRESS_PATTERN.matcher(serverAddress).find() && !serverAddress.contains("localhost")) {
             joinGameHelperLabel.setText(SERVER_ADDRESS_NOT_VALID);
             joinGameHelperLabel.setTextFill(Color.RED);
             return false;
@@ -78,7 +82,22 @@ public class FloorIsLavaController {
 
     @FXML
     protected void onJoinGameButtonClick() {
-        validateUserInput();
+        if (!validateUserInput()) return;
+        String username = usernameTextField.getText();
+        String serverAddress = serverTextField.getText();
+
+        // Processing user data for server connection
+        String[] parts = serverAddress.split(":");
+        String ipAddress = parts[0];
+        String textport = parts[1];
+        int port = Integer.parseInt(textport);
+
+        // Connection thread
+        Thread connectionThread = new Thread(new StartConnection(ipAddress, port, username));
+        connectionThread.start();
+
+
+        setScene(GAME_SCREEN);
     }
 
     @FXML
