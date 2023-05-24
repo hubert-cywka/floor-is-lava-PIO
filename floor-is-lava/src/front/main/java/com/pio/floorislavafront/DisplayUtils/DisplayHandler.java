@@ -79,7 +79,15 @@ public class DisplayHandler {
             AnchorPane myContainer = (AnchorPane) container;
 //            System.out.println("Znaleziono kontener o ID: " + containerId);
 
+            Node mapNode = container.lookup("#mymap");
+            if (mapNode instanceof GridPane)
+            {
+                GridPane writtenMap = (GridPane) mapNode;
+                myContainer.getChildren().remove(writtenMap);
+            }
+
             GridPane myMap = new GridPane();
+            myMap.setId("mymap");
 
             for (int y = 0; y < MAP_SIZE; y++) {
                 for (int x = 0; x < MAP_SIZE; x++) {
