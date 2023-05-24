@@ -70,11 +70,16 @@ public class ClientThread implements Runnable {
             int i = 0;
             while (true) {
                 // Example communication
+
+                ServerMutex.serverMutex.lock();
+
                 debug.message("Receiving client action");
                 String packet = (String) objectInputStream.readObject();
                 System.out.println(packet + i);
                 i++;
                 debug.message("Client action received");
+
+                ServerMutex.serverMutex.unlock();
 
 //                debug.message("Waiting for client action");
 //                // TODO: create method to receive data from client
