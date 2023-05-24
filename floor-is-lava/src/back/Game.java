@@ -1,16 +1,24 @@
 package back;
 
+import common.GameMap;
+import common.Player;
+
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Game implements Serializable {
     private final int MAX_PLAYERS = 4;
-
+    public GameMap gamemap;
     ArrayList<Player> playersList;
 
     public Game() {
         this.playersList = new ArrayList<>(4);
+        this.gamemap = new GameMap();
+
+        // Test safezones
+        gamemap.insertSafeZone(30, 5, 5, 5);
+        gamemap.insertSafeZone(90, 90, 5, 5);
     }
 
     public boolean addPlayer(String nickname, ObjectOutputStream objectOutputStream) {
@@ -30,12 +38,12 @@ public class Game implements Serializable {
         if (playersList.size() == 0)
             return 0;
 
-        for (int i=0; i<MAX_PLAYERS; i++){
+        for (int i = 0; i < MAX_PLAYERS; i++) {
 
             int busyFlag = 0;
 
-            for (Player player : playersList){
-                if (i == player.getID()){
+            for (Player player : playersList) {
+                if (i == player.getID()) {
                     busyFlag = 1;
                     break;
                 }
