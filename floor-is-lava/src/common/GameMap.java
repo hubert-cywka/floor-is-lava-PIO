@@ -1,4 +1,4 @@
-package back;
+package common;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -7,14 +7,15 @@ public class GameMap implements Serializable {
 
     private static final int WIDTH = 100;
     private static final int HEIGHT = 100;
-    private int width;
-    private int height;
-    private char[][] map;
+    private final int width;
+    private final int height;
+    private final char[][] map;
 
     public GameMap() {
         this.width = WIDTH;
         this.height = HEIGHT;
         this.map = new char[HEIGHT][WIDTH];
+        generateMap();
     }
     public int getWidth() {
         return width;
@@ -31,8 +32,8 @@ public class GameMap implements Serializable {
         }
     }
 
-    //SafePlace might become class later
-    public void insertSafePlace(int startX, int startY, int width, int height) {
+    //SafeZone might become class later
+    public void insertSafeZone(int startX, int startY, int width, int height) {
         for (int i = startY; i < startY + height; i++) {
             for (int j = startX; j < startX + width; j++) {
                 if (isValidPosition(j, i)) {
@@ -41,7 +42,7 @@ public class GameMap implements Serializable {
             }
         }
     }
-    public void removeSafePlace(int startX, int startY, int width, int height) {
+    public void removeSafeZone(int startX, int startY, int width, int height) {
         for (int i = startY; i < startY + height; i++) {
             for (int j = startX; j < startX + width; j++) {
                 if (isValidPosition(j, i)) {

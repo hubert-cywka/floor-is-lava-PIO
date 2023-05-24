@@ -29,7 +29,7 @@ public class FloorIsLavaApp extends Application {
     }
 
     public static void main(String[] args) {
-//        new ClientApplication("localhost", 8080, "MyNickname");
         launch();
     }
+
 }
