@@ -23,7 +23,6 @@ public class ClientThread implements Runnable {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-
     private Player player;
 
 
@@ -60,7 +59,8 @@ public class ClientThread implements Runnable {
             debug.message("Nickname received: " + nickname);
 
             debug.message("Adding new Player to the Game");
-            if (!addPlayerToTheGame()) {
+            player = addPlayerToTheGame();
+            if (player == null) {
                 debug.errorMessage("Unable to add new player");
                 debug.errorMessage("Closing the connection");
                 sendServerStatus(NICKNAME_ERROR);
@@ -77,23 +77,15 @@ public class ClientThread implements Runnable {
 
                 // Example communication
 
-                debug.message("Receiving client action");
-                PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
-                debug
+                debug.message("Waiting for client action");
+                PlayerMove playerMove = getPlayerMove();
+                debug.infoMessage("Move: " + playerMove);
+                debug.message("Client action received");;
 
-                debug.message("Client action received");
+                debug.message("Handling move");
 
+                debug.message("Mave handled");
 
-//                debug.message("Waiting for client action");
-//                // TODO: create method to receive data from client
-//                debug.message("Client action received");
-//
-//                debug.message("Client data validation process..");
-//                // TODO: create method to validate client action
-//                debug.message("Client Data validated properly");
-//
-//                // TODO: create method for checking if client wants to disconnected etc.
-//                // TODO: create method to update data
             }
 
         } catch (IOException e) {
@@ -105,6 +97,10 @@ public class ClientThread implements Runnable {
             closeIOStreams();
             throw new RuntimeException(e);
         }
+    }
+
+    private PlayerMove getPlayerMove() throws IOException, ClassNotFoundException {
+        return (PlayerMove) objectInputStream.readObject();
     }
 
     private void closeSocket(Socket socket) throws IOException {
@@ -119,7 +115,7 @@ public class ClientThread implements Runnable {
         objectOutputStream.writeObject(message);
     }
 
-    private boolean addPlayerToTheGame() {
+    private Player addPlayerToTheGame() {
         return game.addPlayer(nickname, objectOutputStream);
     }
 
