@@ -11,7 +11,7 @@ public class ClientApplication {
     private final int port;
     private String nickname;
     private final boolean isDebugActive = true;
-    private Debug debug;
+    private static Debug debug;
 
     private static ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
@@ -87,6 +87,7 @@ public class ClientApplication {
     }
 
     public static void sendPlayerMove(PlayerMove move) throws IOException {
+        debug.errorMessage("Sending move: " + move);
         objectOutputStream.writeObject(move);
     }
 
