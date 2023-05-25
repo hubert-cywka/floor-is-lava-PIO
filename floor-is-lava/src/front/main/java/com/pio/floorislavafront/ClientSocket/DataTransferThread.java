@@ -28,7 +28,7 @@ public class DataTransferThread implements Runnable {
             while (true) {
                 Packet packet = (Packet) objectInputStream.readObject();
                 objectOutputStream.writeObject(Player.getNextPlayerMove());
-                Player.clearNextPlayerMove();
+                objectOutputStream.reset();
 
                 byte[] serializedMap = packet.getMap();
                 FieldType[][] map = deserializeFieldTypeArray(serializedMap);

@@ -154,7 +154,7 @@ public class GameMap implements Serializable {
     }
     //METHOD FOR TESTING
 
-    public void movePlayer(Player player, PlayerMove move) {
+    public void movePlayer(Player player, Direction move) {
 
         Position position = player.getPosition();
         System.out.println("First position: " + position);
