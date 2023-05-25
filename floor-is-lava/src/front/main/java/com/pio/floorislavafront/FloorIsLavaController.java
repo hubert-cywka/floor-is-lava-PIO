@@ -1,7 +1,7 @@
 package front.main.java.com.pio.floorislavafront;
 
 import common.PlayerMove;
-import front.main.java.com.pio.floorislavafront.ClientSocket.StartConnection;
+import front.main.java.com.pio.floorislavafront.ClientSocket.ConnectionInitializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +13,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
-import java.io.IOException;
 import java.util.regex.Pattern;
 
-import static front.main.java.com.pio.floorislavafront.ClientSocket.ClientApplication.sendPlayerMove;
+import static common.Player.setNextPlayerMove;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class FloorIsLavaController {
@@ -42,22 +41,18 @@ public class FloorIsLavaController {
     private static void initKeyListeners() {
         getPrimaryStage().getScene().setOnKeyPressed((KeyEvent event) -> {
 
-            try {
-                switch (event.getCode()) {
-                    case W -> sendPlayerMove(PlayerMove.UP); // TODO handle player moves
-                    case A -> sendPlayerMove(PlayerMove.LEFT);
-                    case S -> sendPlayerMove(PlayerMove.DOWN);
-                    case D -> sendPlayerMove(PlayerMove.RIGHT);
-                    case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
-                    case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
-                    case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
-                    case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
-                    case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
-                    case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
-                    default -> System.out.println("NOT RECOGNIZED KEY");
-                }
-            }catch (IOException e){
-                throw new RuntimeException();
+            switch (event.getCode()) {
+                case W -> setNextPlayerMove(PlayerMove.UP);
+                case A -> setNextPlayerMove(PlayerMove.LEFT);
+                case S -> setNextPlayerMove(PlayerMove.DOWN);
+                case D -> setNextPlayerMove(PlayerMove.RIGHT);
+                case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
+                case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
+                case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
+                case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
+                case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
+                case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
+                default -> System.out.println("NOT RECOGNIZED KEY");
             }
         });
     }
@@ -121,7 +116,7 @@ public class FloorIsLavaController {
         int port = Integer.parseInt(textport);
 
         // Connection thread
-        Thread connectionThread = new Thread(new StartConnection(ipAddress, port, username));
+        Thread connectionThread = new Thread(new ConnectionInitializer(ipAddress, port, username));
         connectionThread.start();
 
         setScene(GAME_SCREEN);

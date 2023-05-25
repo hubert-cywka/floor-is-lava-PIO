@@ -2,29 +2,42 @@ package common;
 
 import back.Position;
 
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 
 public class Player implements Serializable {
     private final String nickname;
-    private final ObjectOutputStream objectOutputStream;
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
     public Position position;
     private boolean isAlive;
     private boolean isMoving;
     private final int ID;
+    private static PlayerMove nextPlayerMove;
 
-
-
-    public Player(String nickname, int ID, ObjectOutputStream objectOutputStream){
+    public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream){
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;
+        this.objectInputStream = objectInputStream;
         this.ID = ID;
         this.isAlive = true;
         position = new Position(-1, -1);
+        nextPlayerMove = PlayerMove.NO_MOVE;
     }
 
+    public static PlayerMove getNextPlayerMove() {
+        return nextPlayerMove;
+    }
 
+    public static void setNextPlayerMove(PlayerMove playerMove) {
+        nextPlayerMove = playerMove;
+    }
+
+    public static void clearNextPlayerMove() {
+        nextPlayerMove = PlayerMove.NO_MOVE;
+    }
 
     public int getID() {
         return ID;
@@ -49,4 +62,6 @@ public class Player implements Serializable {
     public String getNickname() { return nickname; }
 
     public ObjectOutputStream getOutputStream() { return objectOutputStream; }
+
+    public ObjectInputStream getInputStream() { return objectInputStream; }
 }

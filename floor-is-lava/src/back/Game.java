@@ -6,6 +6,7 @@ import common.PowerUp;
 import common.FieldType;
 import common.PlayerMove;
 
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,13 +33,13 @@ public class Game implements Serializable {
     }
 
 
-    public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream) {
+    public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         if (playersList.size() >= MAX_PLAYERS || hasSomeoneTheSameNickname(nickname))
             return null;
 
         int id = getFirstFreeID();
 
-        Player player = new Player(nickname, id, objectOutputStream);
+        Player player = new Player(nickname, id, objectOutputStream, objectInputStream);
         playersList.add(player);
         insertPlayerToMap(player);
         return player;
@@ -76,12 +77,10 @@ public class Game implements Serializable {
     }
 
     private int getFirstFreeID() {
-
         if (playersList.isEmpty())
             return 0;
 
         for (int i = 0; i < MAX_PLAYERS; i++) {
-
             int busyFlag = 0;
 
             for (Player player : playersList) {
@@ -99,7 +98,7 @@ public class Game implements Serializable {
     }
 
     public void removePlayer(String nickname) {
-        if (playersList.size() == 0)
+        if (playersList.isEmpty())
             return;
 
         Player player = findPlayerByNickname(nickname);

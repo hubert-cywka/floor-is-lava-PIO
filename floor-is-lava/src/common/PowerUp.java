@@ -1,7 +1,6 @@
 package common;
 
 import back.Position;
-import common.FieldType;
 
 public class PowerUp {
     public FieldType type;

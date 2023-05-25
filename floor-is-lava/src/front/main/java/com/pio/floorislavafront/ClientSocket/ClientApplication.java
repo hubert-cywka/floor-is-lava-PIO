@@ -1,7 +1,6 @@
 package front.main.java.com.pio.floorislavafront.ClientSocket;
 
 import common.Debug;
-import common.PlayerMove;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,7 +12,7 @@ public class ClientApplication {
     private final boolean isDebugActive = true;
     private static Debug debug;
 
-    private static ObjectOutputStream objectOutputStream;
+    private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     private Socket socket;
 
@@ -73,22 +72,7 @@ public class ClientApplication {
             throw new RuntimeException(e);
         }
 
-        startUpdateReceiverThread();
-
-//        try {
-//            while (true) {
-//
-//                String packet = "EXAMPLE: Move_Right";
-//                objectOutputStream.writeObject(packet);
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-    }
-
-    public static void sendPlayerMove(PlayerMove move) throws IOException {
-        debug.errorMessage("Sending move: " + move);
-        objectOutputStream.writeObject(move);
+        startDataTransferThread();
     }
 
     private boolean hasServerFreeSlot() throws IOException, ClassNotFoundException {
@@ -114,8 +98,8 @@ public class ClientApplication {
         }
     }
 
-    private void startUpdateReceiverThread() {
-        Thread updateReceiver = new Thread(new UpdateReceiver(objectInputStream));
-        updateReceiver.start();
+    private void startDataTransferThread() {
+        Thread dataTransferThread = new Thread(new DataTransferThread(objectInputStream, objectOutputStream));
+        dataTransferThread.start();
     }
 }
