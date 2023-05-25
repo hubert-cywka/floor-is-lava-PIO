@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class FloorIsLavaApp extends Application {
     private static Stage primaryStage;
-    private final SoundtrackManager soundtrackManager = new SoundtrackManager();
+    private static final SoundtrackManager soundtrackManager = new SoundtrackManager();
 
     private static void setPrimaryStage(Stage stage) {
         FloorIsLavaApp.primaryStage = stage;
@@ -19,9 +19,12 @@ public class FloorIsLavaApp extends Application {
         return FloorIsLavaApp.primaryStage;
     }
 
+    public static SoundtrackManager getSoundtrackManager() {
+        return soundtrackManager;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
-
         setPrimaryStage(stage);
         FloorIsLavaController.setScene("scenes/initial-screen-scene.fxml");
         stage.setTitle("Floor is Lava!");

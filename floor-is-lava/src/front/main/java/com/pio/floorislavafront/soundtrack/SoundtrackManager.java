@@ -2,10 +2,8 @@ package front.main.java.com.pio.floorislavafront.soundtrack;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class SoundtrackManager {
     private final String BASE_SOUNDTRACK_PATH = "src/front/main/resources/com/pio/floorislavafront/music/";
@@ -56,5 +54,13 @@ public class SoundtrackManager {
 
     public void setVolume(double volume) {
         this.mediaPlayer.setVolume(volume);
+    }
+
+    public void toggleVolume() {
+        if (this.mediaPlayer.getVolume() > 0) {
+            this.mediaPlayer.setVolume(0);
+        } else {
+            this.mediaPlayer.setVolume(1);
+        }
     }
 }
