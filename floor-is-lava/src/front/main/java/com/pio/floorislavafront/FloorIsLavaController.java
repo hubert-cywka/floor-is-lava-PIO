@@ -43,8 +43,12 @@ public class FloorIsLavaController {
                 case A -> System.out.println("LEFT");
                 case S -> System.out.println("DOWN");
                 case D -> System.out.println("RIGHT");
-                case M -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
                 case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
+                case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
+                case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
+                case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
+                case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
+                case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
                 default -> System.out.println("NOT RECOGNIZED KEY");
             }
         });

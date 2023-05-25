@@ -26,12 +26,24 @@ public class SoundtrackManager {
         this.playInspiringPlaylist();
     }
 
-    public void playNextSong() {
-        Media nextSong = new Media(new File(this.currentPlaylist.getNextSong()).toURI().toString());
-        this.mediaPlayer = new MediaPlayer(nextSong);
+    public void initSong() {
         this.mediaPlayer.setOnEndOfMedia(this::playNextSong);
         this.mediaPlayer.setVolume(1);
         this.mediaPlayer.play();
+    }
+
+    public void playNextSong() {
+        if (this.mediaPlayer != null) this.pause();
+        Media nextSong = new Media(new File(this.currentPlaylist.getNextSong()).toURI().toString());
+        this.mediaPlayer = new MediaPlayer(nextSong);
+        this.initSong();
+    }
+
+    public void playPreviousSong() {
+        if (this.mediaPlayer != null) this.pause();
+        Media nextSong = new Media(new File(this.currentPlaylist.getPreviousSong()).toURI().toString());
+        this.mediaPlayer = new MediaPlayer(nextSong);
+        this.initSong();
     }
 
     public void playAmbientPlaylist() {
