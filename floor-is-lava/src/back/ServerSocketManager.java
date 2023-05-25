@@ -19,7 +19,7 @@ public class ServerSocketManager {
         this.game = new Game();
         this.debug = new Debug(isDebugActivated);
 
-        launchUpdateSenderThread();
+        launchGameLoopThread();
         startJoinHandler();
     }
 
@@ -41,9 +41,9 @@ public class ServerSocketManager {
     }
 
 
-    private void launchUpdateSenderThread() {
-        Thread updateSender = new Thread(new UpdateSender(game, debug));
-        updateSender.start();
+    private void launchGameLoopThread() {
+        Thread gameLoop = new Thread(new GameLoop(game, debug));
+        gameLoop.start();
     }
 
     private Socket acceptNewConnection(ServerSocket serverSocket) throws IOException {
@@ -53,7 +53,7 @@ public class ServerSocketManager {
     }
 
     private void startNewClientThread(Socket clientSocket) {
-        Thread clientThread = new Thread(new ClientThread(clientSocket, game));
+        Thread clientThread = new Thread(new JoiningThread(clientSocket, game));
         clientThread.start();
     }
 }

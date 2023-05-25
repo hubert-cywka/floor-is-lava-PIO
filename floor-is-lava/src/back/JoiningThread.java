@@ -2,12 +2,11 @@ package back;
 
 import common.Debug;
 import common.Player;
-import common.PlayerMove;
 
 import java.io.*;
 import java.net.Socket;
 
-public class ClientThread implements Runnable {
+public class JoiningThread implements Runnable {
     private final String SERVER_HAS_FREE_SLOT = "OK";
     private final String SERVER_IS_FULL = "FULL";
     private final String NICKNAME_ERROR = "NICKNAME_ERROR";
@@ -26,7 +25,7 @@ public class ClientThread implements Runnable {
     private Player player;
 
 
-    public ClientThread(Socket socket, Game game) {
+    public JoiningThread(Socket socket, Game game) {
         this.socket = socket;
         this.game = game;
         this.debug = new Debug(isDebugActivated);
@@ -60,6 +59,7 @@ public class ClientThread implements Runnable {
 
             debug.message("Adding new Player to the Game");
             player = addPlayerToTheGame();
+
             if (player == null) {
                 debug.errorMessage("Unable to add new player");
                 debug.errorMessage("Closing the connection");
@@ -73,21 +73,6 @@ public class ClientThread implements Runnable {
             sendServerStatus(READY_TO_RECEIVE_DATA);
             debug.message("READY status has been sent");
 
-            while (true) {
-
-                // Example communication
-
-                debug.message("Waiting for client action");
-                PlayerMove playerMove = getPlayerMove();
-                debug.infoMessage("Move: " + playerMove);
-                debug.message("Client action received");;
-
-                debug.message("Handling move");
-                game.movePlayer(player, playerMove);
-                debug.message("Mave handled");
-
-            }
-
         } catch (IOException e) {
             // Connection lost
             closeIOStreams();
@@ -97,10 +82,6 @@ public class ClientThread implements Runnable {
             closeIOStreams();
             throw new RuntimeException(e);
         }
-    }
-
-    private PlayerMove getPlayerMove() throws IOException, ClassNotFoundException {
-        return (PlayerMove) objectInputStream.readObject();
     }
 
     private void closeSocket(Socket socket) throws IOException {
@@ -116,7 +97,7 @@ public class ClientThread implements Runnable {
     }
 
     private Player addPlayerToTheGame() {
-        return game.addPlayer(nickname, objectOutputStream);
+        return game.addPlayer(nickname, objectOutputStream, objectInputStream);
     }
 
     private String receiveNickname() throws IOException, ClassNotFoundException {
