@@ -1,11 +1,13 @@
 package common;
+import front.main.java.com.pio.floorislavafront.DisplayUtils.FieldType;
+
 import java.io.Serializable;
 
 public class Packet implements Serializable {
     public String message;
-    public char[][] map;
+    public FieldType[][] map;
 
-    public Packet(String message, char[][] map){
+    public Packet(String message, FieldType[][] map){
         this.message = message;
         this.map = map;
     }

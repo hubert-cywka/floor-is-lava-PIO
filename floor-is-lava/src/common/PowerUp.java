@@ -1,12 +1,13 @@
 package common;
 
 import back.Position;
+import front.main.java.com.pio.floorislavafront.DisplayUtils.FieldType;
 
 public class PowerUp {
-    public char type;
+    public FieldType type;
     public Position position;
 
-    public PowerUp(char type, Position position) {
+    public PowerUp(FieldType type, Position position) {
         this.type = type;
         this.position = position;
     }

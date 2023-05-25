@@ -1,7 +1,6 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
 public enum FieldType {
-
     PLAYER_0,
     PLAYER_1,
     PLAYER_2,
@@ -12,6 +11,6 @@ public enum FieldType {
     FLOOR,
     LAVA,
     BOOST_SPEED,
-    BOOST_GHOST
-
+    BOOST_GHOST,
+    HOLE
 }
