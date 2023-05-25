@@ -83,7 +83,7 @@ public class ClientThread implements Runnable {
                 debug.message("Client action received");;
 
                 debug.message("Handling move");
-
+                game.movePlayer(player, playerMove);
                 debug.message("Mave handled");
 
             }

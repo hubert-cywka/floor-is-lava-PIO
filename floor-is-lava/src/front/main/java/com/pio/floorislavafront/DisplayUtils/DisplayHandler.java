@@ -1,5 +1,6 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
+import common.FieldType;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -58,7 +59,6 @@ public class DisplayHandler {
 
             for (int y = 0; y < MAP_SIZE; y++) {
                 for (int x = 0; x < MAP_SIZE; x++) {
-                    if (map[y][x] == null) break;
                     Rectangle square = createSquare(map[y][x]);
                     myMap.add(square, x, y);
                 }
