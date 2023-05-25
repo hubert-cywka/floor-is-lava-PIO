@@ -13,6 +13,7 @@ public class ServerSocketManager {
     private final int port;
     private final Game game;
 
+
     public ServerSocketManager(int port) {
         this.port = port;
         this.game = new Game();
