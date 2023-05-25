@@ -24,9 +24,8 @@ public class GameLoop implements Runnable {
         debug.message("Receiving update");
 
         PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
-        if (playerMove != null) {
-            game.movePlayer(player, playerMove);
-        }
+        game.movePlayer(player, playerMove.getHorizontal());
+        game.movePlayer(player, playerMove.getVertical());
     }
 
     private void handleDataSend(Player player) throws IOException {

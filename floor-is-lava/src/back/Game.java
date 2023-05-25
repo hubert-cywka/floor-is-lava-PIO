@@ -4,7 +4,7 @@ import common.GameMap;
 import common.Player;
 import common.PowerUp;
 import common.FieldType;
-import common.PlayerMove;
+import common.Direction;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -133,7 +133,7 @@ public class Game implements Serializable {
         return null;
     }
 
-    public void movePlayer(Player player, PlayerMove move){
+    public void movePlayer(Player player, Direction move){
         gameMap.movePlayer(player, move);
     }
 }
