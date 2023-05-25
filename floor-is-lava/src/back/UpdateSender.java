@@ -23,6 +23,8 @@ public class UpdateSender implements Runnable {
     public void run() {
         try {
             while (true) {
+
+
                 Thread.sleep(REFRESH_TIME);
 
                 for (int i = 0; i < game.playersList.size(); i++) {
@@ -31,6 +33,7 @@ public class UpdateSender implements Runnable {
                     objectOutputStream.writeObject(new Packet("new update to client", game.gamemap.getMap()));
                     debug.message("Update has been sent");
                 }
+
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

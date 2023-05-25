@@ -71,12 +71,14 @@ public class ClientThread implements Runnable {
             while (true) {
 
                 // Example communication
+
                 debug.message("Receiving client action");
                 String packet = (String) objectInputStream.readObject();
                 System.out.println(packet + i);
                 i++;
 
                 debug.message("Client action received");
+
 
 //                debug.message("Waiting for client action");
 //                // TODO: create method to receive data from client
