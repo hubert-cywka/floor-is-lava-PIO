@@ -27,10 +27,16 @@ public class Player implements Serializable {
         return isAlive;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream){
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;
         this.ID = ID;
+        this.isAlive = true;
+        position = new Position(-1, -1);
     }
 
     public String getNickname() { return nickname; }

@@ -6,6 +6,7 @@ import common.Player;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game implements Serializable {
     private final int MAX_PLAYERS = 4;
@@ -29,8 +30,29 @@ public class Game implements Serializable {
 
         Player player = new Player(nickname, id, objectOutputStream);
         playersList.add(player);
-
+        insertPlayerToMap(player);
         return true;
+    }
+
+    public int getRandomNumberInRange(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
+    }
+    public boolean validPositionOnMap(Position pos)
+    {
+        char[][] map = gamemap.getMap();
+        return map[pos.x][pos.y] == '.';
+    }
+    public void insertPlayerToMap(Player p)
+    {
+        Position playerpos = new Position(getRandomNumberInRange(0, gamemap.getHeight()), getRandomNumberInRange(0, gamemap.getWidth()));
+        while (!validPositionOnMap(playerpos))
+        {
+            playerpos.x = getRandomNumberInRange(0, gamemap.getHeight());
+            playerpos.y = getRandomNumberInRange(0, gamemap.getWidth());
+        }
+        p.setPosition(playerpos);
+        gamemap.insertPlayer(p);
     }
 
     private int getFirstFreeID() {
