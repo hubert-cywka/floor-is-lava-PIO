@@ -29,16 +29,16 @@ public class Game implements Serializable {
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, generateValidPositionOnMap()));
     }
 
-    public boolean addPlayer(String nickname, ObjectOutputStream objectOutputStream) {
+    public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream) {
         if (playersList.size() >= MAX_PLAYERS || hasSomeoneTheSameNickname(nickname))
-            return false;
+            return null;
 
         int id = getFirstFreeID();
 
         Player player = new Player(nickname, id, objectOutputStream);
         playersList.add(player);
         insertPlayerToMap(player);
-        return true;
+        return player;
     }
 
     public void addPowerUpOnMap(PowerUp power) {
