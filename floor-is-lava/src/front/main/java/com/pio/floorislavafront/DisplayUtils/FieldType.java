@@ -10,6 +10,8 @@ public enum FieldType {
     BORDER,
     SAFE_ZONE,
     FLOOR,
-    LAVA
+    LAVA,
+    BOOST_SPEED,
+    BOOST_GHOST
 
 }

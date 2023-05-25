@@ -19,7 +19,7 @@ public class DisplayHandler {
         Rectangle square = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
         switch (fieldType) {
             case PLAYER_0:
-                square.setFill(Color.BLUE);
+                square.setFill(Color.DARKBLUE);
                 square.setStroke(Color.GRAY);
                 break;
 
@@ -62,6 +62,16 @@ public class DisplayHandler {
                 square.setFill(Color.DARKRED);
                 square.setStroke(Color.GRAY);
                 break;
+
+            case BOOST_SPEED:
+                square.setFill(Color.LIGHTYELLOW);
+                square.setStroke(Color.GRAY);
+                break;
+
+            case BOOST_GHOST:
+                square.setFill(Color.LIGHTBLUE);
+                square.setStroke(Color.GRAY);
+                break;
         }
         return square;
     }
@@ -77,6 +87,8 @@ public class DisplayHandler {
             case '*' -> FieldType.SAFE_ZONE;
             case '.' -> FieldType.FLOOR;
             case '@' -> FieldType.LAVA;
+            case 'x' -> FieldType.BOOST_SPEED;
+            case 'y' -> FieldType.BOOST_GHOST;
             default -> FieldType.WALL;
         };
     }
