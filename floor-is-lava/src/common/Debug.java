@@ -23,4 +23,13 @@ public class Debug {
         System.out.println("(Debug) " + message);
         System.out.print(Color.RESET);
     }
+
+    public void infoMessage(String message) {
+        if (!isActive)
+            return;
+
+        System.out.print(Color.GREEN);
+        System.out.println("(Debug) " + message);
+        System.out.print(Color.RESET);
+    }
 }
