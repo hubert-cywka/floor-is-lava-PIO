@@ -2,6 +2,7 @@ package back;
 
 import common.GameMap;
 import common.Player;
+import common.PowerUp;
 
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -20,6 +21,11 @@ public class Game implements Serializable {
         // Test safezones
         gamemap.insertSafeZone(30, 5, 5, 5);
         gamemap.insertSafeZone(90, 90, 5, 5);
+
+        // test powerups
+        addPowerUpOnMap(new PowerUp('x', generateValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp('y', generateValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp('y', generateValidPositionOnMap()));
     }
 
     public boolean addPlayer(String nickname, ObjectOutputStream objectOutputStream) {
@@ -34,6 +40,13 @@ public class Game implements Serializable {
         return true;
     }
 
+    public void addPowerUpOnMap(PowerUp power)
+    {
+        Position powerpos = generateValidPositionOnMap();
+        power.setPosition(powerpos);
+        gamemap.insertPowerUp(power);
+    }
+
     public int getRandomNumberInRange(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
@@ -43,14 +56,18 @@ public class Game implements Serializable {
         char[][] map = gamemap.getMap();
         return map[pos.x][pos.y] == '.';
     }
-    public void insertPlayerToMap(Player p)
-    {
+    public Position generateValidPositionOnMap() {
         Position playerpos = new Position(getRandomNumberInRange(0, gamemap.getHeight()), getRandomNumberInRange(0, gamemap.getWidth()));
         while (!validPositionOnMap(playerpos))
         {
             playerpos.x = getRandomNumberInRange(0, gamemap.getHeight());
             playerpos.y = getRandomNumberInRange(0, gamemap.getWidth());
         }
+        return playerpos;
+    }
+    public void insertPlayerToMap(Player p)
+    {
+        Position playerpos = generateValidPositionOnMap();
         p.setPosition(playerpos);
         gamemap.insertPlayer(p);
     }

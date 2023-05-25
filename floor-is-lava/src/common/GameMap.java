@@ -1,5 +1,7 @@
 package common;
 
+import back.Position;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -32,6 +34,10 @@ public class GameMap implements Serializable {
         }
     }
 
+    public boolean checkIfFloor(Position pos) {
+        return map[pos.x][pos.y] == '.';
+    }
+
     //SafeZone might become class later
     public void insertSafeZone(int startX, int startY, int width, int height) {
         for (int i = startY; i < startY + height; i++) {
@@ -51,6 +57,13 @@ public class GameMap implements Serializable {
             }
         }
     }
+
+    // szybkosc przenikanie przez sciany
+    public void insertPowerUp(PowerUp pow)
+    {
+        if (isValidPosition(pow.position.x, pow.position.y) && checkIfFloor(pow.position)) map[pow.position.x][pow.position.y] = pow.type;
+    }
+
     public void insertPlayer(Player p) {
         if (isValidPosition(p.position.x, p.position.y)) {
             map[p.position.x][p.position.y] = (char) (p.getID() + 48);
