@@ -1,7 +1,7 @@
 package common;
 
 import back.Position;
-import front.main.java.com.pio.floorislavafront.DisplayUtils.FieldType;
+import common.FieldType;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -155,13 +155,57 @@ public class GameMap implements Serializable {
         return isValidPosition(x, y) && map[x][y] == FieldType.FLOOR;
     }
     //METHOD FOR TESTING
+
+    public void movePlayer(Player player, PlayerMove move) {
+
+        Position position = player.getPosition();
+        System.out.println("First position: " + position);
+        FieldType playerSymbol;
+
+        switch (map[position.x][position.y]) {
+
+            case PLAYER_0:
+            case PLAYER_1:
+            case PLAYER_2:
+            case PLAYER_3:
+                playerSymbol = map[position.x][position.y];
+                System.err.println("Symbol: " + playerSymbol);
+
+                map[position.x][position.y] = FieldType.FLOOR;
+                break;
+
+            default:
+                System.err.println("NIE MA GRACZA NA TEJ POZYCJI");
+                return;
+
+        }
+
+        switch (move) {
+            case UP -> position.x--;
+            case DOWN -> position.x++;
+            case RIGHT -> position.y++;
+            case LEFT -> position.y--;
+
+            default -> System.err.println("Nie ma takiego ruchu!");
+        }
+
+        map[position.x][position.y] = playerSymbol;
+
+        System.err.println("New pos: " + position);
+        player.setPosition(position);
+
+    }
+
+    @Deprecated
     public void printMap() {
+        System.err.println("------------------------------------------------------------------------");
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 System.out.print(map[i][j] + " ");
             }
             System.out.println();
         }
+        System.err.println("------------------------------------------------------------------------");
     }
 
 }

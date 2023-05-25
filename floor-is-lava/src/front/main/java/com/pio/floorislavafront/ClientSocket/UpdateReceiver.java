@@ -1,8 +1,10 @@
 package front.main.java.com.pio.floorislavafront.ClientSocket;
 
+import common.FieldType;
 import common.Packet;
 import javafx.application.Platform;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -24,13 +26,11 @@ public class UpdateReceiver implements Runnable {
             while (true) {
                 Packet packet = (Packet) objectInputStream.readObject();
 
-                // Printing map to console
-//                packet.printMap();
+                byte[] serializedMap = packet.getMap();
+                FieldType[][] map = deserializeCharArray(serializedMap);
 
                 // Refreshing map
-                Platform.runLater(() -> mapHandler(packet.map));
-
-                System.out.println("(Update from server) " + packet.message);
+                Platform.runLater(() -> mapHandler(map));
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -38,5 +38,11 @@ public class UpdateReceiver implements Runnable {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static FieldType[][] deserializeCharArray(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
+        ObjectInputStream objectStream = new ObjectInputStream(byteStream);
+        return (FieldType[][]) objectStream.readObject();
     }
 }

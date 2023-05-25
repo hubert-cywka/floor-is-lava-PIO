@@ -1,6 +1,7 @@
 package back;
 
 import common.Debug;
+import common.Player;
 import common.PlayerMove;
 
 import java.io.*;
@@ -21,6 +22,9 @@ public class ClientThread implements Runnable {
 
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
+
+    private Player player;
+
 
     public ClientThread(Socket socket, Game game) {
         this.socket = socket;
@@ -55,7 +59,8 @@ public class ClientThread implements Runnable {
             debug.message("Nickname received: " + nickname);
 
             debug.message("Adding new Player to the Game");
-            if (!addPlayerToTheGame()) {
+            player = addPlayerToTheGame();
+            if (player == null) {
                 debug.errorMessage("Unable to add new player");
                 debug.errorMessage("Closing the connection");
                 sendServerStatus(NICKNAME_ERROR);
@@ -68,29 +73,19 @@ public class ClientThread implements Runnable {
             sendServerStatus(READY_TO_RECEIVE_DATA);
             debug.message("READY status has been sent");
 
-            int i = 0;
             while (true) {
 
                 // Example communication
 
-                debug.message("Receiving client action");
-                PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
-                System.out.println(playerMove);
-                i++;
+                debug.message("Waiting for client action");
+                PlayerMove playerMove = getPlayerMove();
+                debug.infoMessage("Move: " + playerMove);
+                debug.message("Client action received");;
 
-                debug.message("Client action received");
+                debug.message("Handling move");
+                game.movePlayer(player, playerMove);
+                debug.message("Mave handled");
 
-
-//                debug.message("Waiting for client action");
-//                // TODO: create method to receive data from client
-//                debug.message("Client action received");
-//
-//                debug.message("Client data validation process..");
-//                // TODO: create method to validate client action
-//                debug.message("Client Data validated properly");
-//
-//                // TODO: create method for checking if client wants to disconnected etc.
-//                // TODO: create method to update data
             }
 
         } catch (IOException e) {
@@ -102,6 +97,10 @@ public class ClientThread implements Runnable {
             closeIOStreams();
             throw new RuntimeException(e);
         }
+    }
+
+    private PlayerMove getPlayerMove() throws IOException, ClassNotFoundException {
+        return (PlayerMove) objectInputStream.readObject();
     }
 
     private void closeSocket(Socket socket) throws IOException {
@@ -116,7 +115,7 @@ public class ClientThread implements Runnable {
         objectOutputStream.writeObject(message);
     }
 
-    private boolean addPlayerToTheGame() {
+    private Player addPlayerToTheGame() {
         return game.addPlayer(nickname, objectOutputStream);
     }
 
