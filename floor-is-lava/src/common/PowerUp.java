@@ -1,7 +1,7 @@
 package common;
 
 import back.Position;
-import front.main.java.com.pio.floorislavafront.DisplayUtils.FieldType;
+import common.FieldType;
 
 public class PowerUp {
     public FieldType type;
