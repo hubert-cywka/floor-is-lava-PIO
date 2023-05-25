@@ -1,0 +1,21 @@
+Uruchomienie projektu w środowisku IntelliJ:
+
+1. Uruchomienie odbywa się poprzez otwarcie pliku "pom.xml"
+jako projekt IntelliJ (floor-is-lava-PIO > floor-is-lava > pom.xml)
+
+2. Przechodzimy w IntelliJ do Project Structure
+(File > Project Structure)
+Przechodzimy do zakładki Modules, a następnie Sources
+Zaznaczamy myszką poprzez kliknięcie folder "src"
+i ustawiamy go jako Sources (Mark as: Sources)
+Klikamy apply
+
+3. W tym samym oknie przechodzimy do zakładki "Dependencies"
+i zamieniamy wszystkie Scope'y "Runtime"do wartości "Compile"
+Powinny być 4 Scope'y Runtime, które należy zmienić
+
+4. Uruchamiamy Server (floor-is-lava-PIO\floor-is-lava\src\back > Server.java)
+
+5. Uruchamiamy klienta (floor-is-lava-PIO\floor-is-lava\src\front\main\java\com\pio\floorislavafront > FloorIsLavaApp.java)
+
+
