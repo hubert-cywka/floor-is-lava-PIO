@@ -1,5 +1,6 @@
 package front.main.java.com.pio.floorislavafront;
 
+import common.PlayerMove;
 import front.main.java.com.pio.floorislavafront.ClientSocket.StartConnection;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -12,8 +13,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
+import static front.main.java.com.pio.floorislavafront.ClientSocket.ClientApplication.sendPlayerMove;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class FloorIsLavaController {
@@ -38,18 +41,23 @@ public class FloorIsLavaController {
 
     private static void initKeyListeners() {
         getPrimaryStage().getScene().setOnKeyPressed((KeyEvent event) -> {
-            switch (event.getCode()) {
-                case W -> System.out.println("UP"); // TODO handle player moves
-                case A -> System.out.println("LEFT");
-                case S -> System.out.println("DOWN");
-                case D -> System.out.println("RIGHT");
-                case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
-                case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
-                case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
-                case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
-                case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
-                case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
-                default -> System.out.println("NOT RECOGNIZED KEY");
+
+            try {
+                switch (event.getCode()) {
+                    case W -> sendPlayerMove(PlayerMove.UP); // TODO handle player moves
+                    case A -> sendPlayerMove(PlayerMove.LEFT);
+                    case S -> sendPlayerMove(PlayerMove.DOWN);
+                    case D -> sendPlayerMove(PlayerMove.RIGHT);
+                    case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
+                    case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
+                    case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
+                    case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
+                    case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
+                    case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
+                    default -> System.out.println("NOT RECOGNIZED KEY");
+                }
+            }catch (IOException e){
+                throw new RuntimeException();
             }
         });
     }

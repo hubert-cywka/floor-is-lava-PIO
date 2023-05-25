@@ -1,6 +1,7 @@
 package back;
 
 import common.Debug;
+import common.PlayerMove;
 
 import java.io.*;
 import java.net.Socket;
@@ -73,8 +74,8 @@ public class ClientThread implements Runnable {
                 // Example communication
 
                 debug.message("Receiving client action");
-                String packet = (String) objectInputStream.readObject();
-                System.out.println(packet + i);
+                PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
+                System.out.println(playerMove);
                 i++;
 
                 debug.message("Client action received");
