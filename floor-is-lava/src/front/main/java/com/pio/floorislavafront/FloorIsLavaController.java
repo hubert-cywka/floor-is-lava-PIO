@@ -8,6 +8,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
@@ -35,12 +36,27 @@ public class FloorIsLavaController {
     @FXML
     TextField serverTextField;
 
+    private static void initKeyListeners() {
+        getPrimaryStage().getScene().setOnKeyPressed((KeyEvent event) -> {
+            switch (event.getCode()) {
+                case W -> System.out.println("UP"); // TODO handle player moves
+                case A -> System.out.println("LEFT");
+                case S -> System.out.println("DOWN");
+                case D -> System.out.println("RIGHT");
+                case M -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
+                case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
+                default -> System.out.println("NOT RECOGNIZED KEY");
+            }
+        });
+    }
+
     public static void setScene(String sceneFXML) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(FloorIsLavaApp.class.getResource(sceneFXML));
             getPrimaryStage().setScene(new Scene(fxmlLoader.load(), bounds.getWidth(), bounds.getHeight() - 20));
+            initKeyListeners();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -95,7 +111,6 @@ public class FloorIsLavaController {
         // Connection thread
         Thread connectionThread = new Thread(new StartConnection(ipAddress, port, username));
         connectionThread.start();
-
 
         setScene(GAME_SCREEN);
     }

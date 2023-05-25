@@ -22,7 +22,6 @@ public class ServerSocketManager {
         startJoinHandler();
     }
 
-
     private void startJoinHandler() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             debug.message("Server has started");
