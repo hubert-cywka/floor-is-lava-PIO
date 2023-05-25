@@ -3,6 +3,7 @@ package back;
 import common.GameMap;
 import common.Player;
 import common.PowerUp;
+import front.main.java.com.pio.floorislavafront.DisplayUtils.FieldType;
 
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -19,13 +20,13 @@ public class Game implements Serializable {
         this.gamemap = new GameMap();
 
         // Test safezones
-        gamemap.insertSafeZone(30, 5, 5, 5);
-        gamemap.insertSafeZone(90, 90, 5, 5);
+        gamemap.insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
+        gamemap.insertZone(90, 90, 5, 5, FieldType.SAFE_ZONE);
 
         // test powerups
-        addPowerUpOnMap(new PowerUp('x', generateValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp('y', generateValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp('y', generateValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, generateValidPositionOnMap()));
     }
 
     public boolean addPlayer(String nickname, ObjectOutputStream objectOutputStream) {
@@ -40,8 +41,7 @@ public class Game implements Serializable {
         return true;
     }
 
-    public void addPowerUpOnMap(PowerUp power)
-    {
+    public void addPowerUpOnMap(PowerUp power) {
         Position powerpos = generateValidPositionOnMap();
         power.setPosition(powerpos);
         gamemap.insertPowerUp(power);
@@ -51,22 +51,22 @@ public class Game implements Serializable {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
-    public boolean validPositionOnMap(Position pos)
-    {
-        char[][] map = gamemap.getMap();
-        return map[pos.x][pos.y] == '.';
+
+    public boolean validPositionOnMap(Position pos) {
+        FieldType[][] map = gamemap.getMap();
+        return map[pos.x][pos.y] == FieldType.FLOOR;
     }
+
     public Position generateValidPositionOnMap() {
         Position playerpos = new Position(getRandomNumberInRange(0, gamemap.getHeight()), getRandomNumberInRange(0, gamemap.getWidth()));
-        while (!validPositionOnMap(playerpos))
-        {
+        while (!validPositionOnMap(playerpos)) {
             playerpos.x = getRandomNumberInRange(0, gamemap.getHeight());
             playerpos.y = getRandomNumberInRange(0, gamemap.getWidth());
         }
         return playerpos;
     }
-    public void insertPlayerToMap(Player p)
-    {
+
+    public void insertPlayerToMap(Player p) {
         Position playerpos = generateValidPositionOnMap();
         p.setPosition(playerpos);
         gamemap.insertPlayer(p);
@@ -74,7 +74,7 @@ public class Game implements Serializable {
 
     private int getFirstFreeID() {
 
-        if (playersList.size() == 0)
+        if (playersList.isEmpty())
             return 0;
 
         for (int i = 0; i < MAX_PLAYERS; i++) {

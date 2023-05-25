@@ -1,6 +1,5 @@
 package front.main.java.com.pio.floorislavafront;
 
-import front.main.java.com.pio.floorislavafront.ClientSocket.ClientApplication;
 import front.main.java.com.pio.floorislavafront.soundtrack.SoundtrackManager;
 import javafx.application.Application;
 import javafx.stage.Stage;

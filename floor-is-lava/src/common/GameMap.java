@@ -1,6 +1,7 @@
 package common;
 
 import back.Position;
+import front.main.java.com.pio.floorislavafront.DisplayUtils.FieldType;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -9,75 +10,150 @@ public class GameMap implements Serializable {
 
     private static final int WIDTH = 100;
     private static final int HEIGHT = 100;
+    private static final int MIN_HOLE_RADIUS = 1;
+    private static final int MAX_HOLE_RADIUS = 3;
+    private static final int MIN_LAVA_RADIUS = 5;
+    private static final int MAX_LAVA_RADIUS = 10;
+    private static final int MAP_HOLE_FREQUENCY = 300;
+    private static final int BORDER_HOLE_FREQUENCY = 3;
     private final int width;
     private final int height;
-    private final char[][] map;
+    private final FieldType[][] map;
 
     public GameMap() {
         this.width = WIDTH;
         this.height = HEIGHT;
-        this.map = new char[HEIGHT][WIDTH];
+        this.map = new FieldType[HEIGHT][WIDTH];
         generateMap();
     }
+
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
-    public char[][] getMap() {
+
+    public FieldType[][] getMap() {
         return map;
     }
+
+    public void addLavaPatch(int x, int y) {
+        int randomWidth = (int) Math.floor(Math.random() * (MAX_LAVA_RADIUS - MIN_LAVA_RADIUS) + MIN_LAVA_RADIUS);
+        int randomHeight = (int) Math.floor(Math.random() * (MAX_LAVA_RADIUS - MIN_LAVA_RADIUS) + MIN_LAVA_RADIUS);
+        insertZone(x, y, randomWidth, randomHeight, FieldType.LAVA);
+
+    }
+
+    public void generateLavaBorders() {
+        for (int row = 0; row < height; row++) {
+            int randomSeed = (int) Math.floor(Math.random() * BORDER_HOLE_FREQUENCY);
+            if (randomSeed == 0) {
+                addLavaPatch(row, 0);
+                addLavaPatch(row, width - MIN_HOLE_RADIUS);
+            }
+        }
+
+        for (int col = 0; col < width; col++) {
+            int randomSeed = (int) Math.floor(Math.random() * BORDER_HOLE_FREQUENCY);
+            if (randomSeed == 0) {
+                addLavaPatch(0, col);
+                addLavaPatch(height - MIN_HOLE_RADIUS, col);
+            }
+        }
+    }
+
     public void generateMap() {
-        for (int i = 0; i < height; i++) {
-            Arrays.fill(map[i], '.');
+        for (int row = 0; row < height; row++) {
+            Arrays.fill(map[row], FieldType.FLOOR);
+        }
+
+        generateLavaBorders();
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                int randomSeed = (int) Math.floor(Math.random() * MAP_HOLE_FREQUENCY);
+                if (randomSeed == 0) {
+                    int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+                    int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+                    insertZone(row, col, randomWidth, randomHeight, FieldType.HOLE);
+                }
+            }
+        }
+    }
+
+    private boolean isWithinCircle(int x, int y, int centerX, int centerY, int radiusSquared) {
+        int distanceSquared = (x - centerX) * (x - centerX) + (y - centerY) * (y - centerY);
+        return distanceSquared <= radiusSquared;
+    }
+
+    public void insertZone(int centerX, int centerY, int radiusWidth, int radiusHeight, FieldType tile) {
+        int radiusSquared = radiusWidth * radiusHeight;
+        int startX = centerX - radiusWidth;
+        int startY = centerY - radiusHeight;
+        int endX = centerX + radiusWidth;
+        int endY = centerY + radiusHeight;
+
+        for (int i = startY; i <= endY; i++) {
+            for (int j = startX; j <= endX; j++) {
+                if (isValidPosition(i, j) && isWithinCircle(j, i, centerX, centerY, radiusSquared)) {
+                    map[i][j] = tile;
+                }
+            }
         }
     }
 
     public boolean checkIfFloor(Position pos) {
-        return map[pos.x][pos.y] == '.';
-    }
-
-    //SafeZone might become class later
-    public void insertSafeZone(int startX, int startY, int width, int height) {
-        for (int i = startY; i < startY + height; i++) {
-            for (int j = startX; j < startX + width; j++) {
-                if (isValidPosition(j, i)) {
-                    map[i][j] = '*';
-                }
-            }
-        }
-    }
-    public void removeSafeZone(int startX, int startY, int width, int height) {
-        for (int i = startY; i < startY + height; i++) {
-            for (int j = startX; j < startX + width; j++) {
-                if (isValidPosition(j, i)) {
-                    map[i][j] = '.';
-                }
-            }
-        }
+        return map[pos.x][pos.y] == FieldType.FLOOR;
     }
 
     // szybkosc przenikanie przez sciany
-    public void insertPowerUp(PowerUp pow)
-    {
-        if (isValidPosition(pow.position.x, pow.position.y) && checkIfFloor(pow.position)) map[pow.position.x][pow.position.y] = pow.type;
+    public void insertPowerUp(PowerUp pow) {
+        if (isValidPosition(pow.position.x, pow.position.y) && checkIfFloor(pow.position))
+            map[pow.position.x][pow.position.y] = pow.type;
+    }
+
+    private FieldType getPlayerTile(int playerId) {
+        switch (playerId) {
+            case 0 -> {
+                return FieldType.PLAYER_0;
+            }
+            case 1 -> {
+                return FieldType.PLAYER_1;
+            }
+            case 2 -> {
+                return FieldType.PLAYER_2;
+            }
+            case 3 -> {
+                return FieldType.PLAYER_3;
+            }
+            default -> {
+                return FieldType.FLOOR;
+            }
+        }
     }
 
     public void insertPlayer(Player p) {
         if (isValidPosition(p.position.x, p.position.y)) {
-            map[p.position.x][p.position.y] = (char) (p.getID() + 48);
+            map[p.position.x][p.position.y] = getPlayerTile(p.getID());
         }
-    }
-    public void removePlayer(Player p) {
-        if (isValidPosition(p.position.x, p.position.y)) {
-            map[p.position.x][p.position.y] = (char) (p.getID() + 48);
-        }
-    }
-    private boolean isValidPosition(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
     }
 
+    public void removePlayer(Player p) {
+        if (isValidPosition(p.position.x, p.position.y)) {
+            map[p.position.x][p.position.y] = getPlayerTile(p.getID());
+        }
+    }
+
+    private boolean isValidPosition(int x, int y) {
+        if (x < 0 || x >= width || y < 0 || y >= height) return false;
+        return map[x][y] != FieldType.LAVA && map[x][y] != FieldType.HOLE;
+    }
+
+    private boolean isFloor(int x, int y) {
+        return isValidPosition(x, y) && map[x][y] == FieldType.FLOOR;
+    }
     //METHOD FOR TESTING
     public void printMap() {
         for (int i = 0; i < height; i++) {
