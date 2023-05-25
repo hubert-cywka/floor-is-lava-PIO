@@ -31,6 +31,16 @@ public class Playlist {
         return this.songs.get(songIndex);
     }
 
+    public String getPreviousSong() {
+        if (songIndex - 1 > 0) {
+            this.songIndex = this.songIndex - 1;
+        } else {
+            this.songIndex = this.songs.size() - 1;
+        }
+
+        return this.songs.get(songIndex);
+    }
+
     public Playlist fillWithSongsFromDirectory(String directory) {
         File[] files = new File(directory).listFiles();
 
