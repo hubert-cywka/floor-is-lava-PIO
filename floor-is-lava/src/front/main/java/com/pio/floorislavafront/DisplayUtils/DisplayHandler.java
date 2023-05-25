@@ -13,36 +13,51 @@ public class DisplayHandler {
 
     private static final int SQUARE_SIZE = 5;
     private static final int MAP_SIZE = 100;
-    private static final int PLAYER = 0;
-    private static final int WALL = 1;
-    private static final int BORDER = 2;
-    private static final int SAFEZONE = 3;
-    private static final int FLOOR = 4;
-    private static final int LAVA = 5;
 
-    private static Rectangle createSquare(int fieldtype) {
+
+    private static Rectangle createSquare(FieldType fieldType) {
         Rectangle square = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
-        switch (fieldtype) {
-            case PLAYER:
+        switch (fieldType) {
+            case PLAYER_0:
                 square.setFill(Color.BLUE);
                 square.setStroke(Color.GRAY);
                 break;
+
+            case PLAYER_1:
+                square.setFill(Color.BLUE);
+                square.setStroke(Color.GRAY);
+                break;
+
+            case PLAYER_2:
+                square.setFill(Color.BLUE);
+                square.setStroke(Color.GRAY);
+                break;
+
+            case PLAYER_3:
+                square.setFill(Color.BLUE);
+                square.setStroke(Color.GRAY);
+                break;
+
             case WALL:
                 square.setFill(Color.YELLOW);
                 square.setStroke(Color.GRAY);
                 break;
+
             case BORDER:
                 square.setFill(Color.BLACK);
                 square.setStroke(Color.GRAY);
                 break;
-            case SAFEZONE:
+
+            case SAFE_ZONE:
                 square.setFill(Color.LIGHTGREEN);
                 square.setStroke(Color.BLACK);
                 break;
+
             case FLOOR:
                 square.setFill(Color.DARKGREEN);
                 square.setStroke(Color.GRAY);
                 break;
+
             case LAVA:
                 square.setFill(Color.DARKRED);
                 square.setStroke(Color.GRAY);
@@ -51,23 +66,19 @@ public class DisplayHandler {
         return square;
     }
 
-    private static int fieldTypeChecker(char c) {
-        switch (c) {
-            case '0':
-                return PLAYER;
-            case '#':
-                return WALL;
-            case '$':
-                return BORDER;
-            case '*':
-                return SAFEZONE;
-            case '.':
-                return FLOOR;
-            case '@':
-                return LAVA;
-            default:
-                return -1;
-        }
+    private static FieldType fieldTypeChecker(char c) {
+        return switch (c) {
+            case '0' -> FieldType.PLAYER_0;
+            case '1' -> FieldType.PLAYER_1;
+            case '2' -> FieldType.PLAYER_2;
+            case '3' -> FieldType.PLAYER_3;
+            case '#' -> FieldType.WALL;
+            case '$' -> FieldType.BORDER;
+            case '*' -> FieldType.SAFE_ZONE;
+            case '.' -> FieldType.FLOOR;
+            case '@' -> FieldType.LAVA;
+            default -> FieldType.WALL;
+        };
     }
 
     public static void mapHandler(char[][] map) {
