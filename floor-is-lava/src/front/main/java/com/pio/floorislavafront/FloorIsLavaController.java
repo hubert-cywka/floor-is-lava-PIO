@@ -1,7 +1,7 @@
 package front.main.java.com.pio.floorislavafront;
 
-import common.PlayerMove;
-import front.main.java.com.pio.floorislavafront.ClientSocket.StartConnection;
+import common.Direction;
+import front.main.java.com.pio.floorislavafront.ClientSocket.ConnectionInitializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +9,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
-import java.io.IOException;
 import java.util.regex.Pattern;
 
-import static front.main.java.com.pio.floorislavafront.ClientSocket.ClientApplication.sendPlayerMove;
+import static common.Player.getNextPlayerMove;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class FloorIsLavaController {
@@ -39,25 +39,33 @@ public class FloorIsLavaController {
     @FXML
     TextField serverTextField;
 
+    private static void handleNextPlayerMove(KeyCode code) {
+        switch (code) {
+            case UP, W -> getNextPlayerMove().setVertical(Direction.UP);
+            case DOWN, S -> getNextPlayerMove().setVertical(Direction.DOWN);
+            case RIGHT, D -> getNextPlayerMove().setHorizontal(Direction.RIGHT);
+            case LEFT, A -> getNextPlayerMove().setHorizontal(Direction.LEFT);
+        }
+    }
+
     private static void initKeyListeners() {
         getPrimaryStage().getScene().setOnKeyPressed((KeyEvent event) -> {
+            switch (event.getCode()) {
+                case UP, LEFT, DOWN, RIGHT, W, S, A, D -> handleNextPlayerMove(event.getCode());
+                case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
+                case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
+                case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
+                case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
+                case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
+                case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
+                default -> System.out.println("NOT RECOGNIZED KEY");
+            }
+        });
 
-            try {
-                switch (event.getCode()) {
-                    case W -> sendPlayerMove(PlayerMove.UP); // TODO handle player moves
-                    case A -> sendPlayerMove(PlayerMove.LEFT);
-                    case S -> sendPlayerMove(PlayerMove.DOWN);
-                    case D -> sendPlayerMove(PlayerMove.RIGHT);
-                    case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
-                    case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
-                    case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
-                    case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
-                    case K -> FloorIsLavaApp.getSoundtrackManager().playAmbientPlaylist();
-                    case L -> FloorIsLavaApp.getSoundtrackManager().playInspiringPlaylist();
-                    default -> System.out.println("NOT RECOGNIZED KEY");
-                }
-            }catch (IOException e){
-                throw new RuntimeException();
+        getPrimaryStage().getScene().setOnKeyReleased((KeyEvent event) -> {
+            switch (event.getCode()) {
+                case UP, DOWN, W, S -> getNextPlayerMove().setVertical(Direction.NO_MOVE);
+                case LEFT, RIGHT, A, D -> getNextPlayerMove().setHorizontal(Direction.NO_MOVE);
             }
         });
     }
@@ -121,7 +129,7 @@ public class FloorIsLavaController {
         int port = Integer.parseInt(textport);
 
         // Connection thread
-        Thread connectionThread = new Thread(new StartConnection(ipAddress, port, username));
+        Thread connectionThread = new Thread(new ConnectionInitializer(ipAddress, port, username));
         connectionThread.start();
 
         setScene(GAME_SCREEN);

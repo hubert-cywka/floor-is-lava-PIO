@@ -1,8 +1,6 @@
 package common;
 
 import back.Position;
-import common.FieldType;
-
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -156,28 +154,23 @@ public class GameMap implements Serializable {
     }
     //METHOD FOR TESTING
 
-    public void movePlayer(Player player, PlayerMove move) {
+    public void movePlayer(Player player, Direction move) {
 
         Position position = player.getPosition();
         System.out.println("First position: " + position);
         FieldType playerSymbol;
 
         switch (map[position.x][position.y]) {
-
-            case PLAYER_0:
-            case PLAYER_1:
-            case PLAYER_2:
-            case PLAYER_3:
+            case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
                 playerSymbol = map[position.x][position.y];
                 System.err.println("Symbol: " + playerSymbol);
-
                 map[position.x][position.y] = FieldType.FLOOR;
-                break;
+            }
 
-            default:
+            default -> {
                 System.err.println("NIE MA GRACZA NA TEJ POZYCJI");
                 return;
-
+            }
         }
 
         switch (move) {
@@ -185,6 +178,7 @@ public class GameMap implements Serializable {
             case DOWN -> position.x++;
             case RIGHT -> position.y++;
             case LEFT -> position.y--;
+            case NO_MOVE -> System.out.println("GRACZ NIE WYKONAŁ RUCHU");
 
             default -> System.err.println("Nie ma takiego ruchu!");
         }
