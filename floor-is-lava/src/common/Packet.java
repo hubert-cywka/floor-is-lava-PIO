@@ -3,7 +3,8 @@ package common;
 import java.io.Serializable;
 
 public class Packet implements Serializable {
-    public byte[] map;
+    private final byte[] map;
+
 
     public Packet(byte[] map) {
         this.map = map;
