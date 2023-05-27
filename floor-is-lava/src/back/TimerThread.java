@@ -25,10 +25,7 @@ public class TimerThread implements Runnable {
             try {
 
                 Thread.sleep(TIMER_UPDATE_RATE);
-
                 decrementTimer();
-                manageTimerValue();
-
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -42,7 +39,4 @@ public class TimerThread implements Runnable {
         game.decrementTimer();
     }
 
-    private void manageTimerValue(){
-        game.setTimer(game.getTimer());
-    }
 }

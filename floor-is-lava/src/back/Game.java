@@ -147,11 +147,16 @@ public class Game implements Serializable {
 
     public void decrementTimer(){
         timer--;
+        validateTimer(timer);
     }
 
     public void setTimer(int value){
+        validateTimer(value);
+    }
 
-        if (value <= 0){
+    private void validateTimer(int value){
+
+        if (value < 0){
             timer = TIMER_START_VALUE;
             System.err.println("Provided wrong data! [setTimer()]");
             return;
