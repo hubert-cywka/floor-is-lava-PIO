@@ -20,6 +20,7 @@ public class ServerSocketManager {
         this.debug = new Debug(isDebugActivated);
 
         launchGameLoopThread();
+        launchTimerThread();
         startJoinHandler();
     }
 
@@ -55,5 +56,10 @@ public class ServerSocketManager {
     private void startNewClientThread(Socket clientSocket) {
         Thread clientThread = new Thread(new JoiningThread(clientSocket, game));
         clientThread.start();
+    }
+
+    private void launchTimerThread(){
+        Thread timerThread = new Thread(new TimerThread(debug, game));
+        timerThread.start();
     }
 }

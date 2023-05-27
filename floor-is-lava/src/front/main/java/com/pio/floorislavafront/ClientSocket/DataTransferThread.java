@@ -26,15 +26,12 @@ public class DataTransferThread implements Runnable {
     public void run() {
         try {
             while (true) {
-                Packet packet = (Packet) objectInputStream.readObject();
-                objectOutputStream.writeObject(Player.getNextPlayerMove());
-                objectOutputStream.reset();
+                Packet packet = receiveData();
+                sendPlayerMove();
+                updateMap(packet);
 
-                byte[] serializedMap = packet.getMap();
-                FieldType[][] map = deserializeFieldTypeArray(serializedMap);
-
-                // Refreshing map
-                Platform.runLater(() -> mapHandler(map));
+                // method using only in program testing
+                printTimer(packet);
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -44,9 +41,32 @@ public class DataTransferThread implements Runnable {
 
     }
 
+    @Deprecated
+    private void printTimer(Packet packet) {
+        System.out.println("Timer: " + packet.getTimer());
+    }
+
     public static FieldType[][] deserializeFieldTypeArray(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
         ObjectInputStream objectStream = new ObjectInputStream(byteStream);
         return (FieldType[][]) objectStream.readObject();
+    }
+
+    private Packet receiveData() throws IOException, ClassNotFoundException {
+        return (Packet) objectInputStream.readObject();
+    }
+
+    private void sendPlayerMove() throws IOException {
+        objectOutputStream.writeObject(Player.getNextPlayerMove());
+        objectOutputStream.reset();
+    }
+
+    private FieldType[][] getDeserializedMap(byte[] serializedMap) throws IOException, ClassNotFoundException {
+        return deserializeFieldTypeArray(serializedMap);
+    }
+
+    private void updateMap(Packet packet) throws IOException, ClassNotFoundException {
+        FieldType[][] map = getDeserializedMap(packet.getMap());
+        Platform.runLater(() -> mapHandler(map));
     }
 }
