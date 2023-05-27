@@ -29,14 +29,11 @@ public class GameLoop implements Runnable {
     }
 
     private void handleDataSend(Player player) throws IOException {
-        ObjectOutputStream objectOutputStream = player.getOutputStream();
         debug.message("Sending update");
-
-
-
-        Packet packet = new Packet(serializedMap);
+        ObjectOutputStream objectOutputStream = player.getOutputStream();
+        Packet packet = preparePackOfData();
         objectOutputStream.writeObject(packet);
-        debug.message("Update has been sent");
+
     }
 
     @Override
@@ -68,6 +65,9 @@ public class GameLoop implements Runnable {
         FieldType[][] map = game.gameMap.getMap();
         byte[] serializedMap = serializeFieldTypeArray(map);
 
-        return new Packet(serializedMap, 5);
+        int timer = game.getTimer();
+
+
+        return new Packet(serializedMap, timer);
     }
 }
