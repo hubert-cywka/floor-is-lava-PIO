@@ -20,6 +20,7 @@ public class ServerSocketManager {
         this.debug = new Debug(isDebugActivated);
 
         launchGameLoopThread();
+        launchTimerThread();
         startJoinHandler();
     }
 
