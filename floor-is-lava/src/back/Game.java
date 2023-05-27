@@ -16,11 +16,13 @@ public class Game implements Serializable {
     private final int MAX_PLAYERS = 4;
     public GameMap gameMap;
     public ArrayList<Player> playersList;
+    private int timer;
 
 
     public Game() {
-        this.playersList = new ArrayList<>(4);
+        this.playersList = new ArrayList<>(MAX_PLAYERS);
         this.gameMap = new GameMap();
+        this.timer = 5;
 
         // Test safezones
         gameMap.insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
