@@ -15,7 +15,7 @@ import java.util.Random;
 public class Game implements Serializable {
     private final int MAX_PLAYERS = 4;
     public GameMap gameMap;
-    ArrayList<Player> playersList;
+    public ArrayList<Player> playersList;
 
 
     public Game() {
