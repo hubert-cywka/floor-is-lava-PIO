@@ -14,19 +14,16 @@ import java.util.Random;
 
 public class Game implements Serializable {
     private final int MAX_PLAYERS = 4;
-    private final int TIMER_INITIAL_VALUE = 5;
-    private int timerStartValue;
 
     public GameMap gameMap;
     public ArrayList<Player> playersList;
-    private int timer;
+    private Timer timer;
 
 
     public Game() {
         this.playersList = new ArrayList<>(MAX_PLAYERS);
         this.gameMap = new GameMap();
-        this.timer = TIMER_INITIAL_VALUE;
-        this.timerStartValue = TIMER_INITIAL_VALUE;
+        this.timer = new Timer();
 
         // Test safezones
         gameMap.insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
@@ -143,40 +140,8 @@ public class Game implements Serializable {
         gameMap.movePlayer(player, move);
     }
 
-
-    // TIMER
-    public int getTimer(){
+    public Timer getTimer(){
         return timer;
     }
 
-    public void decrementTimer(){
-        --timer;
-        validateTimer(timer);
-    }
-
-    public void setTimer(int value){
-        validateTimer(value);
-    }
-
-    private void validateTimer(int value){
-
-        timer = (value < 0) ? timerStartValue : value;
-
-//        if (value < 0){
-//            timer = timerStartValue;
-//            System.err.println("Provided wrong data! [setTimer()]");
-//            return;
-//        }
-//
-//        timer = value;
-
-    }
-
-    public void setTimerStartValue(int value){
-        timerStartValue = (value <= 0) ? TIMER_INITIAL_VALUE : value;
-    }
-
-    public int getTimerStartValue(){
-        return timerStartValue;
-    }
 }

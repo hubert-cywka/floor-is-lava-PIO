@@ -65,7 +65,7 @@ public class GameLoop implements Runnable {
         FieldType[][] map = game.gameMap.getMap();
         byte[] serializedMap = serializeFieldTypeArray(map);
 
-        int timer = game.getTimer();
+        int timer = game.getTimer().getTimerCurrentValue();
 
 
         return new Packet(serializedMap, timer);
