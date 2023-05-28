@@ -73,8 +73,8 @@ public class Game implements Serializable {
     public Position generateValidPositionOnMap() {
         Position playerpos = new Position(getRandomNumberInRange(0, gameMap.getHeight()), getRandomNumberInRange(0, gameMap.getWidth()));
         while (!validPositionOnMap(playerpos)) {
-            playerpos.col = getRandomNumberInRange(0, gameMap.getHeight());
-            playerpos.row = getRandomNumberInRange(0, gameMap.getWidth());
+            playerpos.row = getRandomNumberInRange(0, gameMap.getHeight());
+            playerpos.col = getRandomNumberInRange(0, gameMap.getWidth());
         }
         return playerpos;
     }
