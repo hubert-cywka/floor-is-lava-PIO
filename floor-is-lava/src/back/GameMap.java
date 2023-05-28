@@ -166,7 +166,7 @@ public class GameMap implements Serializable {
             }
 
             default -> {
-                System.err.println("NIE MA GRACZA NA TEJ POZYCJI");
+                System.err.println("There is no player on this position! [GameMap - movePlayer()]");
                 return;
             }
         }
@@ -175,10 +175,8 @@ public class GameMap implements Serializable {
             case UP -> position.x--;
             case DOWN -> position.x++;
             case RIGHT -> position.y++;
-            case LEFT -> position.y--;
-            case NO_MOVE -> System.out.println("GRACZ NIE WYKONAŁ RUCHU");
 
-            default -> System.err.println("Nie ma takiego ruchu!");
+            default -> System.err.println("Unable to handle move like that! [GameMap - movePlayer()]");
         }
 
         map[position.x][position.y] = playerSymbol;
