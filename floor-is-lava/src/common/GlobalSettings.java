@@ -19,7 +19,7 @@ public class GlobalSettings {
     public static final String READY_TO_RECEIVE_DATA = "READY";
 
     // GameMap
-    public static final int WIDTH = 200;
+    public static final int WIDTH = 150;
     public static final int HEIGHT = 100;
     public static final int MIN_HOLE_RADIUS = 1;
     public static final int MAX_HOLE_RADIUS = 3;
@@ -33,6 +33,6 @@ public class GlobalSettings {
 
 
     // DisplayHandler
-    public static final int SQUARE_SIZE = 5;
+    public static final int SQUARE_SIZE = 7;
 
 }

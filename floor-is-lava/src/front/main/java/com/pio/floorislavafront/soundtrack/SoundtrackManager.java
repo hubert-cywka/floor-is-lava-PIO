@@ -15,6 +15,7 @@ public class SoundtrackManager {
     private Playlist currentPlaylist;
     private Media media;
     private MediaPlayer mediaPlayer;
+    private boolean isMute;
 
     public SoundtrackManager() {
         this.ambientPlaylist = new Playlist();
@@ -23,12 +24,13 @@ public class SoundtrackManager {
         this.inspiringPlaylist = new Playlist();
         this.inspiringPlaylist.fillWithSongsFromDirectory(SOUNDTRACK_INSPIRING);
 
+        this.isMute = false;
         this.playInspiringPlaylist();
     }
 
     public void initSong() {
         this.mediaPlayer.setOnEndOfMedia(this::playNextSong);
-        this.mediaPlayer.setVolume(1);
+        this.mediaPlayer.setVolume(isMute ? 0 : 1);
         this.mediaPlayer.play();
     }
 
@@ -71,8 +73,10 @@ public class SoundtrackManager {
     public void toggleVolume() {
         if (this.mediaPlayer.getVolume() > 0) {
             this.mediaPlayer.setVolume(0);
+            this.isMute = true;
         } else {
             this.mediaPlayer.setVolume(1);
+            this.isMute = false;
         }
     }
 }
