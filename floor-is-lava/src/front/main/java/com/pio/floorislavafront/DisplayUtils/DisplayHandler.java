@@ -13,16 +13,17 @@ import javafx.scene.shape.Rectangle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import static common.GlobalSettings.*;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class DisplayHandler {
     private static final String SPRITE_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/sprites/";
-    private static final InputStream SAFE_ZONE_SPRITE_IMAGE;
-    private static final InputStream LAVA_SPRITE_IMAGE;
-    private static final InputStream HOLE_SPRITE_IMAGE;
-    private static final InputStream FLOOR_SPRITE_IMAGE;
+    private static final ArrayList<InputStream> SAFE_ZONE_SPRITE_IMAGE = new ArrayList<>();
+    private static final ArrayList<InputStream> LAVA_SPRITE_IMAGE = new ArrayList<>();
+    private static final ArrayList<InputStream> HOLE_SPRITE_IMAGE = new ArrayList<>();
+    private static final ArrayList<InputStream> FLOOR_SPRITE_IMAGE = new ArrayList<>();
     private static final InputStream PLAYER_SPRITE_RED_IMAGE;
     private static final InputStream PLAYER_SPRITE_BLACK_IMAGE;
     private static final InputStream PLAYER_SPRITE_PURPLE_IMAGE;
@@ -34,10 +35,26 @@ public class DisplayHandler {
             PLAYER_SPRITE_PURPLE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("purple.png"));
             PLAYER_SPRITE_BLACK_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("black.png"));
             PLAYER_SPRITE_BLUE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("blue.png"));
-            FLOOR_SPRITE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("floor.png"));
-            SAFE_ZONE_SPRITE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("safe_zone.png"));
-            LAVA_SPRITE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("lava.png"));
-            HOLE_SPRITE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("hole.png"));
+
+            FLOOR_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("floor1.png")));
+            FLOOR_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("floor2.png")));
+            FLOOR_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("floor3.png")));
+            FLOOR_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("floor4.png")));
+
+            SAFE_ZONE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("safe_zone1.png")));
+            SAFE_ZONE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("safe_zone2.png")));
+            SAFE_ZONE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("safe_zone3.png")));
+            SAFE_ZONE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("safe_zone4.png")));
+
+            LAVA_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("lava1.png")));
+            LAVA_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("lava2.png")));
+            LAVA_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("lava3.png")));
+            LAVA_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("lava4.png")));
+
+            HOLE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("hole1.png")));
+            HOLE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("hole2.png")));
+            HOLE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("hole3.png")));
+            HOLE_SPRITE_IMAGE.add(new FileInputStream(SPRITE_IMAGE_BASE.concat("hole4.png")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -47,12 +64,28 @@ public class DisplayHandler {
     private static final ImagePattern PLAYER_SPRITE_RED = new ImagePattern(new Image(PLAYER_SPRITE_RED_IMAGE));
     private static final ImagePattern PLAYER_SPRITE_BLACK = new ImagePattern(new Image(PLAYER_SPRITE_BLACK_IMAGE));
     private static final ImagePattern PLAYER_SPRITE_PURPLE = new ImagePattern(new Image(PLAYER_SPRITE_PURPLE_IMAGE));
-    private static final ImagePattern FLOOR_SPRITE = new ImagePattern(new Image(FLOOR_SPRITE_IMAGE));
-    private static final ImagePattern SAFE_ZONE_SPRITE = new ImagePattern(new Image(SAFE_ZONE_SPRITE_IMAGE));
-    private static final ImagePattern LAVA_SPRITE = new ImagePattern(new Image(LAVA_SPRITE_IMAGE));
-    private static final ImagePattern HOLE_SPRITE = new ImagePattern(new Image(HOLE_SPRITE_IMAGE));
+    private static final ArrayList<ImagePattern> FLOOR_SPRITES = new ArrayList<>();
+    private static final ArrayList<ImagePattern> SAFE_ZONE_SPRITES = new ArrayList<>();
+    private static final ArrayList<ImagePattern> LAVA_SPRITES = new ArrayList<>();
+    private static final ArrayList<ImagePattern> HOLE_SPRITES = new ArrayList<>();
 
-    private static Rectangle createSquare(FieldType fieldType) {
+    public static void initTextures() {
+        LAVA_SPRITE_IMAGE.forEach((texture) -> LAVA_SPRITES.add(new ImagePattern(new Image(texture))));
+        HOLE_SPRITE_IMAGE.forEach((texture) -> HOLE_SPRITES.add(new ImagePattern(new Image(texture))));
+        SAFE_ZONE_SPRITE_IMAGE.forEach((texture) -> SAFE_ZONE_SPRITES.add(new ImagePattern(new Image(texture))));
+        FLOOR_SPRITE_IMAGE.forEach((texture) -> FLOOR_SPRITES.add(new ImagePattern(new Image(texture))));
+    }
+
+    private static ImagePattern getRandomTextureFromTexturesList(ArrayList<ImagePattern> textures) {
+        int random = (int) Math.floor(Math.random() * textures.size());
+        return textures.get(random);
+    }
+
+    private static ImagePattern getTextureFromTexturesList(ArrayList<ImagePattern> textures, int seed) {
+        return textures.get(seed % textures.size());
+    }
+
+    private static Rectangle createSquare(FieldType fieldType, int col, int row) {
         Rectangle square = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
 
         switch (fieldType) {
@@ -62,10 +95,10 @@ public class DisplayHandler {
             case PLAYER_3 -> square.setFill(PLAYER_SPRITE_PURPLE);
             case WALL -> square.setFill(Color.YELLOW);
             case BORDER -> square.setFill(Color.BLACK);
-            case SAFE_ZONE -> square.setFill(SAFE_ZONE_SPRITE);
-            case FLOOR -> square.setFill(FLOOR_SPRITE);
-            case LAVA -> square.setFill(LAVA_SPRITE);
-            case HOLE -> square.setFill(HOLE_SPRITE);
+            case SAFE_ZONE -> square.setFill(getTextureFromTexturesList(SAFE_ZONE_SPRITES, col * 2 + row * 3));
+            case FLOOR -> square.setFill(getTextureFromTexturesList(FLOOR_SPRITES, col * 2 + row * 3));
+            case LAVA -> square.setFill(getRandomTextureFromTexturesList(LAVA_SPRITES));
+            case HOLE -> square.setFill(getRandomTextureFromTexturesList(HOLE_SPRITES));
             case BOOST_SPEED -> square.setFill(Color.LIGHTYELLOW);
             case BOOST_GHOST -> square.setFill(Color.LIGHTBLUE);
         }
@@ -93,7 +126,7 @@ public class DisplayHandler {
 
             for (int row = 0; row < HEIGHT; row++) {
                 for (int col = 0; col < WIDTH; col++) {
-                    Rectangle square = createSquare(map[row][col]);
+                    Rectangle square = createSquare(map[row][col], col, row);
                     myMap.add(square, col, row);
                 }
             }
