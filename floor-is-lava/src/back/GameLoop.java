@@ -6,15 +6,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Iterator;
 
 public class GameLoop implements Runnable {
 
     private final int REFRESH_TIME = 100;
 
+    private boolean isRunning;
     private final Game game;
     private final Debug debug;
 
     public GameLoop(Game game, Debug debug) {
+        this.isRunning = true;
         this.game = game;
         this.debug = debug;
     }
@@ -38,18 +41,26 @@ public class GameLoop implements Runnable {
 
     @Override
     public void run() {
-        try {
-            while (true) {
+        while (isRunning) {
+            try {
                 Thread.sleep(REFRESH_TIME);
+            } catch (InterruptedException e) {
+                debug.errorMessage(e.getMessage());
+            }
 
-                for (int i = 0; i < game.playersList.size(); i++) {
-                    Player currentPlayer = game.playersList.get(i);
-                    handleDataSend(currentPlayer);
-                    handleDataReceive(currentPlayer);
+            Iterator<Player> iterator = game.playersList.iterator();
+            while (iterator.hasNext()) {
+                Player player = iterator.next();
+
+                try {
+                    handleDataSend(player);
+                    handleDataReceive(player);
+                } catch (IOException | ClassNotFoundException e) {
+                    System.out.println("Failed to communicate with player " + player.getNickname());
+                    debug.errorMessage(e.getMessage());
+                    iterator.remove();
                 }
             }
-        } catch (IOException | InterruptedException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 

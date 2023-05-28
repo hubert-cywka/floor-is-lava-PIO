@@ -24,8 +24,10 @@ public class DataTransferThread implements Runnable {
 
     @Override
     public void run() {
+        Player.setConnected(true);
+
         try {
-            while (true) {
+            while (Player.isConnected()) {
                 Packet packet = receiveData();
                 sendPlayerMove();
                 updateMap(packet);
@@ -35,10 +37,15 @@ public class DataTransferThread implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
+        try {
+            objectOutputStream.close();
+            objectInputStream.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Deprecated

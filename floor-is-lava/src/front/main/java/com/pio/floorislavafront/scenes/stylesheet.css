@@ -25,6 +25,14 @@
 	-fx-background-color: radial-gradient(center 50% 50%, radius 80%, #a400ff 0%, #220065 100%);
 }
 
+.game-screen-container {
+	-fx-background-color: radial-gradient(center 50% 50%, radius 80%, #a400ff 0%, #220065 100%);
+}
+
+.arrow-back-icon {
+	-fx-padding: 10;
+}
+
 .initial-screen-label {
 	-fx-font-size: 13px;
 	-fx-text-fill: #ffffff;

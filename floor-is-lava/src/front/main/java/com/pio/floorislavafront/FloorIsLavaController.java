@@ -1,14 +1,17 @@
 package front.main.java.com.pio.floorislavafront;
 
 import common.Direction;
+import common.Player;
 import front.main.java.com.pio.floorislavafront.ClientSocket.ConnectionInitializer;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -39,6 +42,9 @@ public class FloorIsLavaController {
     @FXML
     TextField serverTextField;
 
+    @FXML
+    ImageView leaveGameButton;
+
     private static void handleNextPlayerMove(KeyCode code) {
         switch (code) {
             case UP, W -> getNextPlayerMove().setVertical(Direction.UP);
@@ -52,7 +58,7 @@ public class FloorIsLavaController {
         getPrimaryStage().getScene().setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
                 case UP, LEFT, DOWN, RIGHT, W, S, A, D -> handleNextPlayerMove(event.getCode());
-                case ESCAPE -> System.out.println("ESCAPE"); // TODO handle exit
+                case ESCAPE -> leaveGame();
                 case O -> FloorIsLavaApp.getSoundtrackManager().toggleVolume();
                 case I -> FloorIsLavaApp.getSoundtrackManager().playPreviousSong();
                 case P -> FloorIsLavaApp.getSoundtrackManager().playNextSong();
@@ -90,7 +96,7 @@ public class FloorIsLavaController {
             joinGameHelperLabel.setText(USERNAME_NOT_VALID);
             joinGameHelperLabel.setTextFill(Color.RED);
             return false;
-        } else if (!SERVER_ADDRESS_PATTERN.matcher(serverAddress).find() && !serverAddress.contains("localhost")) {
+        } else if (!(SERVER_ADDRESS_PATTERN.matcher(serverAddress).find() || serverAddress.contains("localhost"))) {
             joinGameHelperLabel.setText(SERVER_ADDRESS_NOT_VALID);
             joinGameHelperLabel.setTextFill(Color.RED);
             return false;
@@ -99,6 +105,11 @@ public class FloorIsLavaController {
         joinGameHelperLabel.setText(INPUT_VALIDATION_SUCCESS);
         joinGameHelperLabel.setTextFill(Color.LIME);
         return true;
+    }
+
+    public static void leaveGame() {
+        Player.setConnected(false);
+        setScene(INITIAL_SCREEN);
     }
 
     @FXML
@@ -114,6 +125,11 @@ public class FloorIsLavaController {
     @FXML
     protected void onGoBackButtonClick() {
         setScene(INITIAL_SCREEN);
+    }
+
+    @FXML
+    protected void onLeaveGameButtonClick() {
+        leaveGame();
     }
 
     @FXML
