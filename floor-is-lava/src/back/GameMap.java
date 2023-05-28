@@ -101,7 +101,11 @@ public class GameMap implements Serializable {
     }
 
     public boolean checkIfFloor(Position pos) {
-        return map[pos.col][pos.row] == FieldType.FLOOR;
+        try {
+            return map[pos.col][pos.row] == FieldType.FLOOR;
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
     }
 
     // szybkosc przenikanie przez sciany
@@ -158,33 +162,34 @@ public class GameMap implements Serializable {
     public void movePlayer(Player player, Direction move) {
 
         Position position = player.getPosition();
-        FieldType playerSymbol;
+        FieldType playerSymbol = map[position.row][position.col];
 
-        switch (map[position.row][position.col]) {
-            case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
-
-                playerSymbol = map[position.row][position.col];
-                updateLastStandingFieldOnMap(player);
-
-            }
-
-            default -> {
-                System.err.println("There is no player on this position! [GameMap - movePlayer()]");
-                return;
-            }
-        }
-
+        Position newPosition = new Position(position.col, position.row);
         switch (move) {
-            case UP -> position.row--;
-            case DOWN -> position.row++;
-            case RIGHT -> position.col++;
-            case LEFT -> position.col--;
+            case UP -> newPosition.row--;
+            case DOWN -> newPosition.row++;
+            case RIGHT -> newPosition.col++;
+            case LEFT -> newPosition.col--;
         }
 
-        player.setLastStandingField(map[position.row][position.col]);
-        map[position.row][position.col] = playerSymbol;
-        player.setPosition(position);
+        if (isOutOfBorder(newPosition))
+            return;
 
+        updateLastStandingFieldOnMap(player);
+
+        player.setLastStandingField(map[newPosition.row][newPosition.col]);
+        map[newPosition.row][newPosition.col] = playerSymbol;
+        player.setPosition(newPosition);
+
+    }
+
+    private boolean isOutOfBorder(Position position){
+        try{
+            map[position.row][position.col] = map[position.row][position.col];
+            return false;
+        }catch (IndexOutOfBoundsException e){
+            return true;
+        }
     }
 
     private void updateLastStandingFieldOnMap(Player player) {

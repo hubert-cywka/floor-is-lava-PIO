@@ -62,15 +62,19 @@ public class Game implements Serializable {
     }
 
     public boolean validPositionOnMap(Position pos) {
-        FieldType[][] map = gameMap.getMap();
-        return map[pos.col][pos.row] == FieldType.FLOOR;
+        try{
+            FieldType[][] map = gameMap.getMap();
+            return map[pos.row][pos.col] == FieldType.FLOOR;
+        }catch (IndexOutOfBoundsException e){
+            return false;
+        }
     }
 
     public Position generateValidPositionOnMap() {
         Position playerpos = new Position(getRandomNumberInRange(0, gameMap.getHeight()), getRandomNumberInRange(0, gameMap.getWidth()));
         while (!validPositionOnMap(playerpos)) {
-            playerpos.col = getRandomNumberInRange(0, gameMap.getHeight());
-            playerpos.row = getRandomNumberInRange(0, gameMap.getWidth());
+            playerpos.row = getRandomNumberInRange(0, gameMap.getHeight());
+            playerpos.col = getRandomNumberInRange(0, gameMap.getWidth());
         }
         return playerpos;
     }
