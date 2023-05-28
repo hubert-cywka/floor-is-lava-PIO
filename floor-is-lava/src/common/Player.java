@@ -12,10 +12,12 @@ public class Player implements Serializable {
     private ObjectInputStream objectInputStream;
     public Position position;
     private boolean isAlive;
-    private boolean isMoving;
+    private FieldType lastStandingField;
     private static boolean isConnected;
     private final int ID;
     private static PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
+
+
 
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         this.nickname = nickname;
@@ -25,6 +27,15 @@ public class Player implements Serializable {
         this.ID = ID;
         this.isAlive = true;
         position = new Position(-1, -1);
+    }
+
+
+    public FieldType getLastStandingField() {
+        return lastStandingField;
+    }
+
+    public void setLastStandingField(FieldType lastStandingField) {
+        this.lastStandingField = lastStandingField;
     }
 
     public static PlayerMove getNextPlayerMove() {
