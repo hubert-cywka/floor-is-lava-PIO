@@ -62,8 +62,12 @@ public class Game implements Serializable {
     }
 
     public boolean validPositionOnMap(Position pos) {
-        FieldType[][] map = gameMap.getMap();
-        return map[pos.col][pos.row] == FieldType.FLOOR;
+        try{
+            FieldType[][] map = gameMap.getMap();
+            return map[pos.row][pos.col] == FieldType.FLOOR;
+        }catch (IndexOutOfBoundsException e){
+            return false;
+        }
     }
 
     public Position generateValidPositionOnMap() {
