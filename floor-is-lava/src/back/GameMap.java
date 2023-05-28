@@ -162,7 +162,8 @@ public class GameMap implements Serializable {
             case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
                 playerSymbol = map[position.x][position.y];
                 System.err.println("Symbol: " + playerSymbol);
-                map[position.x][position.y] = FieldType.FLOOR;
+                map[position.x][position.y] = player.getLastStandingField();
+
             }
 
             default -> {
@@ -179,6 +180,7 @@ public class GameMap implements Serializable {
             default -> System.err.println("Unable to handle move like that! [GameMap - movePlayer()]");
         }
 
+        player.setLastStandingField(map[position.x][position.y]);
         map[position.x][position.y] = playerSymbol;
 
         System.err.println("New pos: " + position);
