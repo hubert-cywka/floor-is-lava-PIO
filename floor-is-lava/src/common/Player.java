@@ -13,6 +13,7 @@ public class Player implements Serializable {
     public Position position;
     private boolean isAlive;
     private boolean isMoving;
+    private static boolean isConnected;
     private final int ID;
     private static PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
 
@@ -20,6 +21,7 @@ public class Player implements Serializable {
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;
         this.objectInputStream = objectInputStream;
+        this.isConnected = false;
         this.ID = ID;
         this.isAlive = true;
         position = new Position(-1, -1);
@@ -44,6 +46,14 @@ public class Player implements Serializable {
 
     public boolean isAlive() {
         return isAlive;
+    }
+
+    public static boolean isConnected() {
+        return isConnected;
+    }
+
+    public static void setConnected(boolean connected) {
+        isConnected = connected;
     }
 
     public void setPosition(Position position) {

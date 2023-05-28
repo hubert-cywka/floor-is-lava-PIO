@@ -45,7 +45,8 @@
                    text="STEROWANIE" textAlignment="JUSTIFY"
                    wrapText="true"/>
             <Label layoutX="23.0" layoutY="370.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph"
-                   text="O - włącz/wyłącz muzykę, P - następna piosenka, I - poprzednia piosenka, K, L - wybór playlisty" textAlignment="JUSTIFY"
+                   text="O - włącz/wyłącz muzykę, P - następna piosenka, I - poprzednia piosenka, K, L - wybór playlisty, ESC - wyjście do ekranu głównego"
+                   textAlignment="JUSTIFY"
                    wrapText="true"/>
         </Pane>
         <columnConstraints>

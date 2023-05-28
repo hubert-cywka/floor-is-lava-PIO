@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="861.0" prefWidth="967.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController"
+            stylesheets="@stylesheet.css">
+    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
+               styleClass="arrow-back-icon" fx:id="leaveGameButton" onMouseClicked="#onLeaveGameButtonClick">
+        <Image url="@../../../../../resources/com/pio/floorislavafront/images/arrow-back.png"/>
+    </ImageView>
+</AnchorPane>
