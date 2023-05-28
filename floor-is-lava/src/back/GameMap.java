@@ -173,6 +173,7 @@ public class GameMap implements Serializable {
             case UP -> position.x--;
             case DOWN -> position.x++;
             case RIGHT -> position.y++;
+            case LEFT -> position.y--;
 
             default -> System.err.println("Unable to handle move like that! [GameMap - movePlayer()]");
         }
