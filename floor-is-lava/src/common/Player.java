@@ -8,14 +8,16 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
     private final String nickname;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
+    private final ObjectOutputStream objectOutputStream;
+    private final ObjectInputStream objectInputStream;
     public Position position;
     private boolean isAlive;
-    private boolean isMoving;
+    private FieldType lastStandingField;
     private static boolean isConnected;
     private final int ID;
-    private static PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
+    private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
+
+
 
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         this.nickname = nickname;
@@ -24,7 +26,17 @@ public class Player implements Serializable {
         this.isConnected = false;
         this.ID = ID;
         this.isAlive = true;
+        this.lastStandingField = FieldType.FLOOR;
         position = new Position(-1, -1);
+    }
+
+
+    public FieldType getLastStandingField() {
+        return lastStandingField;
+    }
+
+    public void setLastStandingField(FieldType lastStandingField) {
+        this.lastStandingField = lastStandingField;
     }
 
     public static PlayerMove getNextPlayerMove() {

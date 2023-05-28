@@ -20,6 +20,7 @@ public class Game implements Serializable {
     private Timer timer;
 
 
+
     public Game() {
         this.playersList = new ArrayList<>(MAX_PLAYERS);
         this.gameMap = new GameMap();
@@ -34,6 +35,7 @@ public class Game implements Serializable {
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, generateValidPositionOnMap()));
     }
+
 
 
     public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
@@ -108,7 +110,8 @@ public class Game implements Serializable {
         if (player == null)
             return;
 
-        playersList.remove(player);
+        player.setAlive(false);
+        gameMap.removePlayer(player);
     }
 
     public int getMaxPlayers() {

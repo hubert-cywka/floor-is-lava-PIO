@@ -136,10 +136,9 @@ public class GameMap implements Serializable {
         }
     }
 
-    public void removePlayer(Player p) {
-        if (isValidPosition(p.position.x, p.position.y)) {
-            map[p.position.x][p.position.y] = getPlayerTile(p.getID());
-        }
+    public void removePlayer(Player player) {
+        Position position = player.getPosition();
+        map[position.x][position.y] = player.getLastStandingField();
     }
 
     private boolean isValidPosition(int x, int y) {
@@ -150,23 +149,22 @@ public class GameMap implements Serializable {
     private boolean isFloor(int x, int y) {
         return isValidPosition(x, y) && map[x][y] == FieldType.FLOOR;
     }
-    //METHOD FOR TESTING
 
     public void movePlayer(Player player, Direction move) {
 
         Position position = player.getPosition();
-        System.out.println("First position: " + position);
         FieldType playerSymbol;
 
         switch (map[position.x][position.y]) {
             case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
+
                 playerSymbol = map[position.x][position.y];
-                System.err.println("Symbol: " + playerSymbol);
-                map[position.x][position.y] = FieldType.FLOOR;
+                updateLastStandingFieldOnMap(player);
+
             }
 
             default -> {
-                System.err.println("NIE MA GRACZA NA TEJ POZYCJI");
+                System.err.println("There is no player on this position! [GameMap - movePlayer()]");
                 return;
             }
         }
@@ -176,15 +174,23 @@ public class GameMap implements Serializable {
             case DOWN -> position.x++;
             case RIGHT -> position.y++;
             case LEFT -> position.y--;
-            case NO_MOVE -> System.out.println("GRACZ NIE WYKONAŁ RUCHU");
-
-            default -> System.err.println("Nie ma takiego ruchu!");
         }
 
+        player.setLastStandingField(map[position.x][position.y]);
         map[position.x][position.y] = playerSymbol;
-
-        System.err.println("New pos: " + position);
         player.setPosition(position);
+
+    }
+
+    private void updateLastStandingFieldOnMap(Player player) {
+
+        FieldType lastPlayerField = player.getLastStandingField();
+        Position position = player.getPosition();
+
+        if (lastPlayerField == FieldType.BOOST_SPEED || lastPlayerField == FieldType.BOOST_GHOST)
+            map[position.x][position.y] = FieldType.FLOOR;
+        else
+            map[position.x][position.y] = lastPlayerField;
 
     }
 
