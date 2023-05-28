@@ -101,7 +101,11 @@ public class GameMap implements Serializable {
     }
 
     public boolean checkIfFloor(Position pos) {
-        return map[pos.col][pos.row] == FieldType.FLOOR;
+        try {
+            return map[pos.col][pos.row] == FieldType.FLOOR;
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
     }
 
     // szybkosc przenikanie przez sciany
@@ -157,33 +161,28 @@ public class GameMap implements Serializable {
 
     public void movePlayer(Player player, Direction move) {
 
-        Position position = player.getPosition();
-        FieldType playerSymbol;
+        try {
+            Position position = player.getPosition();
+            FieldType playerSymbol = map[position.row][position.col];
 
-        switch (map[position.row][position.col]) {
-            case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
+            updateLastStandingFieldOnMap(player);
 
-                playerSymbol = map[position.row][position.col];
-                updateLastStandingFieldOnMap(player);
-
+            switch (move) {
+                case UP -> position.row--;
+                case DOWN -> position.row++;
+                case RIGHT -> position.col++;
+                case LEFT -> position.col--;
             }
 
-            default -> {
-                System.err.println("There is no player on this position! [GameMap - movePlayer()]");
+            if (position.row >= getHeight() || position.col >= getWidth())
                 return;
-            }
-        }
 
-        switch (move) {
-            case UP -> position.row--;
-            case DOWN -> position.row++;
-            case RIGHT -> position.col++;
-            case LEFT -> position.col--;
-        }
 
-        player.setLastStandingField(map[position.row][position.col]);
-        map[position.row][position.col] = playerSymbol;
-        player.setPosition(position);
+            player.setLastStandingField(map[position.row][position.col]);
+            map[position.row][position.col] = playerSymbol;
+            player.setPosition(position);
+        } catch (IndexOutOfBoundsException ignored) {
+        }
 
     }
 
