@@ -150,18 +150,15 @@ public class GameMap implements Serializable {
     private boolean isFloor(int x, int y) {
         return isValidPosition(x, y) && map[x][y] == FieldType.FLOOR;
     }
-    //METHOD FOR TESTING
 
     public void movePlayer(Player player, Direction move) {
 
         Position position = player.getPosition();
-        System.out.println("First position: " + position);
         FieldType playerSymbol;
 
         switch (map[position.x][position.y]) {
             case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
                 playerSymbol = map[position.x][position.y];
-                System.err.println("Symbol: " + playerSymbol);
                 map[position.x][position.y] = player.getLastStandingField();
 
             }
@@ -182,8 +179,6 @@ public class GameMap implements Serializable {
 
         player.setLastStandingField(map[position.x][position.y]);
         map[position.x][position.y] = playerSymbol;
-
-        System.err.println("New pos: " + position);
         player.setPosition(position);
 
     }
