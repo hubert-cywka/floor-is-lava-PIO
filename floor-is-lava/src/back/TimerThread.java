@@ -35,8 +35,8 @@ public class TimerThread implements Runnable {
 
     }
 
-    private void decrementTimer(){
-        game.decrementTimer();
+    private void decrementTimer() {
+        game.getTimer().decrementTimer();
     }
 
 }
