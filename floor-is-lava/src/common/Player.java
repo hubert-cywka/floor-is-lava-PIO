@@ -26,6 +26,7 @@ public class Player implements Serializable {
         this.isConnected = false;
         this.ID = ID;
         this.isAlive = true;
+        this.lastStandingField = FieldType.FLOOR;
         position = new Position(-1, -1);
     }
 
