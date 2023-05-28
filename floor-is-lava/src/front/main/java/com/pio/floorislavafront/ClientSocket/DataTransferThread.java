@@ -3,6 +3,7 @@ package front.main.java.com.pio.floorislavafront.ClientSocket;
 import common.FieldType;
 import common.Packet;
 import common.Player;
+import front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler;
 import javafx.application.Platform;
 
 import java.io.ByteArrayInputStream;
@@ -18,6 +19,7 @@ public class DataTransferThread implements Runnable {
     private final ObjectOutputStream objectOutputStream;
 
     public DataTransferThread(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
+        DisplayHandler.initTextures();
         this.objectInputStream = objectInputStream;
         this.objectOutputStream = objectOutputStream;
     }
