@@ -8,14 +8,14 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
     private final String nickname;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
+    private final ObjectOutputStream objectOutputStream;
+    private final ObjectInputStream objectInputStream;
     public Position position;
     private boolean isAlive;
     private FieldType lastStandingField;
     private static boolean isConnected;
     private final int ID;
-    private static PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
+    private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
 
 
 
