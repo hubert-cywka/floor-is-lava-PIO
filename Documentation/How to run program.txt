@@ -18,4 +18,5 @@ Powinny być 4 Scope'y Runtime, które należy zmienić
 
 5. Uruchamiamy klienta (floor-is-lava-PIO\floor-is-lava\src\front\main\java\com\pio\floorislavafront > FloorIsLavaApp.java)
 
-
+6. Wpisujemy nazwe uzytkownika
+7. Wpisujemy IP serwera: localhost:8080
