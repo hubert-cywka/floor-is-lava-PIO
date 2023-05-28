@@ -1,19 +1,17 @@
-package common;
+package back;
 
-import back.Position;
+import common.Direction;
+import common.FieldType;
+import common.Player;
+import common.PowerUp;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
+import static common.GlobalSettings.*;
+
 public class GameMap implements Serializable {
 
-    private static final int WIDTH = 100;
-    private static final int HEIGHT = 100;
-    private static final int MIN_HOLE_RADIUS = 1;
-    private static final int MAX_HOLE_RADIUS = 3;
-    private static final int MIN_LAVA_RADIUS = 5;
-    private static final int MAX_LAVA_RADIUS = 10;
-    private static final int MAP_HOLE_FREQUENCY = 300;
-    private static final int BORDER_HOLE_FREQUENCY = 3;
     private final int width;
     private final int height;
     private final FieldType[][] map;

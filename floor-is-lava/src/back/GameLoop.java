@@ -8,9 +8,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
 
-public class GameLoop implements Runnable {
+import static common.GlobalSettings.REFRESH_TIME;
 
-    private final int REFRESH_TIME = 100;
+public class GameLoop implements Runnable {
 
     private boolean isRunning;
     private final Game game;

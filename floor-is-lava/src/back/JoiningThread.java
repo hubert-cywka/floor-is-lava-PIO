@@ -6,11 +6,9 @@ import common.Player;
 import java.io.*;
 import java.net.Socket;
 
+import static common.GlobalSettings.*;
+
 public class JoiningThread implements Runnable {
-    private final String SERVER_HAS_FREE_SLOT = "OK";
-    private final String SERVER_IS_FULL = "FULL";
-    private final String NICKNAME_ERROR = "NICKNAME_ERROR";
-    public static final String READY_TO_RECEIVE_DATA = "READY";
 
     private final Debug debug;
     private final boolean isDebugActivated = true;
