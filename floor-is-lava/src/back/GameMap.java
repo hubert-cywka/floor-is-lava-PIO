@@ -158,8 +158,9 @@ public class GameMap implements Serializable {
 
         switch (map[position.x][position.y]) {
             case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
+
                 playerSymbol = map[position.x][position.y];
-                map[position.x][position.y] = player.getLastStandingField();
+                updateLastStandingFieldOnMap(player);
 
             }
 
@@ -181,6 +182,18 @@ public class GameMap implements Serializable {
         player.setLastStandingField(map[position.x][position.y]);
         map[position.x][position.y] = playerSymbol;
         player.setPosition(position);
+
+    }
+
+    private void updateLastStandingFieldOnMap(Player player) {
+
+        FieldType lastPlayerField = player.getLastStandingField();
+        Position position = player.getPosition();
+
+        if (lastPlayerField == FieldType.BOOST_SPEED || lastPlayerField == FieldType.BOOST_GHOST)
+            map[position.x][position.y] = FieldType.FLOOR;
+        else
+            map[position.x][position.y] = lastPlayerField;
 
     }
 
