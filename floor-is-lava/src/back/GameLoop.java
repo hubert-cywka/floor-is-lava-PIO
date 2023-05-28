@@ -56,9 +56,13 @@ public class GameLoop implements Runnable {
                     handleDataSend(player);
                     handleDataReceive(player);
                 } catch (IOException | ClassNotFoundException e) {
+
                     System.out.println("Failed to communicate with player " + player.getNickname());
                     debug.errorMessage(e.getMessage());
+
+                    game.removePlayer(player.getNickname());
                     iterator.remove();
+
                 }
             }
         }

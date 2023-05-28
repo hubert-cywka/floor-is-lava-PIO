@@ -136,10 +136,9 @@ public class GameMap implements Serializable {
         }
     }
 
-    public void removePlayer(Player p) {
-        if (isValidPosition(p.position.x, p.position.y)) {
-            map[p.position.x][p.position.y] = getPlayerTile(p.getID());
-        }
+    public void removePlayer(Player player) {
+        Position position = player.getPosition();
+        map[position.x][position.y] = player.getLastStandingField();
     }
 
     private boolean isValidPosition(int x, int y) {
@@ -175,8 +174,6 @@ public class GameMap implements Serializable {
             case DOWN -> position.x++;
             case RIGHT -> position.y++;
             case LEFT -> position.y--;
-
-            default -> System.err.println("Unable to handle move like that! [GameMap - movePlayer()]");
         }
 
         player.setLastStandingField(map[position.x][position.y]);
