@@ -1,6 +1,5 @@
 package back;
 
-import common.GameMap;
 import common.Player;
 import common.PowerUp;
 import common.FieldType;
@@ -12,8 +11,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static common.GlobalSettings.MAX_PLAYERS;
+
 public class Game implements Serializable {
-    private final int MAX_PLAYERS = 4;
 
     public GameMap gameMap;
     public ArrayList<Player> playersList;

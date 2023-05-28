@@ -5,6 +5,9 @@ import common.Debug;
 import java.io.*;
 import java.net.Socket;
 
+import static common.GlobalSettings.READY_TO_RECEIVE_DATA;
+import static common.GlobalSettings.SERVER_HAS_FREE_SLOT;
+
 public class ClientApplication {
     private final String host;
     private final int port;
@@ -78,7 +81,7 @@ public class ClientApplication {
     private boolean hasServerFreeSlot() throws IOException, ClassNotFoundException {
         String status = (String) objectInputStream.readObject();
         debug.message("Server status - " + status);
-        return status.equalsIgnoreCase("OK");
+        return status.equalsIgnoreCase(SERVER_HAS_FREE_SLOT);
     }
 
     private void sendMessageToServer(String message) throws IOException {
@@ -87,7 +90,7 @@ public class ClientApplication {
 
     private boolean serverIsReady() throws IOException, ClassNotFoundException {
         String status = (String) objectInputStream.readObject();
-        return status.equalsIgnoreCase("READY");
+        return status.equalsIgnoreCase(READY_TO_RECEIVE_DATA);
     }
 
     private void closeIOStreams() {

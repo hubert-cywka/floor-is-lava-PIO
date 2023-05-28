@@ -8,13 +8,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static common.GlobalSettings.MAP_SIZE;
+import static common.GlobalSettings.SQUARE_SIZE;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class DisplayHandler {
-
-    private static final int SQUARE_SIZE = 5;
-    private static final int MAP_SIZE = 100;
-
 
     private static Rectangle createSquare(FieldType fieldType) {
         Rectangle square = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
