@@ -22,7 +22,7 @@
                     <String fx:value="button" />
                 </styleClass>
             </Button>
-            <Button layoutX="190.0" layoutY="354.0" mnemonicParsing="false" onAction="#onInstructionsButtonClick" prefHeight="65.0" prefWidth="300.0" text="INSTRUKCJA">
+            <Button layoutX="190.0" layoutY="354.0" mnemonicParsing="false" onAction="#showInstructionsScreen" prefHeight="65.0" prefWidth="300.0" text="INSTRUKCJA">
                 <styleClass>
                     <String fx:value="show-instructions-button" />
                     <String fx:value="button" />

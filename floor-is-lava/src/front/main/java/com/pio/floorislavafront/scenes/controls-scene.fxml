@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
+    <GridPane alignment="CENTER" styleClass="initial-screen-container" stylesheets="@stylesheet.css" VBox.vgrow="ALWAYS">
+        <Pane prefHeight="535.0" prefWidth="668.0" VBox.vgrow="ALWAYS">
+            <styleClass>
+                <String fx:value="buttons-container" />
+            </styleClass>
+            <Button layoutX="23.0" layoutY="441.0" mnemonicParsing="false" onAction="#showInitialScreen" prefHeight="65.0" prefWidth="300.0" text="WRÓĆ">
+                <styleClass>
+                    <String fx:value="show-instructions-button" />
+                    <String fx:value="button" />
+                </styleClass>
+            </Button>
+            <Label layoutX="227.0" layoutY="56.0" prefHeight="45.0" prefWidth="267.0" styleClass="instructions-label" text="STEROWANIE" />
+         <Pane layoutX="22.0" layoutY="148.0">
+            <children>
+                  <Label prefHeight="25.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Poruszanie się" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="15.0" />
+                  </font>
+               </Label>
+               <Label layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="w,  ↑ - ruch w górę" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label layoutX="174.0" layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="s, ↓ - ruch w dół" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label layoutX="325.0" layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="d, → - ruch w prawo" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label layoutX="484.0" layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="a, ← - ruch w lewo" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+            <Button layoutX="345.0" layoutY="441.0" mnemonicParsing="false" onAction="#showInstructionsScreen" prefHeight="65.0" prefWidth="300.0" styleClass="join-game-button" text="INSTRUKCJA" />
+         <Pane layoutX="22.0" layoutY="232.0">
+            <children>
+               <Label prefHeight="25.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Muzyka" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="15.0" />
+                  </font>
+               </Label>
+               <Label layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="O - włącz / wyłącz muzykę" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label layoutX="174.0" layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="P - następna piosenka" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label layoutX="325.0" layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="I - poprzednia piosenka" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label layoutX="484.0" layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="K, L - wybór playlisty" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+         <Pane layoutX="22.0" layoutY="312.0">
+            <children>
+               <Label prefHeight="25.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Ogólne" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="15.0" />
+                  </font>
+               </Label>
+               <Label layoutY="25.0" prefHeight="25.0" prefWidth="194.0" styleClass="instruction-paragraph" text="ESC - opuszczenie gry" textAlignment="JUSTIFY" wrapText="true">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+        </Pane>
+        <columnConstraints>
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+</VBox>

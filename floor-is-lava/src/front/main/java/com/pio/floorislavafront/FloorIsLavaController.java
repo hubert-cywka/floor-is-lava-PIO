@@ -4,7 +4,6 @@ import common.Direction;
 import common.Player;
 import front.main.java.com.pio.floorislavafront.ClientSocket.ConnectionInitializer;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -25,6 +24,7 @@ import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimary
 public class FloorIsLavaController {
     private static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
     private static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
+    private static final String CONTROLS_SCREEN = "scenes/controls-scene.fxml";
     public static final String GAME_SCREEN = "scenes/game-scene.fxml";
     private final String USERNAME_NOT_VALID = "Nazwa użytkownika nie może pozostać pusta!";
     private final String SERVER_ADDRESS_NOT_VALID = "Adres serwera jest nieprawidłowy. Poprawny format to X.X.X.X:XXXX, np.: 192.168.0.1:8080";
@@ -118,13 +118,18 @@ public class FloorIsLavaController {
     }
 
     @FXML
-    protected void onInstructionsButtonClick() {
+    protected void showInstructionsScreen() {
         setScene(INSTRUCTIONS_SCREEN);
     }
 
     @FXML
-    protected void onGoBackButtonClick() {
+    protected void showInitialScreen() {
         setScene(INITIAL_SCREEN);
+    }
+
+    @FXML
+    protected void showControlsScreen() {
+        setScene(CONTROLS_SCREEN);
     }
 
     @FXML
