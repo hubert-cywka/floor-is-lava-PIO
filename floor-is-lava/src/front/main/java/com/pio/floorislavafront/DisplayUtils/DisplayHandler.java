@@ -36,8 +36,6 @@ public class DisplayHandler {
     }
 
 
-
-
     public static void mapHandler(FieldType[][] map) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
@@ -48,8 +46,7 @@ public class DisplayHandler {
 //            System.out.println("Znaleziono kontener o ID: " + containerId);
 
             Node mapNode = container.lookup("#mymap");
-            if (mapNode instanceof GridPane)
-            {
+            if (mapNode instanceof GridPane) {
                 GridPane writtenMap = (GridPane) mapNode;
                 myContainer.getChildren().remove(writtenMap);
             }

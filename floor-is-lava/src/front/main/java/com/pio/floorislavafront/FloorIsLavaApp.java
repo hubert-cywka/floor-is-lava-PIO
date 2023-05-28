@@ -30,6 +30,15 @@ public class FloorIsLavaApp extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop(){
+        try {
+            FloorIsLavaController.leaveGame();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }
