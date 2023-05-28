@@ -36,6 +36,6 @@ public class TimerThread implements Runnable {
     }
 
     private void decrementTimer() {
-        // game.decrementTimer(); TODO implement that method
+        game.getTimer().decrementTimer();
     }
 }
