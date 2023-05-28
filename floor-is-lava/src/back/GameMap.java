@@ -161,29 +161,35 @@ public class GameMap implements Serializable {
 
     public void movePlayer(Player player, Direction move) {
 
-        try {
-            Position position = player.getPosition();
-            FieldType playerSymbol = map[position.row][position.col];
+        Position position = player.getPosition();
+        FieldType playerSymbol = map[position.row][position.col];
 
-            updateLastStandingFieldOnMap(player);
-
-            switch (move) {
-                case UP -> position.row--;
-                case DOWN -> position.row++;
-                case RIGHT -> position.col++;
-                case LEFT -> position.col--;
-            }
-
-            if (position.row >= getHeight() || position.col >= getWidth())
-                return;
-
-
-            player.setLastStandingField(map[position.row][position.col]);
-            map[position.row][position.col] = playerSymbol;
-            player.setPosition(position);
-        } catch (IndexOutOfBoundsException ignored) {
+        Position newPosition = new Position(position.col, position.row);
+        switch (move) {
+            case UP -> newPosition.row--;
+            case DOWN -> newPosition.row++;
+            case RIGHT -> newPosition.col++;
+            case LEFT -> newPosition.col--;
         }
 
+        if (isOutOfBorder(newPosition))
+            return;
+
+        updateLastStandingFieldOnMap(player);
+
+        player.setLastStandingField(map[newPosition.row][newPosition.col]);
+        map[newPosition.row][newPosition.col] = playerSymbol;
+        player.setPosition(newPosition);
+
+    }
+
+    private boolean isOutOfBorder(Position position){
+        try{
+            map[position.row][position.col] = map[position.row][position.col];
+            return false;
+        }catch (IndexOutOfBoundsException e){
+            return true;
+        }
     }
 
     private void updateLastStandingFieldOnMap(Player player) {
