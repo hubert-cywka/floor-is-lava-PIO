@@ -35,10 +35,10 @@ public class GameMap implements Serializable {
         return map;
     }
 
-    public void addLavaPatch(int x, int y) {
+    public void addLavaPatch(int col, int row) {
         int randomWidth = (int) Math.floor(Math.random() * (MAX_LAVA_RADIUS - MIN_LAVA_RADIUS) + MIN_LAVA_RADIUS);
         int randomHeight = (int) Math.floor(Math.random() * (MAX_LAVA_RADIUS - MIN_LAVA_RADIUS) + MIN_LAVA_RADIUS);
-        insertZone(x, y, randomWidth, randomHeight, FieldType.LAVA);
+        insertZone(col, row, randomWidth, randomHeight, FieldType.LAVA);
 
     }
 
@@ -46,16 +46,16 @@ public class GameMap implements Serializable {
         for (int row = 0; row < height; row++) {
             int randomSeed = (int) Math.floor(Math.random() * BORDER_HOLE_FREQUENCY);
             if (randomSeed == 0) {
-                addLavaPatch(row, 0);
-                addLavaPatch(row, width - MIN_HOLE_RADIUS);
+                addLavaPatch(0, row);
+                addLavaPatch(width - 1, row);
             }
         }
 
         for (int col = 0; col < width; col++) {
             int randomSeed = (int) Math.floor(Math.random() * BORDER_HOLE_FREQUENCY);
             if (randomSeed == 0) {
-                addLavaPatch(0, col);
-                addLavaPatch(height - MIN_HOLE_RADIUS, col);
+                addLavaPatch(col, 0);
+                addLavaPatch(col, height - 1);
             }
         }
     }
@@ -73,41 +73,41 @@ public class GameMap implements Serializable {
                 if (randomSeed == 0) {
                     int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
                     int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
-                    insertZone(row, col, randomWidth, randomHeight, FieldType.HOLE);
+                    insertZone(col, row, randomWidth, randomHeight, FieldType.HOLE);
                 }
             }
         }
     }
 
-    private boolean isWithinCircle(int x, int y, int centerX, int centerY, int radiusSquared) {
-        int distanceSquared = (x - centerX) * (x - centerX) + (y - centerY) * (y - centerY);
+    private boolean isWithinCircle(int col, int row, int centerCol, int centerRow, int radiusSquared) {
+        int distanceSquared = (col - centerCol) * (col - centerCol) + (row - centerRow) * (row - centerRow);
         return distanceSquared <= radiusSquared;
     }
 
-    public void insertZone(int centerX, int centerY, int radiusWidth, int radiusHeight, FieldType tile) {
+    public void insertZone(int centerCol, int centerRow, int radiusWidth, int radiusHeight, FieldType tile) {
         int radiusSquared = radiusWidth * radiusHeight;
-        int startX = centerX - radiusWidth;
-        int startY = centerY - radiusHeight;
-        int endX = centerX + radiusWidth;
-        int endY = centerY + radiusHeight;
+        int startCol = centerCol - radiusWidth;
+        int startRow = centerRow - radiusHeight;
+        int endCol = centerCol + radiusWidth;
+        int endRow = centerRow + radiusHeight;
 
-        for (int i = startY; i <= endY; i++) {
-            for (int j = startX; j <= endX; j++) {
-                if (isValidPosition(i, j) && isWithinCircle(j, i, centerX, centerY, radiusSquared)) {
-                    map[i][j] = tile;
+        for (int row = startRow; row <= endRow; row++) {
+            for (int col = startCol; col <= endCol; col++) {
+                if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared)) {
+                    map[row][col] = tile;
                 }
             }
         }
     }
 
     public boolean checkIfFloor(Position pos) {
-        return map[pos.x][pos.y] == FieldType.FLOOR;
+        return map[pos.col][pos.row] == FieldType.FLOOR;
     }
 
     // szybkosc przenikanie przez sciany
     public void insertPowerUp(PowerUp pow) {
-        if (isValidPosition(pow.position.x, pow.position.y) && checkIfFloor(pow.position))
-            map[pow.position.x][pow.position.y] = pow.type;
+        if (isValidPosition(pow.position.col, pow.position.row) && checkIfFloor(pow.position))
+            map[pow.position.col][pow.position.row] = pow.type;
     }
 
     private FieldType getPlayerTile(int playerId) {
@@ -131,23 +131,28 @@ public class GameMap implements Serializable {
     }
 
     public void insertPlayer(Player p) {
-        if (isValidPosition(p.position.x, p.position.y)) {
-            map[p.position.x][p.position.y] = getPlayerTile(p.getID());
+        if (isValidPosition(p.position)) {
+            map[p.position.row][p.position.col] = getPlayerTile(p.getID());
         }
     }
 
     public void removePlayer(Player player) {
         Position position = player.getPosition();
-        map[position.x][position.y] = player.getLastStandingField();
+        map[position.row][position.col] = player.getLastStandingField();
     }
 
-    private boolean isValidPosition(int x, int y) {
-        if (x < 0 || x >= width || y < 0 || y >= height) return false;
-        return map[x][y] != FieldType.LAVA && map[x][y] != FieldType.HOLE;
+    private boolean isValidPosition(int col, int row) {
+        if (row < 0 || row >= height || col < 0 || col >= width) return false;
+        return map[row][col] != FieldType.LAVA && map[row][col] != FieldType.HOLE;
     }
 
-    private boolean isFloor(int x, int y) {
-        return isValidPosition(x, y) && map[x][y] == FieldType.FLOOR;
+    private boolean isValidPosition(Position p) {
+        if (p.col < 0 || p.col >= width || p.row < 0 || p.row >= height) return false;
+        return map[p.row][p.col] != FieldType.LAVA && map[p.row][p.col] != FieldType.HOLE;
+    }
+
+    private boolean isFloor(int col, int row) {
+        return isValidPosition(col, row) && map[row][col] == FieldType.FLOOR;
     }
 
     public void movePlayer(Player player, Direction move) {
@@ -155,10 +160,10 @@ public class GameMap implements Serializable {
         Position position = player.getPosition();
         FieldType playerSymbol;
 
-        switch (map[position.x][position.y]) {
+        switch (map[position.row][position.col]) {
             case PLAYER_0, PLAYER_1, PLAYER_2, PLAYER_3 -> {
 
-                playerSymbol = map[position.x][position.y];
+                playerSymbol = map[position.row][position.col];
                 updateLastStandingFieldOnMap(player);
 
             }
@@ -170,14 +175,14 @@ public class GameMap implements Serializable {
         }
 
         switch (move) {
-            case UP -> position.x--;
-            case DOWN -> position.x++;
-            case RIGHT -> position.y++;
-            case LEFT -> position.y--;
+            case UP -> position.row--;
+            case DOWN -> position.row++;
+            case RIGHT -> position.col++;
+            case LEFT -> position.col--;
         }
 
-        player.setLastStandingField(map[position.x][position.y]);
-        map[position.x][position.y] = playerSymbol;
+        player.setLastStandingField(map[position.row][position.col]);
+        map[position.row][position.col] = playerSymbol;
         player.setPosition(position);
 
     }
@@ -188,9 +193,9 @@ public class GameMap implements Serializable {
         Position position = player.getPosition();
 
         if (lastPlayerField == FieldType.BOOST_SPEED || lastPlayerField == FieldType.BOOST_GHOST)
-            map[position.x][position.y] = FieldType.FLOOR;
+            map[position.row][position.col] = FieldType.FLOOR;
         else
-            map[position.x][position.y] = lastPlayerField;
+            map[position.row][position.col] = lastPlayerField;
 
     }
 

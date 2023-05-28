@@ -8,8 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import static common.GlobalSettings.MAP_SIZE;
-import static common.GlobalSettings.SQUARE_SIZE;
+import static common.GlobalSettings.*;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class DisplayHandler {
@@ -52,15 +51,15 @@ public class DisplayHandler {
             GridPane myMap = new GridPane();
             myMap.setId("mymap");
 
-            for (int y = 0; y < MAP_SIZE; y++) {
-                for (int x = 0; x < MAP_SIZE; x++) {
-                    Rectangle square = createSquare(map[y][x]);
-                    myMap.add(square, x, y);
+            for (int row = 0; row < HEIGHT; row++) {
+                for (int col = 0; col < WIDTH; col++) {
+                    Rectangle square = createSquare(map[row][col]);
+                    myMap.add(square, col, row);
                 }
             }
 
-            AnchorPane.setTopAnchor(myMap, (myContainer.getHeight() - myMap.getHeight()) / 4);
-            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() - myMap.getWidth()) / 3);
+            AnchorPane.setTopAnchor(myMap, (myContainer.getHeight() / 2 - (SQUARE_SIZE * HEIGHT) / 2));
+            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
             myContainer.getChildren().add(myMap);
 
 
