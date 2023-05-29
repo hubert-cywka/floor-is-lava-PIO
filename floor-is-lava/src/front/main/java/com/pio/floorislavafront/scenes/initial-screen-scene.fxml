@@ -28,17 +28,17 @@
                     <String fx:value="button" />
                 </styleClass>
             </Button>
-            <Button layoutX="190.0" layoutY="224.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="300.0" text="DOŁĄCZ DO GRY" textAlignment="JUSTIFY" onAction="#onJoinGameButtonClick">
+            <Button layoutX="190.0" layoutY="224.0" mnemonicParsing="false" onAction="#onJoinGameButtonClick" prefHeight="65.0" prefWidth="300.0" text="DOŁĄCZ DO GRY" textAlignment="JUSTIFY">
                 <styleClass>
                     <String fx:value="join-game-button" />
                     <String fx:value="button" />
                 </styleClass>
             </Button>
-            <TextField layoutX="280.0" layoutY="147.0" prefWidth="200" fx:id="usernameTextField" onMouseClicked="#onUsernameTextFieldClick" />
-            <TextField layoutX="280.0" layoutY="184.0" prefWidth="200" fx:id="serverTextField" onMouseClicked="#onServerAddressTextFieldClick"  />
-            <Label layoutX="195.0" layoutY="150.0" prefWidth="100" styleClass="initial-screen-label" text="Username:"/>
+            <TextField fx:id="usernameTextField" layoutX="280.0" layoutY="147.0" onMouseClicked="#onUsernameTextFieldClick" prefWidth="200" text="example" />
+            <TextField fx:id="serverTextField" layoutX="280.0" layoutY="184.0" onMouseClicked="#onServerAddressTextFieldClick" prefWidth="200" text="localhost:8080" />
+            <Label layoutX="195.0" layoutY="150.0" prefWidth="100" styleClass="initial-screen-label" text="Username:" />
             <Label layoutX="195.0" layoutY="186.0" prefWidth="100" styleClass="initial-screen-label" text="IP Serwera:" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="135.0" layoutY="80.0" prefHeight="47.0" prefWidth="400.0" styleClass="join-game-helper-text" wrapText="true" textAlignment="JUSTIFY" textFill="WHITE" fx:id="joinGameHelperLabel" />
+            <Label fx:id="joinGameHelperLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="135.0" layoutY="80.0" prefHeight="47.0" prefWidth="400.0" styleClass="join-game-helper-text" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" />
         </Pane>
       <columnConstraints>
          <ColumnConstraints />
