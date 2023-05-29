@@ -1,8 +1,10 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
 import common.FieldType;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -105,11 +107,24 @@ public class DisplayHandler {
         return square;
     }
 
+    public static void displayTimer(int time){
+        Scene currentScene = getPrimaryStage().getScene();
+        String containerId = "textlabel";
+        Node container = currentScene.lookup("#" + containerId);
+        if (container instanceof Label)
+        {
+            Label timerLabel = (Label) container;
+            timerLabel.setText(String.valueOf(time));
+        }
 
-    public static void mapHandler(FieldType[][] map) {
+    }
+
+    public static void mapHandler(FieldType[][] map, int time) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
         Node container = currentScene.lookup("#" + containerId);
+
+        displayTimer(time);
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
@@ -130,9 +145,10 @@ public class DisplayHandler {
                     myMap.add(square, col, row);
                 }
             }
-
-            AnchorPane.setTopAnchor(myMap, (myContainer.getHeight() / 2 - (SQUARE_SIZE * HEIGHT) / 2));
-            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
+            myMap.setLayoutX(360);
+            myMap.setLayoutY(220);
+//            AnchorPane.setTopAnchor(myMap, (myContainer.getHeight() / 2 - (SQUARE_SIZE * HEIGHT) / 2));
+//            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
             myContainer.getChildren().add(myMap);
 
 
