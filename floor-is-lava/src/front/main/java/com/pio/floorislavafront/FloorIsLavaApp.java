@@ -1,5 +1,6 @@
 package front.main.java.com.pio.floorislavafront;
 
+import front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler;
 import front.main.java.com.pio.floorislavafront.soundtrack.SoundtrackManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -24,6 +25,7 @@ public class FloorIsLavaApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        DisplayHandler.initTextures();
         setPrimaryStage(stage);
         FloorIsLavaController.setScene("scenes/initial-screen-scene.fxml");
         stage.setTitle("Floor is Lava!");
