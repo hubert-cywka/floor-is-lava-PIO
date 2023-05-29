@@ -8,6 +8,7 @@ import common.PowerUp;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import static back.Game.getRandomNumberInRange;
 import static common.GlobalSettings.*;
 
 public class GameMap implements Serializable {
@@ -68,26 +69,44 @@ public class GameMap implements Serializable {
 
     public void setSafeTime(){
         replaceFields(FieldType.LAVA, FieldType.FLOOR);
+        replaceFields(FieldType.SAFE_ZONE, FieldType.FLOOR);
         generateLavaBorders();
+        generateSafeZones(2);
+    }
 
-        int safeZones = 0;
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+    public void generateSafeZones(int number){
 
-                if (safeZones >= 2)
-                    break;
+        int safeZones = 0, row, col;
 
-                int randomSeed = (int) Math.floor(Math.random() * 2000);
-                if (randomSeed == 0) {
-                    int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
-                    int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
-                    insertZone(col, row, randomWidth, randomHeight, FieldType.SAFE_ZONE);
-                }
-            }
+        while(safeZones < number){
+
+            row = getRandomNumberInRange(0, height-1);
+            col = getRandomNumberInRange(0, width-1);
+
+            if (map[row][col] != FieldType.FLOOR)
+                continue;
+
+            insertZone(col, row, getRandomNumberInRange(4, 10), getRandomNumberInRange(4, 10), FieldType.SAFE_ZONE);
+            safeZones++;
+
         }
 
-//        insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
-//        insertZone(90, 90, 5, 5, FieldType.SAFE_ZONE);
+//        for (int row = 0; row < height; row++) {
+//            for (int col = 0; col < width; col++) {
+//
+//                if (safeZones >= number)
+//                    return;
+//
+//                int randomSeed = (int) Math.floor(Math.random() * 200);
+//                if (randomSeed == 0) {
+//                    int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+//                    int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+//                    insertZone(col, row, randomWidth, randomHeight, FieldType.SAFE_ZONE);
+//                    safeZones++;
+//                }
+//            }
+//        }
+
     }
 
     private void replaceFields(FieldType from, FieldType to){

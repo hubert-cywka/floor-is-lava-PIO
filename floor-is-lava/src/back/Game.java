@@ -52,7 +52,7 @@ public class Game implements Serializable {
         gameMap.insertPowerUp(power);
     }
 
-    public int getRandomNumberInRange(int min, int max) {
+    public static int getRandomNumberInRange(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
