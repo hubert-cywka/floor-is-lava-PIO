@@ -2,9 +2,10 @@ package back;
 
 import common.Debug;
 
-public class TimerThread implements Runnable {
+import static common.GlobalSettings.BREAK_TIME_DURING_LAVA_TIME;
+import static common.GlobalSettings.TIMER_UPDATE_RATE;
 
-    private final int TIMER_UPDATE_RATE = 1000; // 1sec
+public class TimerThread implements Runnable {
 
     private final Debug debug;
     private final Game game;
@@ -26,6 +27,7 @@ public class TimerThread implements Runnable {
 
                 Thread.sleep(TIMER_UPDATE_RATE);
                 decrementTimer();
+                handleRound();
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -35,7 +37,34 @@ public class TimerThread implements Runnable {
 
     }
 
+    private void handleRound() throws InterruptedException {
+
+        if (!isTimerZero())
+            return;
+
+        fillMapWithLava();
+        Thread.sleep(BREAK_TIME_DURING_LAVA_TIME);
+        removeLava();
+
+    }
+
+    private void removeLava(){
+        game.gameMap.setSafeTime();
+    }
+
+    private void fillMapWithLava(){
+        game.gameMap.setLavaTime();
+    }
+
+    private boolean isTimerZero(){
+        return game.getTimer().getTimerCurrentValue() == 0;
+    }
+
     private void decrementTimer() {
         game.getTimer().decrementTimer();
     }
+
+
+
+
 }

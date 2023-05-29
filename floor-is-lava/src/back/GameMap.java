@@ -16,12 +16,14 @@ public class GameMap implements Serializable {
     private final int height;
     private final FieldType[][] map;
 
+
     public GameMap() {
         this.width = WIDTH;
         this.height = HEIGHT;
         this.map = new FieldType[HEIGHT][WIDTH];
         generateMap();
     }
+
 
     public int getWidth() {
         return width;
@@ -58,6 +60,46 @@ public class GameMap implements Serializable {
                 addLavaPatch(col, height - 1);
             }
         }
+    }
+
+    public void setLavaTime(){
+        replaceFields(FieldType.FLOOR, FieldType.LAVA);
+    }
+
+    public void setSafeTime(){
+        replaceFields(FieldType.LAVA, FieldType.FLOOR);
+        generateLavaBorders();
+
+        int safeZones = 0;
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+
+                if (safeZones >= 2)
+                    break;
+
+                int randomSeed = (int) Math.floor(Math.random() * 2000);
+                if (randomSeed == 0) {
+                    int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+                    int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+                    insertZone(col, row, randomWidth, randomHeight, FieldType.SAFE_ZONE);
+                }
+            }
+        }
+
+//        insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
+//        insertZone(90, 90, 5, 5, FieldType.SAFE_ZONE);
+    }
+
+    private void replaceFields(FieldType from, FieldType to){
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                if (map[row][col] == from) {
+                    map[row][col] = to;
+                }
+            }
+        }
+
     }
 
     public void generateMap() {
@@ -183,11 +225,11 @@ public class GameMap implements Serializable {
 
     }
 
-    private boolean isOutOfBorder(Position position){
-        try{
+    private boolean isOutOfBorder(Position position) {
+        try {
             map[position.row][position.col] = map[position.row][position.col];
             return false;
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return true;
         }
     }

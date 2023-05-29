@@ -26,10 +26,6 @@ public class Game implements Serializable {
         this.gameMap = new GameMap();
         this.timer = new Timer();
 
-        // Test safezones
-        gameMap.insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
-        gameMap.insertZone(90, 90, 5, 5, FieldType.SAFE_ZONE);
-
         // test powerups
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
