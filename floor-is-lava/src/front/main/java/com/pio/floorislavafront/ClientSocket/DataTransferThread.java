@@ -19,7 +19,6 @@ public class DataTransferThread implements Runnable {
     private final ObjectOutputStream objectOutputStream;
 
     public DataTransferThread(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
-        DisplayHandler.initTextures();
         this.objectInputStream = objectInputStream;
         this.objectOutputStream = objectOutputStream;
     }
