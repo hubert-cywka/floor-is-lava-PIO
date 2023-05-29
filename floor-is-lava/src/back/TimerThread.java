@@ -1,6 +1,8 @@
 package back;
 
 import common.Debug;
+import common.FieldType;
+import common.Player;
 
 import static common.GlobalSettings.BREAK_TIME_DURING_LAVA_TIME;
 import static common.GlobalSettings.TIMER_UPDATE_RATE;
@@ -45,6 +47,7 @@ public class TimerThread implements Runnable {
         fillMapWithLava();
         Thread.sleep(BREAK_TIME_DURING_LAVA_TIME);
         removeLava();
+        updatePlayerLastStandingField();
         debug.infoMessage("END OF LAVA TIME");
 
     }
@@ -59,6 +62,11 @@ public class TimerThread implements Runnable {
 
     private boolean isTimerZero(){
         return game.getTimer().getTimerCurrentValue() == 0;
+    }
+
+    private void updatePlayerLastStandingField(){
+        for (Player player : game.playersList)
+            player.setLastStandingField(FieldType.FLOOR);
     }
 
     private void decrementTimer() {
