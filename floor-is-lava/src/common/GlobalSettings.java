@@ -28,6 +28,10 @@ public class GlobalSettings {
     public static final int MAP_HOLE_FREQUENCY = 300;
     public static final int BORDER_HOLE_FREQUENCY = 3;
 
+    // TimerThread
+    public static final int TIMER_UPDATE_RATE = 1000; // 1sec
+    public static final int BREAK_TIME_DURING_LAVA_TIME = 3000; // 3sec
+
 
 //      *** FRONTEND ***
 

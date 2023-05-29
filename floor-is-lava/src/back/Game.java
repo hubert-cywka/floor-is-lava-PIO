@@ -26,10 +26,6 @@ public class Game implements Serializable {
         this.gameMap = new GameMap();
         this.timer = new Timer();
 
-        // Test safezones
-        gameMap.insertZone(30, 5, 5, 5, FieldType.SAFE_ZONE);
-        gameMap.insertZone(90, 90, 5, 5, FieldType.SAFE_ZONE);
-
         // test powerups
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
@@ -56,7 +52,7 @@ public class Game implements Serializable {
         gameMap.insertPowerUp(power);
     }
 
-    public int getRandomNumberInRange(int min, int max) {
+    public static int getRandomNumberInRange(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
@@ -64,7 +60,7 @@ public class Game implements Serializable {
     public boolean validPositionOnMap(Position pos) {
         try{
             FieldType[][] map = gameMap.getMap();
-            return map[pos.row][pos.col] == FieldType.FLOOR;
+            return map[pos.row][pos.col] == FieldType.FLOOR || map[pos.row][pos.col] == FieldType.SAFE_ZONE;
         }catch (IndexOutOfBoundsException e){
             return false;
         }
