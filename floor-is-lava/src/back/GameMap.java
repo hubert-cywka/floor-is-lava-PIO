@@ -8,6 +8,7 @@ import common.PowerUp;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import static back.Game.getRandomNumberInRange;
 import static common.GlobalSettings.*;
 
 public class GameMap implements Serializable {
@@ -16,12 +17,14 @@ public class GameMap implements Serializable {
     private final int height;
     private final FieldType[][] map;
 
+
     public GameMap() {
         this.width = WIDTH;
         this.height = HEIGHT;
         this.map = new FieldType[HEIGHT][WIDTH];
         generateMap();
     }
+
 
     public int getWidth() {
         return width;
@@ -60,6 +63,64 @@ public class GameMap implements Serializable {
         }
     }
 
+    public void setLavaTime(){
+        replaceFields(FieldType.FLOOR, FieldType.LAVA);
+    }
+
+    public void setSafeTime(){
+        replaceFields(FieldType.LAVA, FieldType.FLOOR);
+        replaceFields(FieldType.SAFE_ZONE, FieldType.FLOOR);
+        generateLavaBorders();
+        generateSafeZones(2);
+    }
+
+    public void generateSafeZones(int number){
+
+        int safeZones = 0, row, col;
+
+        while(safeZones < number){
+
+            row = getRandomNumberInRange(0, height-1);
+            col = getRandomNumberInRange(0, width-1);
+
+            if (map[row][col] != FieldType.FLOOR)
+                continue;
+
+            insertZone(col, row, getRandomNumberInRange(4, 10), getRandomNumberInRange(4, 10), FieldType.SAFE_ZONE);
+            safeZones++;
+
+        }
+
+//        for (int row = 0; row < height; row++) {
+//            for (int col = 0; col < width; col++) {
+//
+//                if (safeZones >= number)
+//                    return;
+//
+//                int randomSeed = (int) Math.floor(Math.random() * 200);
+//                if (randomSeed == 0) {
+//                    int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+//                    int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
+//                    insertZone(col, row, randomWidth, randomHeight, FieldType.SAFE_ZONE);
+//                    safeZones++;
+//                }
+//            }
+//        }
+
+    }
+
+    private void replaceFields(FieldType from, FieldType to){
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                if (map[row][col] == from) {
+                    map[row][col] = to;
+                }
+            }
+        }
+
+    }
+
     public void generateMap() {
         for (int row = 0; row < height; row++) {
             Arrays.fill(map[row], FieldType.FLOOR);
@@ -77,6 +138,8 @@ public class GameMap implements Serializable {
                 }
             }
         }
+
+        generateSafeZones(2);
     }
 
     private boolean isWithinCircle(int col, int row, int centerCol, int centerRow, int radiusSquared) {
@@ -183,11 +246,11 @@ public class GameMap implements Serializable {
 
     }
 
-    private boolean isOutOfBorder(Position position){
-        try{
+    private boolean isOutOfBorder(Position position) {
+        try {
             map[position.row][position.col] = map[position.row][position.col];
             return false;
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return true;
         }
     }
