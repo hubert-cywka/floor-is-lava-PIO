@@ -138,6 +138,8 @@ public class GameMap implements Serializable {
                 }
             }
         }
+
+        generateSafeZones(2);
     }
 
     private boolean isWithinCircle(int col, int row, int centerCol, int centerRow, int radiusSquared) {

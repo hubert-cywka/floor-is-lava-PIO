@@ -20,7 +20,6 @@ public class TimerThread implements Runnable {
     @Override
     public void run() {
 
-        debug.message("Timer thread has started");
         while (true) {
 
             try {
@@ -42,9 +41,11 @@ public class TimerThread implements Runnable {
         if (!isTimerZero())
             return;
 
+        debug.infoMessage("IS LAVA TIME");
         fillMapWithLava();
         Thread.sleep(BREAK_TIME_DURING_LAVA_TIME);
         removeLava();
+        debug.infoMessage("END OF LAVA TIME");
 
     }
 

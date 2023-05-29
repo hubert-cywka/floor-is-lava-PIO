@@ -60,7 +60,7 @@ public class Game implements Serializable {
     public boolean validPositionOnMap(Position pos) {
         try{
             FieldType[][] map = gameMap.getMap();
-            return map[pos.row][pos.col] == FieldType.FLOOR;
+            return map[pos.row][pos.col] == FieldType.FLOOR || map[pos.row][pos.col] == FieldType.SAFE_ZONE;
         }catch (IndexOutOfBoundsException e){
             return false;
         }
