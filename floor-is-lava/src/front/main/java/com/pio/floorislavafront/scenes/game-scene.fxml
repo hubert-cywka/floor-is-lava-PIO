@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController"
-            stylesheets="@stylesheet.css">
-    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"
-               styleClass="arrow-back-icon" fx:id="leaveGameButton" onMouseClicked="#onLeaveGameButtonClick">
-        <Image url="@../../../../../resources/com/pio/floorislavafront/images/arrow-back.png"/>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
+      <fill>
+         <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="0.5168799757957458" green="0.06239999830722809" blue="0.7799999713897705" opacity="0.5114504098892212" />
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="0.5215686559677124" green="0.05882352963089943" blue="0.7882353067398071" />
+                  </color>
+               </Stop>
+            </stops>
+         </RadialGradient>
+      </fill>
+   </Rectangle>
+    <ImageView fx:id="leaveGameButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#onLeaveGameButtonClick" pickOnBounds="true" preserveRatio="true" styleClass="arrow-back-icon">
+        <Image url="@../../../../../resources/com/pio/floorislavafront/images/arrow-back.png" />
     </ImageView>
+   <Circle fill="#8bc7ff" layoutX="960.0" layoutY="96.0" radius="71.0" stroke="BLACK" strokeType="INSIDE" />
+   <Label fx:id="textlabel" layoutX="932.0" layoutY="26.0" text="0">
+      <font>
+         <Font name="System Bold Italic" size="96.0" />
+      </font>
+   </Label>
 </AnchorPane>
