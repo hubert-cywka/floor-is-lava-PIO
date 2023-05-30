@@ -31,13 +31,12 @@ public class DataTransferThread implements Runnable {
         try {
             while (true) {
 
-                if (!connectionStatus)
-                    return;
-
                 Packet packet = receiveData();
                 sendPlayerMove();
                 updateMap(packet);
 
+                if (!connectionStatus)
+                    return;
 
                 // Received PlayerData test
                 ArrayList<PlayerData> playerData = packet.getPlayerData();
