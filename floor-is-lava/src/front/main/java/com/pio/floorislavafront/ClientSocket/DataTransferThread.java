@@ -29,7 +29,11 @@ public class DataTransferThread implements Runnable {
     public void run() {
 
         try {
-            while (connectionStatus) {
+            while (true) {
+
+                if (!connectionStatus)
+                    return;
+
                 Packet packet = receiveData();
                 sendPlayerMove();
                 updateMap(packet);
@@ -48,12 +52,6 @@ public class DataTransferThread implements Runnable {
             throw new RuntimeException(e);
         }
 
-        try {
-            objectOutputStream.close();
-            objectInputStream.close();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     public static void stopDataTransfer(){
