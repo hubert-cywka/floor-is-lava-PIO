@@ -26,9 +26,9 @@ public class Game implements Serializable {
         this.timer = new Timer();
 
         // test powerups
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, generateValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
+        addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, findValidPositionOnMap()));
     }
 
 
@@ -45,7 +45,7 @@ public class Game implements Serializable {
     }
 
     public void addPowerUpOnMap(PowerUp power) {
-        Position powerpos = generateValidPositionOnMap();
+        Position powerpos = findValidPositionOnMap();
         power.setPosition(powerpos);
         gameMap.insertPowerUp(power);
     }
@@ -55,7 +55,16 @@ public class Game implements Serializable {
         return random.nextInt(max - min) + min;
     }
 
-    public boolean validPositionOnMap(Position pos) {
+    public boolean isThatField(Position pos, FieldType fieldType){
+        try{
+            return gameMap.getMap()[pos.row][pos.col] == fieldType;
+        }
+        catch (IndexOutOfBoundsException e){
+            return false;
+        }
+    }
+
+    public boolean isPositionValid(Position pos) {
         try {
             FieldType[][] map = gameMap.getMap();
             return map[pos.row][pos.col] == FieldType.FLOOR || map[pos.row][pos.col] == FieldType.SAFE_ZONE;
@@ -64,17 +73,21 @@ public class Game implements Serializable {
         }
     }
 
-    public Position generateValidPositionOnMap() {
-        Position playerpos = new Position(getRandomNumberInRange(0, gameMap.getHeight()), getRandomNumberInRange(0, gameMap.getWidth()));
-        while (!validPositionOnMap(playerpos)) {
-            playerpos.row = getRandomNumberInRange(0, gameMap.getHeight());
-            playerpos.col = getRandomNumberInRange(0, gameMap.getWidth());
+    public Position findValidPositionOnMap() {
+
+        Position newPosition = new Position(getRandomNumberInRange(0, gameMap.getHeight()), getRandomNumberInRange(0, gameMap.getWidth()));
+
+        while (!isThatField(newPosition, FieldType.SAFE_ZONE)) {
+            newPosition.row = getRandomNumberInRange(0, gameMap.getHeight());
+            newPosition.col = getRandomNumberInRange(0, gameMap.getWidth());
         }
-        return playerpos;
+
+        return newPosition;
+
     }
 
     public void insertPlayerToMap(Player p) {
-        Position playerpos = generateValidPositionOnMap();
+        Position playerpos = findValidPositionOnMap();
         p.setPosition(playerpos);
         gameMap.insertPlayer(p);
     }
