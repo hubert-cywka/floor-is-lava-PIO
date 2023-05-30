@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
     <GridPane alignment="CENTER" styleClass="initial-screen-container" stylesheets="@stylesheet.css" VBox.vgrow="ALWAYS">
@@ -39,6 +40,11 @@
             <Label layoutX="195.0" layoutY="150.0" prefWidth="100" styleClass="initial-screen-label" text="Username:" />
             <Label layoutX="195.0" layoutY="186.0" prefWidth="100" styleClass="initial-screen-label" text="IP Serwera:" />
             <Label fx:id="joinGameHelperLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="135.0" layoutY="80.0" prefHeight="47.0" prefWidth="400.0" styleClass="join-game-helper-text" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" />
+         <Label layoutX="60.0" text="FLOOR IS LAVA" textFill="WHITE">
+            <font>
+               <Font name="System Bold Italic" size="78.0" />
+            </font>
+         </Label>
         </Pane>
       <columnConstraints>
          <ColumnConstraints />
