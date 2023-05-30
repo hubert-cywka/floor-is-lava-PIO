@@ -158,9 +158,10 @@ public class Game implements Serializable {
         if (player == null)
             return;
 
-        player.setAlive(false);
-        player.setConnected(false);
+//        player.setAlive(false);
+//        player.setConnected(false);
         gameMap.removePlayer(player);
+//        playersList.remove(player);
     }
 
     public int getMaxPlayers() {
