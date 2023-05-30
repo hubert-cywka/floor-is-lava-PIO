@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class ServerSocketManager {
     private final Debug debug;
-    private final boolean isDebugActivated = true;
+    private final boolean isDebugActivated = false;
 
     private final int port;
     private final Game game;
