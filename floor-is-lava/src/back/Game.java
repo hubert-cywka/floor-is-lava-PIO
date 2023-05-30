@@ -20,7 +20,6 @@ public class Game implements Serializable {
     private Timer timer;
 
 
-
     public Game() {
         this.playersList = new ArrayList<>(MAX_PLAYERS);
         this.gameMap = new GameMap();
@@ -31,7 +30,6 @@ public class Game implements Serializable {
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, generateValidPositionOnMap()));
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, generateValidPositionOnMap()));
     }
-
 
 
     public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
@@ -58,10 +56,10 @@ public class Game implements Serializable {
     }
 
     public boolean validPositionOnMap(Position pos) {
-        try{
+        try {
             FieldType[][] map = gameMap.getMap();
             return map[pos.row][pos.col] == FieldType.FLOOR || map[pos.row][pos.col] == FieldType.SAFE_ZONE;
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return false;
         }
     }
@@ -131,7 +129,7 @@ public class Game implements Serializable {
         return false;
     }
 
-    private Player findPlayerByNickname(String nickname) {
+    public Player findPlayerByNickname(String nickname) {
         for (Player player : playersList) {
             if (player.getNickname().equalsIgnoreCase(nickname))
                 return player;
@@ -139,11 +137,23 @@ public class Game implements Serializable {
         return null;
     }
 
-    public void movePlayer(Player player, Direction move){
+    public Player findPlayerById(int id) {
+
+        for (Player player : playersList) {
+            if (player.getID() == id)
+                return player;
+        }
+
+        return null;
+
+    }
+
+
+    public void movePlayer(Player player, Direction move) {
         gameMap.movePlayer(player, move);
     }
 
-    public Timer getTimer(){
+    public Timer getTimer() {
         return timer;
     }
 
