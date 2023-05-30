@@ -33,6 +33,9 @@ public class FloorIsLavaController {
     private final String INPUT_VALIDATION_SUCCESS = "Wszystko OK!";
     private final Pattern SERVER_ADDRESS_PATTERN = Pattern.compile("^\\d{1,3}[.]\\d{1,3}[.]\\d{1,3}[.]\\d{1,3}[:]\\d{1,4}$");
 
+    private static Thread connectionThread;
+
+
     @FXML
     Label joinGameHelperLabel;
 
@@ -108,7 +111,7 @@ public class FloorIsLavaController {
     }
 
     public static void leaveGame() {
-        Player.setConnected(false);
+        connectionThread.interrupt();
         setScene(INITIAL_SCREEN);
     }
 
@@ -150,7 +153,7 @@ public class FloorIsLavaController {
         int port = Integer.parseInt(textport);
 
         // Connection thread
-        Thread connectionThread = new Thread(new ConnectionInitializer(ipAddress, port, username));
+        connectionThread = new Thread(new ConnectionInitializer(ipAddress, port, username));
         connectionThread.start();
 
         setScene(GAME_SCREEN);

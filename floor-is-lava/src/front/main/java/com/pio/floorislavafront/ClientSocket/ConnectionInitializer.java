@@ -17,4 +17,6 @@ public class ConnectionInitializer implements Runnable {
         new ClientApplication(ip, port, nickname);
     }
 
+
+
 }
