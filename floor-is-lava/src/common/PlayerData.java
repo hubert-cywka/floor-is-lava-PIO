@@ -1,6 +1,8 @@
 package common;
 
-public class PlayerData {
+import java.io.Serializable;
+
+public class PlayerData implements Serializable {
 
     private String nickname;
     private boolean isAlive;
