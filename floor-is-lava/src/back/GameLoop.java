@@ -6,8 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import static common.GlobalSettings.MAX_PLAYERS;
 import static common.GlobalSettings.REFRESH_TIME;
 
 public class GameLoop implements Runnable {
@@ -80,9 +82,9 @@ public class GameLoop implements Runnable {
 
         byte[] map = prepareMap();
         int timer = prepareTimer();
+        ArrayList<PlayerData> playerData = preparePlayerData();
 
-
-        return new Packet(map, timer);
+        return new Packet(map, timer, playerData);
     }
 
     private byte[] prepareMap() throws IOException {
@@ -92,5 +94,29 @@ public class GameLoop implements Runnable {
 
     private int prepareTimer(){
         return game.getTimer().getTimerCurrentValue();
+    }
+
+    private ArrayList<PlayerData> preparePlayerData(){
+
+        Player player;
+        ArrayList<PlayerData> playerData = new ArrayList<>(MAX_PLAYERS);
+
+        for(int i=0; i<MAX_PLAYERS; i++){
+            player = game.findPlayerById(i);
+
+            if (player == null){
+                playerData.add(new PlayerData("---", false, false));
+                continue;
+            }
+
+            String nickname = player.getNickname();
+            boolean isAlive = player.isAlive();
+            boolean isConnected = player.isConnected();
+
+            playerData.add(new PlayerData(nickname, isAlive, isConnected));
+
+        }
+
+        return playerData;
     }
 }
