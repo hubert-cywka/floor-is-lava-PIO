@@ -39,4 +39,8 @@ public class PlayerData implements Serializable {
     public void setConnected(boolean connected) {
         isConnected = connected;
     }
+
+    public int getID() {
+        return ID;
+    }
 }

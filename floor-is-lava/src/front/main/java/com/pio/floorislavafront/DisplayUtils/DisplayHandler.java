@@ -190,9 +190,19 @@ public class DisplayHandler {
         for (int i=0; i< playerData.size(); i++)
         {
             PlayerData data = playerData.get(i);
-            imageHeart = "P" + i + "_heart";
-            imageConnect = "P" + i + "_connect";
-            nameLabel = "P" + i + "_name";
+            int id = data.getID();
+
+            if (id != -1) {
+                imageHeart = "P" + id + "_heart";
+                imageConnect = "P" + id + "_connect";
+                nameLabel = "P" + id + "_name";
+            }
+            else {
+                imageHeart = "P" + i + "_heart";
+                imageConnect = "P" + i + "_connect";
+                nameLabel = "P" + i + "_name";
+            }
+
 
             container = currentScene.lookup("#" + imageHeart);
             setHeartImage(container, data.isAlive());
