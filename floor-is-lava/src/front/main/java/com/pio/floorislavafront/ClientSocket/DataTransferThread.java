@@ -33,8 +33,6 @@ public class DataTransferThread implements Runnable {
                 sendPlayerMove();
                 updateMap(packet);
 
-                // method using only in program testing
-                printTimer(packet);
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -47,11 +45,6 @@ public class DataTransferThread implements Runnable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Deprecated
-    private void printTimer(Packet packet) {
-        System.out.println("Timer: " + packet.getTimer());
     }
 
     public static FieldType[][] deserializeFieldTypeArray(byte[] data) throws IOException, ClassNotFoundException {
