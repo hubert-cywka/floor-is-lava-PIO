@@ -64,7 +64,6 @@ public class GameLoop implements Runnable {
 
                     game.removePlayer(player.getNickname());
                     iterator.remove();
-
                 }
             }
         }

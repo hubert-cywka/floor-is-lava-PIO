@@ -18,12 +18,13 @@ public class Game implements Serializable {
     public GameMap gameMap;
     public ArrayList<Player> playersList;
     private final Timer timer;
-
+    private static int round;
 
     public Game() {
         this.playersList = new ArrayList<>(MAX_PLAYERS);
         this.gameMap = new GameMap();
-        this.timer = new Timer();
+        timer = new Timer();
+        round = 0;
 
         // test powerups
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
@@ -31,6 +32,18 @@ public class Game implements Serializable {
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, findValidPositionOnMap()));
     }
 
+    public static int getRound() {
+        return round;
+    }
+
+
+    public static void incrementRound() {
+        round += 1;
+    }
+
+    public static void resetRound() {
+        round = 0;
+    }
 
     public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         if (playersList.size() >= MAX_PLAYERS || hasSomeoneTheSameNickname(nickname))
@@ -170,5 +183,4 @@ public class Game implements Serializable {
     public Timer getTimer() {
         return timer;
     }
-
 }
