@@ -77,12 +77,20 @@ public class GameLoop implements Runnable {
     }
 
     private Packet preparePackOfData() throws IOException {
+
+        byte[] map = prepareMap();
+        int timer = prepareTimer();
+
+
+        return new Packet(map, timer);
+    }
+
+    private byte[] prepareMap() throws IOException {
         FieldType[][] map = game.gameMap.getMap();
-        byte[] serializedMap = serializeFieldTypeArray(map);
+        return serializeFieldTypeArray(map);
+    }
 
-        int timer = game.getTimer().getTimerCurrentValue();
-
-
-        return new Packet(serializedMap, timer);
+    private int prepareTimer(){
+        return game.getTimer().getTimerCurrentValue();
     }
 }
