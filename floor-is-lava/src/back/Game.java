@@ -17,7 +17,7 @@ public class Game implements Serializable {
 
     public GameMap gameMap;
     public ArrayList<Player> playersList;
-    private Timer timer;
+    private final Timer timer;
 
 
     public Game() {
@@ -41,6 +41,7 @@ public class Game implements Serializable {
         Player player = new Player(nickname, id, objectOutputStream, objectInputStream);
         playersList.add(player);
         insertPlayerToMap(player);
+        player.setConnected(true);
         return player;
     }
 
@@ -109,6 +110,7 @@ public class Game implements Serializable {
             return;
 
         player.setAlive(false);
+        player.setConnected(false);
         gameMap.removePlayer(player);
     }
 
