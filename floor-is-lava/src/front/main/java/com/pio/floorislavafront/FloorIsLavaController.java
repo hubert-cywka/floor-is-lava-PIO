@@ -1,7 +1,6 @@
 package front.main.java.com.pio.floorislavafront;
 
 import common.Direction;
-import common.Player;
 import front.main.java.com.pio.floorislavafront.ClientSocket.ConnectionInitializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -19,7 +18,7 @@ import javafx.stage.Screen;
 import java.util.regex.Pattern;
 
 import static common.Player.getNextPlayerMove;
-import static front.main.java.com.pio.floorislavafront.ClientSocket.ClientApplication.stopDataTransfer;
+import static front.main.java.com.pio.floorislavafront.ClientSocket.DataTransferThread.stopDataTransfer;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class FloorIsLavaController {

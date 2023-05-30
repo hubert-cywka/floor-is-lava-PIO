@@ -18,6 +18,7 @@ public class DataTransferThread implements Runnable {
 
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
+    private static boolean connectionStatus = true;
 
     public DataTransferThread(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
         this.objectInputStream = objectInputStream;
@@ -28,7 +29,7 @@ public class DataTransferThread implements Runnable {
     public void run() {
 
         try {
-            while (true) {
+            while (connectionStatus) {
                 Packet packet = receiveData();
                 sendPlayerMove();
                 updateMap(packet);
@@ -44,16 +45,19 @@ public class DataTransferThread implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-
-            try {
-                objectOutputStream.close();
-                objectInputStream.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
             throw new RuntimeException(e);
         }
+
+        try {
+            objectOutputStream.close();
+            objectInputStream.close();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void stopDataTransfer(){
+        connectionStatus = false;
     }
 
     public static FieldType[][] deserializeFieldTypeArray(byte[] data) throws IOException, ClassNotFoundException {

@@ -19,8 +19,6 @@ public class ClientApplication {
     private ObjectInputStream objectInputStream;
     private Socket socket;
 
-    private static Thread dataTransferThread;
-
     public ClientApplication(String host, int port, String nickname) {
         this.port = port;
         this.host = host;
@@ -80,10 +78,6 @@ public class ClientApplication {
         startDataTransferThread();
     }
 
-    public static void stopDataTransfer(){
-        dataTransferThread.interrupt();
-    }
-
     private boolean hasServerFreeSlot() throws IOException, ClassNotFoundException {
         String status = (String) objectInputStream.readObject();
         debug.message("Server status - " + status);
@@ -108,7 +102,7 @@ public class ClientApplication {
     }
 
     private void startDataTransferThread() {
-        dataTransferThread = new Thread(new DataTransferThread(objectInputStream, objectOutputStream));
+        Thread dataTransferThread = new Thread(new DataTransferThread(objectInputStream, objectOutputStream));
         dataTransferThread.start();
     }
 }
