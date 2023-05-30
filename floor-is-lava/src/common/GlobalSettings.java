@@ -7,7 +7,7 @@ public class GlobalSettings {
 
 
     // GameLoop
-    public static final int REFRESH_TIME = 50;
+    public static final int REFRESH_TIME = 1000;
 
     // Game
     public static final int MAX_PLAYERS = 4;
