@@ -19,6 +19,7 @@ import javafx.stage.Screen;
 import java.util.regex.Pattern;
 
 import static common.Player.getNextPlayerMove;
+import static front.main.java.com.pio.floorislavafront.ClientSocket.ClientApplication.stopDataTransfer;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class FloorIsLavaController {
@@ -111,6 +112,7 @@ public class FloorIsLavaController {
     }
 
     public static void leaveGame() {
+        stopDataTransfer();
         connectionThread.interrupt();
         setScene(INITIAL_SCREEN);
     }
