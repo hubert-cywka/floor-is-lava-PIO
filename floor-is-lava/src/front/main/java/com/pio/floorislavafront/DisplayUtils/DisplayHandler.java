@@ -1,7 +1,7 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
 import common.FieldType;
-import javafx.fxml.FXML;
+import common.PlayerData;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -119,7 +119,7 @@ public class DisplayHandler {
 
     }
 
-    public static void mapHandler(FieldType[][] map, int time) {
+    public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
         Node container = currentScene.lookup("#" + containerId);

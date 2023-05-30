@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.mapHandler;
+import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.gameHandler;
 
 public class DataTransferThread implements Runnable {
 
@@ -77,6 +77,6 @@ public class DataTransferThread implements Runnable {
 
     private void updateMap(Packet packet) throws IOException, ClassNotFoundException {
         FieldType[][] map = getDeserializedMap(packet.getMap());
-        Platform.runLater(() -> mapHandler(map, packet.getTimer()));
+        Platform.runLater(() -> gameHandler(map, packet.getTimer(), packet.getPlayerData()));
     }
 }
