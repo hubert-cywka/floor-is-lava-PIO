@@ -22,7 +22,7 @@ public class Player implements Serializable {
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;
         this.objectInputStream = objectInputStream;
-        this.isConnected = false;
+        this.isConnected = true;
         this.ID = ID;
         this.isAlive = true;
         this.lastStandingField = FieldType.FLOOR;

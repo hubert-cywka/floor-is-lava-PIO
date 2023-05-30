@@ -41,7 +41,6 @@ public class Game implements Serializable {
         Player player = new Player(nickname, id, objectOutputStream, objectInputStream);
         playersList.add(player);
         insertPlayerToMap(player);
-        player.setConnected(true);
         return player;
     }
 
