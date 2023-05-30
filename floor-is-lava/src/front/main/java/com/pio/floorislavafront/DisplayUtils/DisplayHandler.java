@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -22,6 +23,7 @@ import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimary
 
 public class DisplayHandler {
     private static final String SPRITE_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/sprites/";
+    private static final String STATS_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/stats/";
     private static final ArrayList<InputStream> SAFE_ZONE_SPRITE_IMAGE = new ArrayList<>();
     private static final ArrayList<InputStream> LAVA_SPRITE_IMAGE = new ArrayList<>();
     private static final ArrayList<InputStream> HOLE_SPRITE_IMAGE = new ArrayList<>();
@@ -118,6 +120,68 @@ public class DisplayHandler {
         }
 
     }
+    public static void setHeartImage(Node container, boolean isAlive) {
+        Image heart;
+        if (isAlive) {
+            heart = new Image("file:" + STATS_IMAGE_BASE.concat("alive.png"));
+        }
+        else {
+            heart = new Image("file:" + STATS_IMAGE_BASE.concat("dead.png"));
+        }
+
+        if (container instanceof ImageView)
+        {
+            ImageView view = (ImageView) container;
+            view.setImage(heart);
+        }
+    }
+    public static void setConnectImage(Node container, boolean isConnected) {
+        Image connect;
+        if (isConnected) {
+            connect = new Image("file:" + STATS_IMAGE_BASE.concat("online.png"));
+        }
+        else {
+            connect = new Image("file:" + STATS_IMAGE_BASE.concat("offline.png"));
+        }
+
+        if (container instanceof ImageView)
+        {
+            ImageView view = (ImageView) container;
+            view.setImage(connect);
+        }
+    }
+    public static void setNameLabel(Node container, String username) {
+        if (container instanceof Label)
+        {
+            Label nameLabel = (Label) container;
+            nameLabel.setText(String.valueOf(username));
+        }
+    }
+    public static void displayPlayerData(ArrayList<PlayerData> playerData){
+        Scene currentScene = getPrimaryStage().getScene();
+        Node container;
+        String imageHeart;
+        String imageConnect;
+        String nameLabel;
+
+        for (int i=0; i< playerData.size(); i++)
+        {
+            PlayerData data = playerData.get(i);
+            imageHeart = "P" + i + "_heart";
+            imageConnect = "P" + i + "_connect";
+            nameLabel = "P" + i + "_name";
+
+            container = currentScene.lookup("#" + imageHeart);
+            setHeartImage(container, data.isAlive());
+
+            container = currentScene.lookup("#" + imageConnect);
+            setConnectImage(container, data.isConnected());
+
+            container = currentScene.lookup("#" + nameLabel);
+            setNameLabel(container, data.getNickname());
+        }
+
+    }
 
     public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData) {
         Scene currentScene = getPrimaryStage().getScene();
@@ -125,6 +189,7 @@ public class DisplayHandler {
         Node container = currentScene.lookup("#" + containerId);
 
         displayTimer(time);
+        displayPlayerData(playerData);
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
