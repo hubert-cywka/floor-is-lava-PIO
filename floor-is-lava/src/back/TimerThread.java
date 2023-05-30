@@ -11,13 +11,14 @@ public class TimerThread implements Runnable {
 
     private final Debug debug;
     private final Game game;
+    private int floodStage;
 
 
     public TimerThread(Debug debug, Game game) {
         this.debug = debug;
         this.game = game;
+        this.floodStage = 0;
     }
-
 
     @Override
     public void run() {
@@ -40,8 +41,14 @@ public class TimerThread implements Runnable {
 
     private void handleRound() throws InterruptedException {
 
-        if (!isTimerZero())
+        if (!isTimerZero()) {
+            floodStage += 1;
+            game.gameMap.generateLavaBorders(floodStage);
             return;
+        } else {
+            floodStage = 0;
+        }
+
 
         debug.infoMessage("IS LAVA TIME");
         fillMapWithLava();
@@ -50,6 +57,11 @@ public class TimerThread implements Runnable {
         updatePlayerLastStandingField();
         debug.infoMessage("END OF LAVA TIME");
 
+        if (!game.playersList.isEmpty()) {
+            Game.incrementRound();
+        } else {
+            Game.resetRound();
+        }
     }
 
     private void removeLava(){

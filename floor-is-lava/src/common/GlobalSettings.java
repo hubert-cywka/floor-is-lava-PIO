@@ -21,12 +21,16 @@ public class GlobalSettings {
     // GameMap
     public static final int WIDTH = 120;
     public static final int HEIGHT = 75;
-    public static final int MIN_HOLE_RADIUS = 1;
-    public static final int MAX_HOLE_RADIUS = 3;
+    public static final int MIN_HOLE_RADIUS = 4;
+    public static final int MAX_HOLE_RADIUS = 8;
     public static final int MIN_LAVA_RADIUS = 5;
     public static final int MAX_LAVA_RADIUS = 10;
-    public static final int MAP_HOLE_FREQUENCY = 300;
+    public static final int MAP_HOLE_FREQUENCY = 500;
     public static final int BORDER_HOLE_FREQUENCY = 3;
+    public static final int ROUNDS_TO_INCREASE_LAVA_SIZE = 3;
+    public static final int ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT = 5;
+    public static final int MINIMUM_SAFE_ZONES = 2;
+    public static final int MAXIMUM_SAFE_ZONES = 5;
 
     // TimerThread
     public static final int TIMER_UPDATE_RATE = 1000; // 1sec
