@@ -8,7 +8,7 @@ import static common.GlobalSettings.MAX_PLAYERS;
 public class Packet implements Serializable {
     private final byte[] map;
     private final int timer;
-    private final ArrayList<PlayerData> playerData = new ArrayList<>(MAX_PLAYERS);
+    private ArrayList<PlayerData> playerData = new ArrayList<>(MAX_PLAYERS);
 
 
     public Packet(byte[] map, int timer) {
@@ -17,7 +17,15 @@ public class Packet implements Serializable {
     }
 
 
-    public void addPlayerData(PlayerData newData){
+    public void addPlayerData(ArrayList<PlayerData> newData) {
+
+        if (playerData.size() >= MAX_PLAYERS)
+            return;
+        playerData = newData;
+
+    }
+
+    public void addPlayerData(PlayerData newData) {
 
         if (playerData.size() >= MAX_PLAYERS)
             return;
