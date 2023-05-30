@@ -18,7 +18,6 @@ public class Player implements Serializable {
     private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
 
 
-
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;

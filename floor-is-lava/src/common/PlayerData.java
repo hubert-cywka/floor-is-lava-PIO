@@ -14,11 +14,11 @@ public class PlayerData implements Serializable {
         this.isConnected = isConnected;
     }
 
-    public String getNickname(){
+    public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname){
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 

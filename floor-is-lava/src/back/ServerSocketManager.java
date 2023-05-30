@@ -58,7 +58,7 @@ public class ServerSocketManager {
         clientThread.start();
     }
 
-    private void launchTimerThread(){
+    private void launchTimerThread() {
         Thread timerThread = new Thread(new TimerThread(debug, game));
         timerThread.start();
     }

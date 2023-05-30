@@ -85,19 +85,19 @@ public class GameLoop implements Runnable {
         return serializeFieldTypeArray(map);
     }
 
-    private int prepareTimer(){
+    private int prepareTimer() {
         return game.getTimer().getTimerCurrentValue();
     }
 
-    private ArrayList<PlayerData> preparePlayerData(){
+    private ArrayList<PlayerData> preparePlayerData() {
 
         Player player;
         ArrayList<PlayerData> playerData = new ArrayList<>(MAX_PLAYERS);
 
-        for(int i=0; i<MAX_PLAYERS; i++){
+        for (int i = 0; i < MAX_PLAYERS; i++) {
             player = game.findPlayerById(i);
 
-            if (player == null){
+            if (player == null) {
                 playerData.add(new PlayerData("---", false, false));
                 continue;
             }
