@@ -3,36 +3,19 @@ package common;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import static common.GlobalSettings.MAX_PLAYERS;
 
 public class Packet implements Serializable {
     private final byte[] map;
     private final int timer;
-    private ArrayList<PlayerData> playerData = new ArrayList<>(MAX_PLAYERS);
+    private final ArrayList<PlayerData> playerData;
 
 
-    public Packet(byte[] map, int timer) {
+    public Packet(byte[] map, int timer, ArrayList<PlayerData> playerData) {
         this.map = map;
         this.timer = timer;
+        this.playerData = playerData;
     }
 
-
-    public void addPlayerData(ArrayList<PlayerData> newData) {
-
-        if (playerData.size() >= MAX_PLAYERS)
-            return;
-        playerData = newData;
-
-    }
-
-    public void addPlayerData(PlayerData newData) {
-
-        if (playerData.size() >= MAX_PLAYERS)
-            return;
-
-        playerData.add(newData);
-
-    }
 
     public byte[] getMap() {
         return map;
