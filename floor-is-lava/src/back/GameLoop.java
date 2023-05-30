@@ -70,13 +70,6 @@ public class GameLoop implements Runnable {
         }
     }
 
-    public static byte[] serializeFieldTypeArray(FieldType[][] array) throws IOException {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
-        objectStream.writeObject(array);
-        objectStream.flush();
-        return byteStream.toByteArray();
-    }
 
     private Packet preparePackOfData() throws IOException {
 
@@ -119,4 +112,14 @@ public class GameLoop implements Runnable {
 
         return playerData;
     }
+
+
+    public static byte[] serializeFieldTypeArray(FieldType[][] array) throws IOException {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
+        objectStream.writeObject(array);
+        objectStream.flush();
+        return byteStream.toByteArray();
+    }
+
 }
