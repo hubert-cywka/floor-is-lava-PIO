@@ -77,6 +77,6 @@ public class DataTransferThread implements Runnable {
 
     private void updateMap(Packet packet) throws IOException, ClassNotFoundException {
         FieldType[][] map = getDeserializedMap(packet.getMap());
-        Platform.runLater(() -> mapHandler(map, packet.getTimer()));
+        Platform.runLater(() -> mapHandler(map, packet.getTimer(), packet.isWaitingForPlayers()));
     }
 }

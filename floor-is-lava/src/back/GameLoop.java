@@ -38,7 +38,6 @@ public class GameLoop implements Runnable {
         ObjectOutputStream objectOutputStream = player.getOutputStream();
         Packet packet = preparePackOfData();
         objectOutputStream.writeObject(packet);
-
     }
 
     @Override
@@ -66,6 +65,10 @@ public class GameLoop implements Runnable {
                     iterator.remove();
                 }
             }
+
+            if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
+                game.restartGame();
+            }
         }
     }
 
@@ -76,7 +79,7 @@ public class GameLoop implements Runnable {
         int timer = prepareTimer();
         ArrayList<PlayerData> playerData = preparePlayerData();
 
-        return new Packet(map, timer, playerData);
+        return new Packet(map, timer, playerData, game.isWaitingForPlayers());
     }
 
     private byte[] prepareMap() throws IOException {

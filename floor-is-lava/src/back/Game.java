@@ -11,20 +11,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static common.GlobalSettings.MAX_PLAYERS;
+import static common.GlobalSettings.*;
 
 public class Game implements Serializable {
 
     public GameMap gameMap;
     public ArrayList<Player> playersList;
     private final Timer timer;
-    private static int round;
+    private int round;
+    private boolean isWaitingForPlayers;
 
     public Game() {
         this.playersList = new ArrayList<>(MAX_PLAYERS);
-        this.gameMap = new GameMap();
+        this.gameMap = new GameMap(this);
         timer = new Timer();
-        round = 0;
+        this.isWaitingForPlayers = true;
+        this.round = 0;
 
         // test powerups
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
@@ -32,17 +34,35 @@ public class Game implements Serializable {
         addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, findValidPositionOnMap()));
     }
 
-    public static int getRound() {
-        return round;
+    public boolean isWaitingForPlayers() {
+        return this.isWaitingForPlayers;
     }
 
-
-    public static void incrementRound() {
-        round += 1;
+    public void setWaitingForPlayers(boolean isWaiting) {
+        this.isWaitingForPlayers = isWaiting;
     }
 
-    public static void resetRound() {
-        round = 0;
+    public int getRound() {
+        return this.round;
+    }
+
+    public void incrementRound() {
+        this.round += 1;
+    }
+
+    public void resetRound() {
+        this.round = 0;
+    }
+
+    public void startGame() {
+        setWaitingForPlayers(false);
+    }
+
+    public void restartGame() {
+        setWaitingForPlayers(true);
+        this.gameMap.generateMap();
+        this.getTimer().setTimer(ROUND_TIME);
+        this.resetRound();
     }
 
     public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
@@ -54,6 +74,11 @@ public class Game implements Serializable {
         Player player = new Player(nickname, id, objectOutputStream, objectInputStream);
         playersList.add(player);
         insertPlayerToMap(player);
+
+        if (playersList.size() >= MIN_PLAYERS) {
+            this.startGame();
+        }
+
         return player;
     }
 
@@ -68,11 +93,10 @@ public class Game implements Serializable {
         return random.nextInt(max - min) + min;
     }
 
-    public boolean isThatField(Position pos, FieldType fieldType){
-        try{
+    public boolean isThatField(Position pos, FieldType fieldType) {
+        try {
             return gameMap.getMap()[pos.row][pos.col] == fieldType;
-        }
-        catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return false;
         }
     }

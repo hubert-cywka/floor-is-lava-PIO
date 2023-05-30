@@ -17,12 +17,14 @@ public class GameMap implements Serializable {
     private final int width;
     private final int height;
     private final FieldType[][] map;
+    private Game game;
 
 
-    public GameMap() {
+    public GameMap(Game game) {
         this.width = WIDTH;
         this.height = HEIGHT;
         this.map = new FieldType[HEIGHT][WIDTH];
+        this.game = game;
         generateMap();
     }
 
@@ -40,7 +42,7 @@ public class GameMap implements Serializable {
     }
 
     public void generateLavaBorders(int floodStage) {
-        int additionalSize = Game.getRound() / ROUNDS_TO_INCREASE_LAVA_SIZE;
+        int additionalSize = game.getRound() / ROUNDS_TO_INCREASE_LAVA_SIZE;
         int minSize = MIN_LAVA_RADIUS + additionalSize + floodStage;
         int maxSize = MAX_LAVA_RADIUS + additionalSize + floodStage;
 
@@ -70,7 +72,7 @@ public class GameMap implements Serializable {
         replaceFields(fieldsToReplace, FieldType.FLOOR);
         generateLavaBorders(0);
 
-        int safeZonesAmount = Math.max(MAXIMUM_SAFE_ZONES - Game.getRound() / ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT, MINIMUM_SAFE_ZONES);
+        int safeZonesAmount = Math.max(MAXIMUM_SAFE_ZONES - game.getRound() / ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT, MINIMUM_SAFE_ZONES);
         generateSafeZones(safeZonesAmount);
     }
 
