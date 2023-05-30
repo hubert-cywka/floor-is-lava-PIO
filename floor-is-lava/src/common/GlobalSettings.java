@@ -11,6 +11,8 @@ public class GlobalSettings {
 
     // Game
     public static final int MAX_PLAYERS = 4;
+    public static final int MIN_PLAYERS = 2;
+    public static final int ROUND_TIME = 5;
 
     // JoiningThread
     public static final String SERVER_HAS_FREE_SLOT = "OK";

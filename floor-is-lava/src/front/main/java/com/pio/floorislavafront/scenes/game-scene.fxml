@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
+<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
    <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
       <fill>
          <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -34,9 +30,14 @@
         <Image url="@../../../../../resources/com/pio/floorislavafront/images/arrow-back.png" />
     </ImageView>
    <Circle fill="#8bc7ff" layoutX="960.0" layoutY="96.0" radius="71.0" stroke="BLACK" strokeType="INSIDE" />
-   <Label fx:id="textlabel" layoutX="932.0" layoutY="26.0" text="0">
+   <Label fx:id="timer" layoutX="932.0" layoutY="26.0" text="0">
       <font>
          <Font name="System Bold Italic" size="96.0" />
+      </font>
+   </Label>
+   <Label fx:id="gameMessage" alignment="CENTER" layoutX="810.0" layoutY="167.0" prefWidth="300" text="Hi!" textAlignment="CENTER">
+      <font>
+         <Font name="System Bold Italic" size="25.0" />
       </font>
    </Label>
    <ImageView fitHeight="301.0" fitWidth="301.0" layoutX="25.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true">

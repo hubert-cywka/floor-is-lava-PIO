@@ -1,5 +1,7 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
+import back.Game;
+import back.GameLoop;
 import common.FieldType;
 import common.PlayerData;
 import javafx.scene.Node;
@@ -109,9 +111,27 @@ public class DisplayHandler {
         return square;
     }
 
+    private static String buildDisplayedMessage(boolean isWaitingForPlayers) {
+        if (isWaitingForPlayers) {
+            return "Waiting for players...";
+        } else {
+            return "Try to not die!";
+        }
+    }
+
+    public static void displayMessage(String message) {
+        Scene currentScene = getPrimaryStage().getScene();
+        String containerId = "gameMessage";
+        Node container = currentScene.lookup("#" + containerId);
+        if (container instanceof Label) {
+            Label timerLabel = (Label) container;
+            timerLabel.setText(message);
+        }
+    }
+
     public static void displayTimer(int time){
         Scene currentScene = getPrimaryStage().getScene();
-        String containerId = "textlabel";
+        String containerId = "timer";
         Node container = currentScene.lookup("#" + containerId);
         if (container instanceof Label)
         {
@@ -120,6 +140,7 @@ public class DisplayHandler {
         }
 
     }
+
     public static void setHeartImage(Node container, boolean isAlive) {
         Image heart;
         if (isAlive) {
@@ -128,13 +149,13 @@ public class DisplayHandler {
         else {
             heart = new Image("file:" + STATS_IMAGE_BASE.concat("dead.png"));
         }
-
         if (container instanceof ImageView)
         {
             ImageView view = (ImageView) container;
             view.setImage(heart);
         }
     }
+
     public static void setConnectImage(Node container, boolean isConnected) {
         Image connect;
         if (isConnected) {
@@ -150,6 +171,7 @@ public class DisplayHandler {
             view.setImage(connect);
         }
     }
+
     public static void setNameLabel(Node container, String username) {
         if (container instanceof Label)
         {
@@ -157,6 +179,7 @@ public class DisplayHandler {
             nameLabel.setText(String.valueOf(username));
         }
     }
+
     public static void displayPlayerData(ArrayList<PlayerData> playerData){
         Scene currentScene = getPrimaryStage().getScene();
         Node container;
@@ -183,13 +206,14 @@ public class DisplayHandler {
 
     }
 
-    public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData) {
+    public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData, boolean isWaitingForPlayers) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
         Node container = currentScene.lookup("#" + containerId);
 
         displayTimer(time);
         displayPlayerData(playerData);
+        displayMessage(buildDisplayedMessage(isWaitingForPlayers));
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
