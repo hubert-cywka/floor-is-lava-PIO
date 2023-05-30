@@ -63,25 +63,25 @@ public class GameMap implements Serializable {
         }
     }
 
-    public void setLavaTime(){
+    public void setLavaTime() {
         replaceFields(FieldType.FLOOR, FieldType.LAVA);
     }
 
-    public void setSafeTime(){
+    public void setSafeTime() {
         replaceFields(FieldType.LAVA, FieldType.FLOOR);
         replaceFields(FieldType.SAFE_ZONE, FieldType.FLOOR);
         generateLavaBorders();
         generateSafeZones(2);
     }
 
-    public void generateSafeZones(int number){
+    public void generateSafeZones(int number) {
 
         int safeZones = 0, row, col;
 
-        while(safeZones < number){
+        while (safeZones < number) {
 
-            row = getRandomNumberInRange(0, height-1);
-            col = getRandomNumberInRange(0, width-1);
+            row = getRandomNumberInRange(0, height - 1);
+            col = getRandomNumberInRange(0, width - 1);
 
             if (map[row][col] != FieldType.FLOOR)
                 continue;
@@ -91,25 +91,9 @@ public class GameMap implements Serializable {
 
         }
 
-//        for (int row = 0; row < height; row++) {
-//            for (int col = 0; col < width; col++) {
-//
-//                if (safeZones >= number)
-//                    return;
-//
-//                int randomSeed = (int) Math.floor(Math.random() * 200);
-//                if (randomSeed == 0) {
-//                    int randomWidth = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
-//                    int randomHeight = (int) Math.floor(Math.random() * (MAX_HOLE_RADIUS - MIN_HOLE_RADIUS) + MAX_HOLE_RADIUS);
-//                    insertZone(col, row, randomWidth, randomHeight, FieldType.SAFE_ZONE);
-//                    safeZones++;
-//                }
-//            }
-//        }
-
     }
 
-    private void replaceFields(FieldType from, FieldType to){
+    private void replaceFields(FieldType from, FieldType to) {
 
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
@@ -139,7 +123,7 @@ public class GameMap implements Serializable {
             }
         }
 
-        generateSafeZones(2);
+        generateSafeZones(3);
     }
 
     private boolean isWithinCircle(int col, int row, int centerCol, int centerRow, int radiusSquared) {
@@ -171,7 +155,6 @@ public class GameMap implements Serializable {
         }
     }
 
-    // szybkosc przenikanie przez sciany
     public void insertPowerUp(PowerUp pow) {
         if (isValidPosition(pow.position.col, pow.position.row) && checkIfFloor(pow.position))
             map[pow.position.col][pow.position.row] = pow.type;

@@ -6,8 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import static common.GlobalSettings.MAX_PLAYERS;
 import static common.GlobalSettings.REFRESH_TIME;
 
 public class GameLoop implements Runnable {
@@ -68,6 +70,50 @@ public class GameLoop implements Runnable {
         }
     }
 
+
+    private Packet preparePackOfData() throws IOException {
+
+        byte[] map = prepareMap();
+        int timer = prepareTimer();
+        ArrayList<PlayerData> playerData = preparePlayerData();
+
+        return new Packet(map, timer, playerData);
+    }
+
+    private byte[] prepareMap() throws IOException {
+        FieldType[][] map = game.gameMap.getMap();
+        return serializeFieldTypeArray(map);
+    }
+
+    private int prepareTimer() {
+        return game.getTimer().getTimerCurrentValue();
+    }
+
+    private ArrayList<PlayerData> preparePlayerData() {
+
+        Player player;
+        ArrayList<PlayerData> playerData = new ArrayList<>(MAX_PLAYERS);
+
+        for (int i = 0; i < MAX_PLAYERS; i++) {
+            player = game.findPlayerById(i);
+
+            if (player == null) {
+                playerData.add(new PlayerData("---", false, false));
+                continue;
+            }
+
+            String nickname = player.getNickname();
+            boolean isAlive = player.isAlive();
+            boolean isConnected = player.isConnected();
+
+            playerData.add(new PlayerData(nickname, isAlive, isConnected));
+
+        }
+
+        return playerData;
+    }
+
+
     public static byte[] serializeFieldTypeArray(FieldType[][] array) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
@@ -76,13 +122,4 @@ public class GameLoop implements Runnable {
         return byteStream.toByteArray();
     }
 
-    private Packet preparePackOfData() throws IOException {
-        FieldType[][] map = game.gameMap.getMap();
-        byte[] serializedMap = serializeFieldTypeArray(map);
-
-        int timer = game.getTimer().getTimerCurrentValue();
-
-
-        return new Packet(serializedMap, timer);
-    }
 }

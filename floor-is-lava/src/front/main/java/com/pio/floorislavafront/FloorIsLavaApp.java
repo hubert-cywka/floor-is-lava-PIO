@@ -33,7 +33,7 @@ public class FloorIsLavaApp extends Application {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         try {
             FloorIsLavaController.leaveGame();
         } catch (Exception e) {

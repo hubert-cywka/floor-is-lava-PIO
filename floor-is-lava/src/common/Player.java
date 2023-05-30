@@ -18,15 +18,14 @@ public class Player implements Serializable {
     private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
 
 
-
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;
         this.objectInputStream = objectInputStream;
-        this.isConnected = false;
+        this.isConnected = true;
         this.ID = ID;
         this.isAlive = true;
-        this.lastStandingField = FieldType.FLOOR;
+        this.lastStandingField = FieldType.SAFE_ZONE;
         position = new Position(-1, -1);
     }
 

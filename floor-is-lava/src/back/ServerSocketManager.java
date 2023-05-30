@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class ServerSocketManager {
     private final Debug debug;
-    private final boolean isDebugActivated = true;
+    private final boolean isDebugActivated = false;
 
     private final int port;
     private final Game game;
@@ -58,7 +58,7 @@ public class ServerSocketManager {
         clientThread.start();
     }
 
-    private void launchTimerThread(){
+    private void launchTimerThread() {
         Thread timerThread = new Thread(new TimerThread(debug, game));
         timerThread.start();
     }
