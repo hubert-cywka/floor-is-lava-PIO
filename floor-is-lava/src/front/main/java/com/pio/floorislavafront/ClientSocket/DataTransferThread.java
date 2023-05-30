@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.mapHandler;
+import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.gameHandler;
 
 public class DataTransferThread implements Runnable {
 
