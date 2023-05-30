@@ -1,5 +1,7 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
+import back.Game;
+import back.GameLoop;
 import common.FieldType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -107,9 +109,27 @@ public class DisplayHandler {
         return square;
     }
 
+    private static String buildDisplayedMessage(boolean isWaitingForPlayers) {
+        if (isWaitingForPlayers) {
+            return "Waiting for players...";
+        } else {
+            return "Try to not die!";
+        }
+    }
+
+    public static void displayMessage(String message) {
+        Scene currentScene = getPrimaryStage().getScene();
+        String containerId = "gameMessage";
+        Node container = currentScene.lookup("#" + containerId);
+        if (container instanceof Label) {
+            Label timerLabel = (Label) container;
+            timerLabel.setText(message);
+        }
+    }
+
     public static void displayTimer(int time){
         Scene currentScene = getPrimaryStage().getScene();
-        String containerId = "textlabel";
+        String containerId = "timer";
         Node container = currentScene.lookup("#" + containerId);
         if (container instanceof Label)
         {
@@ -119,12 +139,13 @@ public class DisplayHandler {
 
     }
 
-    public static void mapHandler(FieldType[][] map, int time) {
+    public static void mapHandler(FieldType[][] map, int time, boolean isWaitingForPlayers) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
         Node container = currentScene.lookup("#" + containerId);
 
         displayTimer(time);
+        displayMessage(buildDisplayedMessage(isWaitingForPlayers));
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;

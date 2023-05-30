@@ -28,8 +28,10 @@ public class TimerThread implements Runnable {
             try {
 
                 Thread.sleep(TIMER_UPDATE_RATE);
-                decrementTimer();
-                handleRound();
+                if (!game.isWaitingForPlayers()) {
+                    decrementTimer();
+                    handleRound();
+                }
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -49,7 +51,6 @@ public class TimerThread implements Runnable {
             floodStage = 0;
         }
 
-
         debug.infoMessage("IS LAVA TIME");
         fillMapWithLava();
         Thread.sleep(BREAK_TIME_DURING_LAVA_TIME);
@@ -58,9 +59,9 @@ public class TimerThread implements Runnable {
         debug.infoMessage("END OF LAVA TIME");
 
         if (!game.playersList.isEmpty()) {
-            Game.incrementRound();
+            game.incrementRound();
         } else {
-            Game.resetRound();
+            game.resetRound();
         }
     }
 
@@ -84,8 +85,4 @@ public class TimerThread implements Runnable {
     private void decrementTimer() {
         game.getTimer().decrementTimer();
     }
-
-
-
-
 }
