@@ -24,4 +24,8 @@ public class Packet implements Serializable {
     public int getTimer() {
         return timer;
     }
+
+    public ArrayList<PlayerData> getPlayerData() {
+        return playerData;
+    }
 }
