@@ -101,12 +101,6 @@ public class GameMap implements Serializable {
             if (map[row][col] != FieldType.FLOOR)
                 continue;
 
-            if (PLAYER_FIELDS.contains(map[row][col])){
-                Player player = game.findPlayerByFiledType(map[row][col]);
-                player.setLastStandingField(FieldType.SAFE_ZONE);
-            }
-
-
             insertZone(col, row, getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), FieldType.SAFE_ZONE);
             safeZones++;
         }
@@ -168,6 +162,8 @@ public class GameMap implements Serializable {
 
                 if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(RESTRICTED_FIELDS, col, row)) {
 
+                    actionWhenSafezoneOnPlayer(row, col, tile);
+
                     if (!killPlayerInLava(row, col, tile))
                         continue;
 
@@ -178,6 +174,16 @@ public class GameMap implements Serializable {
 
             }
         }
+    }
+
+
+    private void actionWhenSafezoneOnPlayer(int row, int col, FieldType tile){
+
+        if (PLAYER_FIELDS.contains(map[row][col]) && (tile == FieldType.SAFE_ZONE)){
+            Player player = game.findPlayerByFiledType(map[row][col]);
+            player.setLastStandingField(FieldType.SAFE_ZONE);
+        }
+
     }
 
     private boolean killPlayerInLava(int row, int col, FieldType tile) {
