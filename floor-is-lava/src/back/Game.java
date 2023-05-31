@@ -219,8 +219,6 @@ public class Game implements Serializable {
         if(player.isBoostedWithSpeed()) {
             gameMap.movePlayer(player, move);
             gameMap.movePlayer(player, move);
-            gameMap.movePlayer(player, move);
-            gameMap.movePlayer(player, move);
         }else{
             gameMap.movePlayer(player, move);
         }
