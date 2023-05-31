@@ -1,5 +1,8 @@
 package common;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GlobalSettings {
 
 
@@ -33,6 +36,8 @@ public class GlobalSettings {
     public static final int ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT = 5;
     public static final int MINIMUM_SAFE_ZONES = 2;
     public static final int MAXIMUM_SAFE_ZONES = 5;
+    public static final ArrayList<FieldType> PLAYER_FIELDS = new ArrayList<>(Arrays.asList(FieldType.PLAYER_0, FieldType.PLAYER_1, FieldType.PLAYER_2, FieldType.PLAYER_3));
+    public static final ArrayList<FieldType> RESTRICTED_FIELDS = new ArrayList<>(Arrays.asList(FieldType.SAFE_ZONE, FieldType.HOLE));
 
     // TimerThread
     public static final int TIMER_UPDATE_RATE = 1000; // 1sec

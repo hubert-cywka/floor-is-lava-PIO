@@ -156,14 +156,27 @@ public class GameMap implements Serializable {
         int endCol = centerCol + radiusWidth;
         int endRow = centerRow + radiusHeight;
 
-        ArrayList<FieldType> restrictedFields = new ArrayList<>(Arrays.asList(FieldType.PLAYER_0, FieldType.PLAYER_1, FieldType.PLAYER_2, FieldType.PLAYER_3, FieldType.SAFE_ZONE, FieldType.HOLE));
-
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {
-                if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(restrictedFields, col, row)) {
+
+                if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(RESTRICTED_FIELDS, col, row)) {
+
+                    killPlayerInLava(row, col, tile);
                     map[row][col] = tile;
+
                 }
+
+
             }
+        }
+    }
+
+    private void killPlayerInLava(int row, int col, FieldType tile) {
+
+        if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA){
+            Player player = game.findPlayerByFiledType(map[row][col]);
+            if (player != null)
+                game.killPlayer(player);
         }
     }
 
@@ -240,7 +253,7 @@ public class GameMap implements Serializable {
         if (isOutOfBorder(newPosition))
             return;
 
-        if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)){
+        if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)) {
             game.killPlayer(player);
             return;
         }
