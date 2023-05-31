@@ -281,6 +281,7 @@ public class GameMap implements Serializable {
         }
 
         if(!isPlayerCollision(player, newPosition)) return;
+        if(isInHole(newPosition)) return;
         if (isOutOfBorder(newPosition))
             return;
 
@@ -350,8 +351,8 @@ public class GameMap implements Serializable {
             }
         }
     }
-
-    public FieldType getPlayerFieldType(int ID){
-        return FieldType.values()[ID];
+    private boolean isInHole(Position newPosition) {
+        FieldType fieldType = map[newPosition.row][newPosition.col];
+        return fieldType == FieldType.HOLE;
     }
 }
