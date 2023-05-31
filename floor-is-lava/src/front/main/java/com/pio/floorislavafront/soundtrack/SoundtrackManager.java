@@ -6,7 +6,7 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
 public class SoundtrackManager {
-    private final String BASE_SOUNDTRACK_PATH = "floor-is-lava/src/front/main/resources/com/pio/floorislavafront/music/";
+    private final String BASE_SOUNDTRACK_PATH = "src/front/main/resources/com/pio/floorislavafront/music/";
     public final String SOUNDTRACK_AMBIENT = BASE_SOUNDTRACK_PATH.concat("ambient");
     public final String SOUNDTRACK_INSPIRING = BASE_SOUNDTRACK_PATH.concat("inspiring");
 
