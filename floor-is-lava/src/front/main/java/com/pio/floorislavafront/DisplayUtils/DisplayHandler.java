@@ -24,8 +24,8 @@ import static common.GlobalSettings.*;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class DisplayHandler {
-    private static final String SPRITE_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/sprites/";
-    private static final String STATS_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/stats/";
+    private static final String SPRITE_IMAGE_BASE = "floor-is-lava/src/front/main/resources/com/pio/floorislavafront/images/sprites/";
+    private static final String STATS_IMAGE_BASE = "floor-is-lava/src/front/main/resources/com/pio/floorislavafront/images/stats/";
     private static final ArrayList<InputStream> SAFE_ZONE_SPRITE_IMAGE = new ArrayList<>();
     private static final ArrayList<InputStream> LAVA_SPRITE_IMAGE = new ArrayList<>();
     private static final ArrayList<InputStream> HOLE_SPRITE_IMAGE = new ArrayList<>();
