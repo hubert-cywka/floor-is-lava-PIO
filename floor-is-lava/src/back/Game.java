@@ -160,7 +160,7 @@ public class Game implements Serializable {
 
         player.setAlive(false);
         player.setConnected(false);
-        gameMap.removePlayer(player);
+        gameMap.removePlayerFromMap(player);
     }
 
     public int getMaxPlayers() {
@@ -197,6 +197,11 @@ public class Game implements Serializable {
 
         return null;
 
+    }
+
+    public void killPlayer(Player player) {
+        player.setAlive(false);
+        gameMap.removePlayerFromMap(player);
     }
 
 

@@ -145,6 +145,10 @@ public class GameMap implements Serializable {
         return fields.contains(map[row][col]);
     }
 
+    public boolean isThatField(FieldType field, int col, int row) {
+        return map[row][col] == field;
+    }
+
     public void insertZone(int centerCol, int centerRow, int radiusWidth, int radiusHeight, FieldType tile) {
         int radiusSquared = radiusWidth * radiusHeight;
         int startCol = centerCol - radiusWidth;
@@ -202,7 +206,7 @@ public class GameMap implements Serializable {
         }
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayerFromMap(Player player) {
         Position position = player.getPosition();
         map[position.row][position.col] = player.getLastStandingField();
     }
@@ -215,10 +219,6 @@ public class GameMap implements Serializable {
     private boolean isValidPosition(Position p) {
         if (p.col < 0 || p.col >= width || p.row < 0 || p.row >= height) return false;
         return map[p.row][p.col] != FieldType.LAVA && map[p.row][p.col] != FieldType.HOLE;
-    }
-
-    private boolean isFloor(int col, int row) {
-        return isValidPosition(col, row) && map[row][col] == FieldType.FLOOR;
     }
 
     public void movePlayer(Player player, Direction move) {
@@ -236,6 +236,12 @@ public class GameMap implements Serializable {
 
         if (isOutOfBorder(newPosition))
             return;
+
+        if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)){
+            game.killPlayer(player);
+            return;
+        }
+
 
         updateLastStandingFieldOnMap(player);
 
