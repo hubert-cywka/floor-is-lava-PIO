@@ -70,7 +70,10 @@ public class TimerThread implements Runnable {
 
         for(Player player : game.playersList){
             if (player.getLastStandingField() != FieldType.SAFE_ZONE){
-                player.setLastStandingField(FieldType.LAVA);
+
+                if (!(player.getLastStandingField() == FieldType.HOLE))
+                    player.setLastStandingField(FieldType.LAVA);
+
                 game.killPlayer(player);
             }
         }
