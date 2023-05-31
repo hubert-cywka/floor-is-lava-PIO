@@ -27,6 +27,7 @@ public class GameMap implements Serializable {
         this.map = new FieldType[HEIGHT][WIDTH];
         this.game = game;
         generateMap();
+
     }
 
 
@@ -79,8 +80,6 @@ public class GameMap implements Serializable {
 
         int safeZonesAmount = Math.max(MAXIMUM_SAFE_ZONES - game.getRound() / ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT, MINIMUM_SAFE_ZONES);
         generateSafeZones(safeZonesAmount);
-
-        generatePowerUps(5);
     }
 
     public void generateHoles() {
@@ -109,27 +108,6 @@ public class GameMap implements Serializable {
 
             insertZone(col, row, getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), FieldType.SAFE_ZONE);
             safeZones++;
-        }
-
-    }
-
-    public void generatePowerUps(int number) {
-        int powerUps = 0, row, col;
-
-        while (powerUps < number) {
-
-            row = getRandomNumberInRange(0, height - 1);
-            col = getRandomNumberInRange(0, width - 1);
-
-            if (map[row][col] != FieldType.FLOOR)
-                continue;
-
-            int boostType = getRandomNumberInRange(0,1);
-            if(boostType==1)
-                game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, new Position(col,row)));
-            else
-                game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, new Position(col,row)));
-            powerUps++;
         }
 
     }
@@ -315,14 +293,12 @@ public class GameMap implements Serializable {
             return;
         }
 
-        if(isThatField(FieldType.BOOST_SPEED,newPosition.col,newPosition.row)){
+        if(isThatField(FieldType.BOOST_SPEED, newPosition.col, newPosition.row)){
             player.setRoundsBoostedSpeed();
-            player.setBoostedWithSpeed();
         }
 
         if(isThatField(FieldType.BOOST_GHOST,newPosition.col,newPosition.row)){
             player.setRoundsBoostedGhost();
-            player.setBoostedWithGhost();
         }
 
         updateLastStandingFieldOnMap(player);

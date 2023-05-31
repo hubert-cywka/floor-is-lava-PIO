@@ -9,20 +9,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static common.GlobalSettings.*;
 
 public class Game implements Serializable {
 
     public GameMap gameMap;
-    public ArrayList<Player> playersList;
+    public List<Player> playersList;
     private final Timer timer;
     private int round;
     private boolean isWaitingForPlayers;
 
     public Game() {
-        this.playersList = new ArrayList<>(MAX_PLAYERS);
+        this.playersList = new CopyOnWriteArrayList<Player>();
         this.gameMap = new GameMap(this);
         timer = new Timer();
         this.isWaitingForPlayers = true;
@@ -216,7 +218,7 @@ public class Game implements Serializable {
 
 
     public void movePlayer(Player player, Direction move) {
-        if(player.isBoostedWithSpeed()) {
+        if(player.getRoundsBoostedSpeed() > 0) {
             gameMap.movePlayer(player, move);
             gameMap.movePlayer(player, move);
         }else{
