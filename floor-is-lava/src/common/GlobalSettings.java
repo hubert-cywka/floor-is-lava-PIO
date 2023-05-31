@@ -38,6 +38,8 @@ public class GlobalSettings {
     public static final int MAXIMUM_SAFE_ZONES = 5;
     public static final ArrayList<FieldType> PLAYER_FIELDS = new ArrayList<>(Arrays.asList(FieldType.PLAYER_0, FieldType.PLAYER_1, FieldType.PLAYER_2, FieldType.PLAYER_3));
     public static final ArrayList<FieldType> RESTRICTED_FIELDS = new ArrayList<>(Arrays.asList(FieldType.SAFE_ZONE, FieldType.HOLE));
+    public static final int MIN_SAFEZONE_SIZE = 4;
+    public static final int MAX_SAFEZONE_SIZE = 8;
 
     // TimerThread
     public static final int TIMER_UPDATE_RATE = 1000; // 1sec

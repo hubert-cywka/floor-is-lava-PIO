@@ -101,7 +101,13 @@ public class GameMap implements Serializable {
             if (map[row][col] != FieldType.FLOOR)
                 continue;
 
-            insertZone(col, row, getRandomNumberInRange(4, 10), getRandomNumberInRange(4, 10), FieldType.SAFE_ZONE);
+            if (PLAYER_FIELDS.contains(map[row][col])){
+                Player player = game.findPlayerByFiledType(map[row][col]);
+                player.setLastStandingField(FieldType.SAFE_ZONE);
+            }
+
+
+            insertZone(col, row, getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), FieldType.SAFE_ZONE);
             safeZones++;
         }
 
