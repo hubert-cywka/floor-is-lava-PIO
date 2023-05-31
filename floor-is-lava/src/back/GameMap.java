@@ -4,6 +4,7 @@ import common.Direction;
 import common.FieldType;
 import common.Player;
 import common.PowerUp;
+import javafx.geometry.Pos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -234,13 +235,24 @@ public class GameMap implements Serializable {
         return map[p.row][p.col] != FieldType.LAVA && map[p.row][p.col] != FieldType.HOLE;
     }
 
+    private FieldType getPlayerSymbol(Player player){
+        return FieldType.valueOf("PLAYER_" + player.getID());
+    }
+
+    private void renewPlayerSymbol(Player player){
+        FieldType symbol = getPlayerSymbol(player);
+        Position position = player.getPosition();
+        map[position.row][position.col] = symbol;
+    }
+
     public void movePlayer(Player player, Direction move) {
 
         if (!player.isAlive())
             return;
 
         Position position = player.getPosition();
-        FieldType playerSymbol = map[position.row][position.col];
+        FieldType playerSymbol = getPlayerSymbol(player);
+        renewPlayerSymbol(player);
 
         Position newPosition = new Position(position.col, position.row);
         switch (move) {
