@@ -1,10 +1,6 @@
 package back;
 
-import common.Direction;
-import common.FieldType;
-import common.Player;
-import common.PowerUp;
-import javafx.geometry.Pos;
+import common.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -284,6 +280,7 @@ public class GameMap implements Serializable {
             case LEFT -> newPosition.col--;
         }
 
+        if(!isPlayerCollision(player, newPosition)) return;
         if (isOutOfBorder(newPosition))
             return;
 
@@ -333,5 +330,28 @@ public class GameMap implements Serializable {
         }
         System.err.println("------------------------------------------------------------------------");
     }
+    public boolean isPlayerCollision(Player player, Position newPosition){
+        FieldType fieldType = map[newPosition.row][newPosition.col];
+        switch (player.getID()) {
+            case 0 -> {
+                return fieldType != FieldType.PLAYER_1 && fieldType != FieldType.PLAYER_2 && fieldType != FieldType.PLAYER_3;
+            }
+            case 1 -> {
+                return fieldType != FieldType.PLAYER_0 && fieldType != FieldType.PLAYER_2 && fieldType != FieldType.PLAYER_3;
+            }
+            case 2 -> {
+                return fieldType != FieldType.PLAYER_0 && fieldType != FieldType.PLAYER_1 && fieldType != FieldType.PLAYER_3;
+            }
+            case 3 -> {
+                return fieldType != FieldType.PLAYER_0 && fieldType != FieldType.PLAYER_1 && fieldType != FieldType.PLAYER_2;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
 
+    public FieldType getPlayerFieldType(int ID){
+        return FieldType.values()[ID];
+    }
 }
