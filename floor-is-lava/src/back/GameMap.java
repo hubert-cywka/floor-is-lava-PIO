@@ -71,6 +71,10 @@ public class GameMap implements Serializable {
     public void setSafeTime() {
         ArrayList<FieldType> fieldsToReplace = new ArrayList<>(Arrays.asList(FieldType.LAVA, FieldType.SAFE_ZONE));
         replaceFields(fieldsToReplace, FieldType.FLOOR);
+
+        for (Player player : game.playersList)
+            player.setLastStandingField(FieldType.FLOOR);
+
         generateLavaBorders(0);
 
         int safeZonesAmount = Math.max(MAXIMUM_SAFE_ZONES - game.getRound() / ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT, MINIMUM_SAFE_ZONES);
@@ -178,12 +182,10 @@ public class GameMap implements Serializable {
 
 
     private void actionWhenSafezoneOnPlayer(int row, int col, FieldType tile){
-
         if (PLAYER_FIELDS.contains(map[row][col]) && (tile == FieldType.SAFE_ZONE)){
             Player player = game.findPlayerByFiledType(map[row][col]);
             player.setLastStandingField(FieldType.SAFE_ZONE);
         }
-
     }
 
     private boolean killPlayerInLava(int row, int col, FieldType tile) {
