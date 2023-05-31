@@ -53,6 +53,7 @@ public class TimerThread implements Runnable {
 
         debug.infoMessage("IS LAVA TIME");
         fillMapWithLava();
+        killPlayersInLava();
         Thread.sleep(BREAK_TIME_DURING_LAVA_TIME);
         removeLava();
         updatePlayerLastStandingField();
@@ -63,6 +64,20 @@ public class TimerThread implements Runnable {
         } else {
             game.resetRound();
         }
+    }
+
+    private void killPlayersInLava(){
+
+        for(Player player : game.playersList){
+            if (player.getLastStandingField() != FieldType.SAFE_ZONE){
+
+                if (!(player.getLastStandingField() == FieldType.HOLE))
+                    player.setLastStandingField(FieldType.LAVA);
+
+                game.killPlayer(player);
+            }
+        }
+
     }
 
     private void removeLava(){

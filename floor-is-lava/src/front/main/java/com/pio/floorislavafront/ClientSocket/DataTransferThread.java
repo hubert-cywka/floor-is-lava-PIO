@@ -33,15 +33,6 @@ public class DataTransferThread implements Runnable {
                 Packet packet = receiveData();
                 sendPlayerMove();
                 updateMap(packet);
-
-
-                // Received PlayerData test
-                ArrayList<PlayerData> playerData = packet.getPlayerData();
-                for (PlayerData data : playerData) {
-                    System.err.println("[Nick: " + data.getNickname() + "]   " + "[Alive: " + data.isAlive() + "]   " + "[Conn: " + data.isConnected() + "]");
-                }
-                System.out.println();
-
             }
 
         } catch (IOException | ClassNotFoundException e) {

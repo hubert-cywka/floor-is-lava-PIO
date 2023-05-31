@@ -106,10 +106,9 @@ public class GameLoop implements Runnable {
 
             String nickname = player.getNickname();
             boolean isAlive = player.isAlive();
-            boolean isConnected = player.isConnected();
             int ID = player.getID();
 
-            playerData.add(new PlayerData(nickname, isAlive, isConnected, ID));
+            playerData.add(new PlayerData(nickname, isAlive, true, ID));
 
         }
 

@@ -160,7 +160,7 @@ public class Game implements Serializable {
 
         player.setAlive(false);
         player.setConnected(false);
-        gameMap.removePlayer(player);
+        gameMap.removePlayerFromMap(player);
     }
 
     public int getMaxPlayers() {
@@ -197,6 +197,26 @@ public class Game implements Serializable {
 
         return null;
 
+    }
+
+    public Player findPlayerByFiledType(FieldType fieldType) {
+
+        if (!PLAYER_FIELDS.contains(fieldType))
+            return null;
+
+        String textField = fieldType.toString();
+
+        for (int i = 0; i < MAX_PLAYERS; i++) {
+            if (textField.contains(String.valueOf(i)))
+                return playersList.get(i);
+        }
+
+        return null;
+    }
+
+    public void killPlayer(Player player) {
+        player.setAlive(false);
+        gameMap.removePlayerFromMap(player);
     }
 
 

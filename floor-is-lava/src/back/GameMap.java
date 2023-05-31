@@ -4,6 +4,7 @@ import common.Direction;
 import common.FieldType;
 import common.Player;
 import common.PowerUp;
+import javafx.geometry.Pos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -145,6 +146,10 @@ public class GameMap implements Serializable {
         return fields.contains(map[row][col]);
     }
 
+    public boolean isThatField(FieldType field, int col, int row) {
+        return map[row][col] == field;
+    }
+
     public void insertZone(int centerCol, int centerRow, int radiusWidth, int radiusHeight, FieldType tile) {
         int radiusSquared = radiusWidth * radiusHeight;
         int startCol = centerCol - radiusWidth;
@@ -152,14 +157,27 @@ public class GameMap implements Serializable {
         int endCol = centerCol + radiusWidth;
         int endRow = centerRow + radiusHeight;
 
-        ArrayList<FieldType> restrictedFields = new ArrayList<>(Arrays.asList(FieldType.PLAYER_0, FieldType.PLAYER_1, FieldType.PLAYER_2, FieldType.PLAYER_3, FieldType.SAFE_ZONE, FieldType.HOLE));
-
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {
-                if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(restrictedFields, col, row)) {
+
+                if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(RESTRICTED_FIELDS, col, row)) {
+
+                    killPlayerInLava(row, col, tile);
                     map[row][col] = tile;
+
                 }
+
+
             }
+        }
+    }
+
+    private void killPlayerInLava(int row, int col, FieldType tile) {
+
+        if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA){
+            Player player = game.findPlayerByFiledType(map[row][col]);
+            if (player != null)
+                game.killPlayer(player);
         }
     }
 
@@ -202,7 +220,7 @@ public class GameMap implements Serializable {
         }
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayerFromMap(Player player) {
         Position position = player.getPosition();
         map[position.row][position.col] = player.getLastStandingField();
     }
@@ -217,14 +235,24 @@ public class GameMap implements Serializable {
         return map[p.row][p.col] != FieldType.LAVA && map[p.row][p.col] != FieldType.HOLE;
     }
 
-    private boolean isFloor(int col, int row) {
-        return isValidPosition(col, row) && map[row][col] == FieldType.FLOOR;
+    private FieldType getPlayerSymbol(Player player){
+        return FieldType.valueOf("PLAYER_" + player.getID());
+    }
+
+    private void renewPlayerSymbol(Player player){
+        FieldType symbol = getPlayerSymbol(player);
+        Position position = player.getPosition();
+        map[position.row][position.col] = symbol;
     }
 
     public void movePlayer(Player player, Direction move) {
 
+        if (!player.isAlive())
+            return;
+
         Position position = player.getPosition();
-        FieldType playerSymbol = map[position.row][position.col];
+        FieldType playerSymbol = getPlayerSymbol(player);
+        renewPlayerSymbol(player);
 
         Position newPosition = new Position(position.col, position.row);
         switch (move) {
@@ -236,6 +264,12 @@ public class GameMap implements Serializable {
 
         if (isOutOfBorder(newPosition))
             return;
+
+        if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)) {
+            game.killPlayer(player);
+            return;
+        }
+
 
         updateLastStandingFieldOnMap(player);
 
