@@ -182,7 +182,8 @@ public class GameMap implements Serializable {
 
         if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA){
             Player player = game.findPlayerByFiledType(map[row][col]);
-            if (player != null)
+
+            if (player != null && !(player.getLastStandingField() == FieldType.SAFE_ZONE))
                 game.killPlayer(player);
         }
     }
