@@ -27,11 +27,6 @@ public class Game implements Serializable {
         timer = new Timer();
         this.isWaitingForPlayers = true;
         this.round = 0;
-
-        // test powerups
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, findValidPositionOnMap()));
     }
 
     public boolean isWaitingForPlayers() {
@@ -221,7 +216,14 @@ public class Game implements Serializable {
 
 
     public void movePlayer(Player player, Direction move) {
-        gameMap.movePlayer(player, move);
+        if(player.isBoostedWithSpeed()) {
+            gameMap.movePlayer(player, move);
+            gameMap.movePlayer(player, move);
+            gameMap.movePlayer(player, move);
+            gameMap.movePlayer(player, move);
+        }else{
+            gameMap.movePlayer(player, move);
+        }
     }
 
     public Timer getTimer() {

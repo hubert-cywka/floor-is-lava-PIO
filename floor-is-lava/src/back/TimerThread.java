@@ -22,23 +22,22 @@ public class TimerThread implements Runnable {
 
     @Override
     public void run() {
-
         while (true) {
-
             try {
-
-                Thread.sleep(TIMER_UPDATE_RATE);
+                Thread.sleep(2000);
                 if (!game.isWaitingForPlayers()) {
                     decrementTimer();
                     handleRound();
                 }
-
+                if(isTimerZero()){
+                    Player.decrementPowerUpRound();
+                    //System.out.println("speed: "+Player.getRoundsBoostedSpeed());
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
         }
-
     }
 
     private void handleRound() throws InterruptedException {

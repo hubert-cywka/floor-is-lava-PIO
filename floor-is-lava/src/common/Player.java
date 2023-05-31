@@ -16,6 +16,10 @@ public class Player implements Serializable {
     private static boolean isConnected;
     private final int ID;
     private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
+    private static int roundsBoostedGhost;
+    private static int roundsBoostedSpeed;
+    private static boolean isBoostedWithSpeed;
+    private static boolean isBoostedWithGhost;
 
 
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
@@ -25,6 +29,10 @@ public class Player implements Serializable {
         this.isConnected = true;
         this.ID = ID;
         this.isAlive = true;
+        roundsBoostedGhost = 0;
+        roundsBoostedSpeed = 0;
+        isBoostedWithSpeed = false;
+        isBoostedWithGhost = false;
         this.lastStandingField = FieldType.SAFE_ZONE;
         position = new Position(-1, -1);
     }
@@ -45,6 +53,17 @@ public class Player implements Serializable {
     public static void clearNextPlayerMove() {
         nextPlayerMove.setHorizontal(Direction.NO_MOVE);
         nextPlayerMove.setVertical(Direction.NO_MOVE);
+    }
+
+    public static void decrementPowerUpRound(){
+        if(roundsBoostedGhost>0)
+            roundsBoostedGhost--;
+        else
+            isBoostedWithGhost = false;
+        if(roundsBoostedSpeed>0)
+            roundsBoostedSpeed--;
+        else
+            isBoostedWithSpeed = false;
     }
 
     public int getID() {
@@ -86,4 +105,20 @@ public class Player implements Serializable {
     public ObjectInputStream getInputStream() {
         return objectInputStream;
     }
+
+    public void setRoundsBoostedGhost() { roundsBoostedGhost+=3; }
+
+    public void setRoundsBoostedSpeed() { roundsBoostedSpeed+=3; }
+
+    public int getRoundsBoostedGhost() { return roundsBoostedGhost; }
+
+    public int getRoundsBoostedSpeed() { return roundsBoostedSpeed; }
+
+    public boolean isBoostedWithSpeed(){return isBoostedWithSpeed;}
+
+    public boolean isBoostedWithGhost(){return isBoostedWithGhost;}
+
+    public void setBoostedWithSpeed(){isBoostedWithSpeed = true;}
+
+    public void setBoostedWithGhost(){isBoostedWithGhost = true;}
 }
