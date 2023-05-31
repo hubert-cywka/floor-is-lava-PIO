@@ -168,7 +168,9 @@ public class GameMap implements Serializable {
 
                 if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(RESTRICTED_FIELDS, col, row)) {
 
-                    killPlayerInLava(row, col, tile);
+                    if (!killPlayerInLava(row, col, tile))
+                        continue;
+
                     map[row][col] = tile;
 
                 }
@@ -178,14 +180,19 @@ public class GameMap implements Serializable {
         }
     }
 
-    private void killPlayerInLava(int row, int col, FieldType tile) {
+    private boolean killPlayerInLava(int row, int col, FieldType tile) {
 
         if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA){
             Player player = game.findPlayerByFiledType(map[row][col]);
 
-            if (player != null && !(player.getLastStandingField() == FieldType.SAFE_ZONE))
+            if (player.getLastStandingField() == FieldType.SAFE_ZONE)
+                return false;
+
+            if (player != null)
                 game.killPlayer(player);
         }
+
+        return true;
     }
 
     public boolean checkIfFloor(Position pos) {
