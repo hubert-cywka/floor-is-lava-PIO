@@ -223,6 +223,9 @@ public class GameMap implements Serializable {
 
     public void movePlayer(Player player, Direction move) {
 
+        if (!player.isAlive())
+            return;
+
         Position position = player.getPosition();
         FieldType playerSymbol = map[position.row][position.col];
 
