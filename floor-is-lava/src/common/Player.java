@@ -18,9 +18,6 @@ public class Player implements Serializable {
     private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
     private int roundsBoostedGhost;
     private int roundsBoostedSpeed;
-    //private static boolean isBoostedWithSpeed;
-    //private static boolean isBoostedWithGhost;
-
 
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
         this.nickname = nickname;
@@ -31,8 +28,6 @@ public class Player implements Serializable {
         this.isAlive = true;
         this.roundsBoostedGhost = 0;
         this.roundsBoostedSpeed = 0;
-        //isBoostedWithSpeed = false;
-        //isBoostedWithGhost = false;
         this.lastStandingField = FieldType.SAFE_ZONE;
         position = new Position(-1, -1);
     }
@@ -109,12 +104,4 @@ public class Player implements Serializable {
     public int getRoundsBoostedGhost() { return roundsBoostedGhost; }
 
     public int getRoundsBoostedSpeed() { return roundsBoostedSpeed; }
-
-    //public static boolean isBoostedWithSpeed(){return isBoostedWithSpeed;}
-
-    //public boolean isBoostedWithGhost(){return isBoostedWithGhost;}
-//
-    //public void setBoostedWithSpeed(){isBoostedWithSpeed = true;}
-//
-    //public void setBoostedWithGhost(){isBoostedWithGhost = true;}
 }

@@ -42,12 +42,9 @@ public class GameLoop implements Runnable {
 
     @Override
     public void run() {
-        int time = 0;
         while (isRunning) {
             try {
                 Thread.sleep(REFRESH_TIME);
-                if(!game.isWaitingForPlayers()) time+=REFRESH_TIME;
-                else time = 0;
             } catch (InterruptedException e) {
                 debug.errorMessage(e.getMessage());
             }

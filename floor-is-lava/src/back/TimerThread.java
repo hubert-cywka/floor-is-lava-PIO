@@ -8,6 +8,7 @@ import common.PowerUp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static back.Game.getRandomNumberInRange;
 import static common.GlobalSettings.BREAK_TIME_DURING_LAVA_TIME;
 import static common.GlobalSettings.TIMER_UPDATE_RATE;
 
@@ -16,30 +17,22 @@ public class TimerThread implements Runnable {
     private final Debug debug;
     private final Game game;
     private int floodStage;
-    private List<Player> playerlist;
 
 
-    public TimerThread(Debug debug, Game game, List<Player> playerlist) {
+    public TimerThread(Debug debug, Game game) {
         this.debug = debug;
         this.game = game;
         this.floodStage = 0;
-        this.playerlist = playerlist;
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(4000);
                 if (!game.isWaitingForPlayers()) {
                     decrementTimer();
                     handleRound();
-                }
-                if(isTimerZero()){
-                    game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
-                    game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
-                    game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
-                    game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -55,6 +48,8 @@ public class TimerThread implements Runnable {
             game.gameMap.generateLavaBorders(floodStage);
             return;
         } else {
+            decrementPowerUpRound(game.playersList);
+            generatePowerUps(4);
             floodStage = 0;
         }
 
@@ -108,10 +103,21 @@ public class TimerThread implements Runnable {
         game.getTimer().decrementTimer();
     }
 
-    private void decrementPowerUpRound(List<Player> playerlist){
-        for(Player player : playerlist){
-            player.decrementPowerUpRound();
+    private void generatePowerUps(int number){
+        int powerUps=0;
+        while(powerUps < number){
+            int powerType = getRandomNumberInRange(0,1);
+            if(powerType==1)
+                game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
+            else
+                game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, game.findValidPositionOnMap()));
+            powerUps++;
         }
 
+    }
+
+    private void decrementPowerUpRound(List<Player> playerList){
+        for(Player player : playerList)
+            player.decrementPowerUpRound();
     }
 }

@@ -8,7 +8,6 @@ import common.Direction;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -24,7 +23,7 @@ public class Game implements Serializable {
     private boolean isWaitingForPlayers;
 
     public Game() {
-        this.playersList = new CopyOnWriteArrayList<Player>();
+        this.playersList = new CopyOnWriteArrayList<Player>(); // bezpieczne zachowanie wątków gdy używane jest przez kilka na raz
         this.gameMap = new GameMap(this);
         timer = new Timer();
         this.isWaitingForPlayers = true;

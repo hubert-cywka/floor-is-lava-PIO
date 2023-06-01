@@ -59,7 +59,7 @@ public class ServerSocketManager {
     }
 
     private void launchTimerThread() {
-        Thread timerThread = new Thread(new TimerThread(debug, game, game.playersList));
+        Thread timerThread = new Thread(new TimerThread(debug, game));
         timerThread.start();
     }
 }
