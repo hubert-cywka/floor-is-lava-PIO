@@ -3,7 +3,12 @@ package back;
 import common.Debug;
 import common.FieldType;
 import common.Player;
+import common.PowerUp;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static back.Game.getRandomNumberInRange;
 import static common.GlobalSettings.BREAK_TIME_DURING_LAVA_TIME;
 import static common.GlobalSettings.TIMER_UPDATE_RATE;
 
@@ -22,23 +27,18 @@ public class TimerThread implements Runnable {
 
     @Override
     public void run() {
-
         while (true) {
-
             try {
-
                 Thread.sleep(TIMER_UPDATE_RATE);
                 if (!game.isWaitingForPlayers()) {
                     decrementTimer();
                     handleRound();
                 }
-
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
         }
-
     }
 
     private void handleRound() throws InterruptedException {
@@ -48,6 +48,8 @@ public class TimerThread implements Runnable {
             game.gameMap.generateLavaBorders(floodStage);
             return;
         } else {
+            decrementPowerUpRound(game.playersList);
+            generatePowerUps(4);
             floodStage = 0;
         }
 
@@ -99,5 +101,23 @@ public class TimerThread implements Runnable {
 
     private void decrementTimer() {
         game.getTimer().decrementTimer();
+    }
+
+    private void generatePowerUps(int number){
+        int powerUps=0;
+        while(powerUps < number){
+            int powerType = getRandomNumberInRange(0,1);
+            if(powerType==1)
+                game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
+            else
+                game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, game.findValidPositionOnMap()));
+            powerUps++;
+        }
+
+    }
+
+    private void decrementPowerUpRound(List<Player> playerList){
+        for(Player player : playerList)
+            player.decrementPowerUpRound();
     }
 }

@@ -8,30 +8,26 @@ import common.Direction;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static common.GlobalSettings.*;
 
 public class Game implements Serializable {
 
     public GameMap gameMap;
-    public ArrayList<Player> playersList;
+    public List<Player> playersList;
     private final Timer timer;
     private int round;
     private boolean isWaitingForPlayers;
 
     public Game() {
-        this.playersList = new ArrayList<>(MAX_PLAYERS);
+        this.playersList = new CopyOnWriteArrayList<Player>(); // bezpieczne zachowanie wątków gdy używane jest przez kilka na raz
         this.gameMap = new GameMap(this);
         timer = new Timer();
         this.isWaitingForPlayers = true;
         this.round = 0;
-
-        // test powerups
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, findValidPositionOnMap()));
-        addPowerUpOnMap(new PowerUp(FieldType.BOOST_GHOST, findValidPositionOnMap()));
     }
 
     public boolean isWaitingForPlayers() {
@@ -221,7 +217,12 @@ public class Game implements Serializable {
 
 
     public void movePlayer(Player player, Direction move) {
-        gameMap.movePlayer(player, move);
+        if(player.getRoundsBoostedSpeed() > 0) {
+            gameMap.movePlayer(player, move);
+            gameMap.movePlayer(player, move);
+        }else{
+            gameMap.movePlayer(player, move);
+        }
     }
 
     public Timer getTimer() {

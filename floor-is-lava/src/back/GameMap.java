@@ -23,6 +23,7 @@ public class GameMap implements Serializable {
         this.map = new FieldType[HEIGHT][WIDTH];
         this.game = game;
         generateMap();
+
     }
 
 
@@ -287,6 +288,13 @@ public class GameMap implements Serializable {
             return;
         }
 
+        if(isThatField(FieldType.BOOST_SPEED, newPosition.col, newPosition.row)){
+            player.setRoundsBoostedSpeed();
+        }
+
+        if(isThatField(FieldType.BOOST_GHOST,newPosition.col,newPosition.row)){
+            player.setRoundsBoostedGhost();
+        }
 
         updateLastStandingFieldOnMap(player);
 
