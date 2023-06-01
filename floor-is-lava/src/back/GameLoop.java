@@ -32,12 +32,12 @@ public class GameLoop implements Runnable {
         }
     }
 
-    private void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
+    private synchronized void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
         Thread handleReceive = new Thread(new ReceiveThread(player));
         handleReceive.start();
     }
 
-    private void handleDataSend(Player player) throws IOException {
+    private synchronized void handleDataSend(Player player) throws IOException {
         debug.message("Sending update");
         ObjectOutputStream objectOutputStream = player.getOutputStream();
         objectOutputStream.writeObject(packet);
@@ -126,6 +126,13 @@ public class GameLoop implements Runnable {
         objectStream.flush();
         return byteStream.toByteArray();
     }
+
+
+
+
+
+
+
 
     private class ReceiveThread implements Runnable{
 
