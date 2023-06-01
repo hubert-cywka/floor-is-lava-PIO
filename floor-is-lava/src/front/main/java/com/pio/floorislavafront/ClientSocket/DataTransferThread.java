@@ -5,6 +5,9 @@ import common.Packet;
 import common.Player;
 import common.PlayerData;
 import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.gameHandler;
+import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class DataTransferThread implements Runnable {
 
@@ -36,6 +40,7 @@ public class DataTransferThread implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
+            displayConnectionLost();
             throw new RuntimeException(e);
         }
 
@@ -46,7 +51,15 @@ public class DataTransferThread implements Runnable {
             throw new RuntimeException(e);
         }
     }
-
+    public void displayConnectionLost(){
+        Scene currentScene = getPrimaryStage().getScene();
+        String containerId = "gameMessage";
+        Node container = currentScene.lookup("#" + containerId);
+        if (container instanceof Label) {
+            Label messageLabel = (Label) container;
+            messageLabel.setText("Server connection lost");
+        }
+    }
     public static FieldType[][] deserializeFieldTypeArray(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
         ObjectInputStream objectStream = new ObjectInputStream(byteStream);
