@@ -15,6 +15,7 @@ public class Player implements Serializable {
     private FieldType lastStandingField;
     private static boolean isConnected;
     private final int ID;
+    private int gamesWon;
     private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
     private int roundsBoostedGhost;
     private int roundsBoostedSpeed;
@@ -29,6 +30,7 @@ public class Player implements Serializable {
         this.roundsBoostedGhost = 0;
         this.roundsBoostedSpeed = 0;
         this.lastStandingField = FieldType.SAFE_ZONE;
+        this.gamesWon = 0;
         position = new Position(-1, -1);
     }
 
@@ -104,4 +106,8 @@ public class Player implements Serializable {
     public int getRoundsBoostedGhost() { return roundsBoostedGhost; }
 
     public int getRoundsBoostedSpeed() { return roundsBoostedSpeed; }
+
+    public int getGamesWon() { return gamesWon; }
+
+    public void setGamesWon(int gamesWon) { this.gamesWon = gamesWon; }
 }

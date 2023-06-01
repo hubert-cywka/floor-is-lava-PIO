@@ -172,6 +172,14 @@ public class DisplayHandler {
         }
     }
 
+    public static void setWinsLabel(Node container, int wins) {
+        if (container instanceof Label)
+        {
+            Label winsLabel = (Label) container;
+            winsLabel.setText(String.valueOf(wins));
+        }
+    }
+
     public static void setNameLabel(Node container, String username) {
         if (container instanceof Label)
         {
@@ -186,6 +194,7 @@ public class DisplayHandler {
         String imageHeart;
         String imageConnect;
         String nameLabel;
+        String winsLabel;
 
         for (int i=0; i< playerData.size(); i++)
         {
@@ -196,11 +205,13 @@ public class DisplayHandler {
                 imageHeart = "P" + id + "_heart";
                 imageConnect = "P" + id + "_connect";
                 nameLabel = "P" + id + "_name";
+                winsLabel = "P" + id + "_wins";
             }
             else {
                 imageHeart = "P" + i + "_heart";
                 imageConnect = "P" + i + "_connect";
                 nameLabel = "P" + i + "_name";
+                winsLabel = "P" + i + "_wins";
             }
 
 
@@ -212,6 +223,9 @@ public class DisplayHandler {
 
             container = currentScene.lookup("#" + nameLabel);
             setNameLabel(container, data.getNickname());
+
+            container = currentScene.lookup("#" + winsLabel);
+            setWinsLabel(container, data.getGamesWon());
         }
 
     }
@@ -244,10 +258,9 @@ public class DisplayHandler {
                     myMap.add(square, col, row);
                 }
             }
-            myMap.setLayoutX(360);
-            myMap.setLayoutY(220);
-//            AnchorPane.setTopAnchor(myMap, (myContainer.getHeight() / 2 - (SQUARE_SIZE * HEIGHT) / 2));
-//            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
+
+            AnchorPane.setBottomAnchor(myMap, 10.0);
+            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
             myContainer.getChildren().add(myMap);
 
 

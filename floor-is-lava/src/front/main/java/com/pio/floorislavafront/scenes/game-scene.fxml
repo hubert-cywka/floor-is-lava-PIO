@@ -8,126 +8,166 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
-   <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
-      <fill>
-         <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-            <stops>
-               <Stop>
-                  <color>
-                     <Color red="0.5168799757957458" green="0.06239999830722809" blue="0.7799999713897705" opacity="0.5114504098892212" />
-                  </color>
-               </Stop>
-               <Stop offset="1.0">
-                  <color>
-                     <Color red="0.5215686559677124" green="0.05882352963089943" blue="0.7882353067398071" />
-                  </color>
-               </Stop>
-            </stops>
-         </RadialGradient>
-      </fill>
-   </Rectangle>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
+        <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color red="0.5168799757957458" green="0.06239999830722809" blue="0.7799999713897705" opacity="0.5114504098892212" />
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.5215686559677124" green="0.05882352963089943" blue="0.7882353067398071" />
+                        </color>
+                    </Stop>
+                </stops>
+            </RadialGradient>
+        </fill>
+    </Rectangle>
     <ImageView fx:id="leaveGameButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#onLeaveGameButtonClick" pickOnBounds="true" preserveRatio="true" styleClass="arrow-back-icon">
         <Image url="@../../../../../resources/com/pio/floorislavafront/images/arrow-back.png" />
     </ImageView>
-   <Circle fill="#8bc7ff" layoutX="960.0" layoutY="96.0" radius="71.0" stroke="BLACK" strokeType="INSIDE" />
-   <Label fx:id="timer" layoutX="932.0" layoutY="26.0" text="0">
-      <font>
-         <Font name="System Bold Italic" size="96.0" />
-      </font>
-   </Label>
-   <Label fx:id="gameMessage" alignment="CENTER" layoutX="810.0" layoutY="167.0" prefWidth="300" text="Hi!" textAlignment="CENTER">
-      <font>
-         <Font name="System Bold Italic" size="25.0" />
-      </font>
-   </Label>
-   <ImageView fitHeight="301.0" fitWidth="301.0" layoutX="25.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/frame.png" />
-      </image>
-   </ImageView>
-   <Label layoutX="111.0" layoutY="273.0" text="PLAYERS" textFill="WHITE">
-      <font>
-         <Font name="System Bold Italic" size="31.0" />
-      </font>
-   </Label>
-   <ImageView fitHeight="46.0" fitWidth="249.0" layoutX="50.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/blueframe.png" />
-      </image>
-   </ImageView>
-   <ImageView fitHeight="58.0" fitWidth="249.0" layoutX="50.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/redframe.png" />
-      </image>
-   </ImageView>
-   <ImageView fitHeight="50.0" fitWidth="249.0" layoutX="50.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/greenframe.png" />
-      </image>
-   </ImageView>
-   <ImageView fitHeight="44.0" fitWidth="249.0" layoutX="50.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/yellowframe.png" />
-      </image>
-   </ImageView>
-   <Label fx:id="P0_name" layoutX="111.0" layoutY="331.0" prefHeight="34.0" prefWidth="142.0" text="---">
-      <font>
-         <Font name="System Italic" size="23.0" />
-      </font>
-   </Label>
-   <ImageView fx:id="P0_heart" fitHeight="28.0" fitWidth="35.0" layoutX="56.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P1_heart" fitHeight="28.0" fitWidth="35.0" layoutX="56.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P2_heart" fitHeight="28.0" fitWidth="35.0" layoutX="56.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P3_heart" fitHeight="28.0" fitWidth="35.0" layoutX="56.0" layoutY="504.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P0_connect" fitHeight="44.0" fitWidth="35.0" layoutX="255.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P1_connect" fitHeight="44.0" fitWidth="35.0" layoutX="255.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P2_connect" fitHeight="44.0" fitWidth="35.0" layoutX="255.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="P3_connect" fitHeight="44.0" fitWidth="35.0" layoutX="255.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
-      </image>
-   </ImageView>
-   <Label fx:id="P1_name" layoutX="111.0" layoutY="387.0" prefHeight="34.0" prefWidth="142.0" text="---">
-      <font>
-         <Font name="System Italic" size="23.0" />
-      </font>
-   </Label>
-   <Label fx:id="P2_name" layoutX="111.0" layoutY="443.0" prefHeight="34.0" prefWidth="142.0" text="---">
-      <font>
-         <Font name="System Italic" size="23.0" />
-      </font>
-   </Label>
-   <Label fx:id="P3_name" layoutX="111.0" layoutY="501.0" prefHeight="34.0" prefWidth="142.0" text="---">
-      <font>
-         <Font name="System Italic" size="23.0" />
-      </font>
-   </Label>
+    <Circle fill="#8bc7ff" layoutX="960.0" layoutY="96.0" radius="71.0" stroke="BLACK" strokeType="INSIDE" />
+    <Label fx:id="timer" layoutX="932.0" layoutY="26.0" text="0">
+        <font>
+            <Font name="System Bold Italic" size="96.0" />
+        </font>
+    </Label>
+    <Label fx:id="gameMessage" alignment="CENTER" layoutX="810.0" layoutY="167.0" prefWidth="300" text="Hi!" textAlignment="CENTER">
+        <font>
+            <Font name="System Bold Italic" size="25.0" />
+        </font>
+    </Label>
+    <ImageView fitHeight="301.0" fitWidth="350.0" layoutX="10.0" layoutY="267.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/frame.png" />
+        </image>
+    </ImageView>
+    <Label layoutX="127.0" layoutY="273.0" text="PLAYERS" textFill="WHITE">
+        <font>
+            <Font name="System Bold Italic" size="31.0" />
+        </font>
+    </Label>
+    <ImageView fitHeight="46.0" fitWidth="294.0" layoutX="43.0" layoutY="326.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/blueframe.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="46.0" fitWidth="294.0" layoutX="43.0" layoutY="382.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/redframe.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="46.0" fitWidth="294.0" layoutX="43.0" layoutY="438.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/greenframe.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="46.0" fitWidth="294.0" layoutX="43.0" layoutY="494.0" pickOnBounds="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/yellowframe.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P0_heart" fitHeight="28.0" fitWidth="35.0" layoutX="54.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P1_heart" fitHeight="28.0" fitWidth="35.0" layoutX="54.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P2_heart" fitHeight="28.0" fitWidth="35.0" layoutX="54.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P3_heart" fitHeight="28.0" fitWidth="35.0" layoutX="54.0" layoutY="503.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/dead.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P0_connect" fitHeight="44.0" fitWidth="35.0" layoutX="248.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P1_connect" fitHeight="44.0" fitWidth="35.0" layoutX="248.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P2_connect" fitHeight="44.0" fitWidth="35.0" layoutX="248.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="P3_connect" fitHeight="44.0" fitWidth="35.0" layoutX="248.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/offline.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="44.0" fitWidth="35.0" layoutX="292.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/wins.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="44.0" fitWidth="35.0" layoutX="292.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/wins.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="44.0" fitWidth="35.0" layoutX="292.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/wins.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="44.0" fitWidth="35.0" layoutX="292.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/wins.png" />
+        </image>
+    </ImageView>
+    <Label fx:id="P0_name" layoutX="104.0" layoutY="331.0" prefHeight="34.0" prefWidth="142.0" text="---">
+        <font>
+            <Font name="System Italic" size="23.0" />
+        </font>
+    </Label>
+    <Label fx:id="P1_name" layoutX="104.0" layoutY="387.0" prefHeight="34.0" prefWidth="142.0" text="---">
+        <font>
+            <Font name="System Italic" size="23.0" />
+        </font>
+    </Label>
+    <Label fx:id="P2_name" layoutX="104.0" layoutY="443.0" prefHeight="34.0" prefWidth="142.0" text="---">
+        <font>
+            <Font name="System Italic" size="23.0" />
+        </font>
+    </Label>
+    <Label fx:id="P3_name" layoutX="104.0" layoutY="499.0" prefHeight="34.0" prefWidth="142.0" text="---">
+        <font>
+            <Font name="System Italic" size="23.0" />
+        </font>
+    </Label>
+    <Label fx:id="P0_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="341.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+        <font>
+            <Font name="System Bold" size="13.0" />
+        </font>
+    </Label>
+    <Label fx:id="P1_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="396.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+        <font>
+            <Font name="System Bold" size="13.0" />
+        </font>
+    </Label>
+    <Label fx:id="P2_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="453.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+        <font>
+            <Font name="System Bold" size="13.0" />
+        </font>
+    </Label>
+    <Label fx:id="P3_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="509.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+        <font>
+            <Font name="System Bold" size="13.0" />
+        </font>
+    </Label>
 </AnchorPane>
