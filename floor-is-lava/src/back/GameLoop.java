@@ -100,16 +100,11 @@ public class GameLoop implements Runnable {
             player = game.findPlayerById(i);
 
             if (player == null) {
-                playerData.add(new PlayerData("---", false, false, -1));
+                playerData.add(new PlayerData("---", false, false, -1, 0));
                 continue;
             }
 
-            String nickname = player.getNickname();
-            boolean isAlive = player.isAlive();
-            int ID = player.getID();
-
-            playerData.add(new PlayerData(nickname, isAlive, true, ID));
-
+            playerData.add(new PlayerData(player.getNickname(), player.isAlive(), true, player.getID(), player.getGamesWon()));
         }
 
         return playerData;
