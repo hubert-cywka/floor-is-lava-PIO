@@ -56,7 +56,7 @@ public class TimerThread implements Runnable {
         killPlayersInLava();
         Thread.sleep(BREAK_TIME_DURING_LAVA_TIME);
         removeLava();
-        updatePlayerLastStandingField();
+//        updatePlayerLastStandingField();
         debug.infoMessage("END OF LAVA TIME");
 
         if (!game.playersList.isEmpty()) {

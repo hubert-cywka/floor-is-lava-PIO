@@ -71,6 +71,10 @@ public class GameMap implements Serializable {
     public void setSafeTime() {
         ArrayList<FieldType> fieldsToReplace = new ArrayList<>(Arrays.asList(FieldType.LAVA, FieldType.SAFE_ZONE));
         replaceFields(fieldsToReplace, FieldType.FLOOR);
+
+        for (Player player : game.playersList)
+            player.setLastStandingField(FieldType.FLOOR);
+
         generateLavaBorders(0);
 
         int safeZonesAmount = Math.max(MAXIMUM_SAFE_ZONES - game.getRound() / ROUNDS_TO_DECREASE_SAFE_ZONES_COUNT, MINIMUM_SAFE_ZONES);
@@ -101,7 +105,7 @@ public class GameMap implements Serializable {
             if (map[row][col] != FieldType.FLOOR)
                 continue;
 
-            insertZone(col, row, getRandomNumberInRange(4, 10), getRandomNumberInRange(4, 10), FieldType.SAFE_ZONE);
+            insertZone(col, row, getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), getRandomNumberInRange(MIN_SAFEZONE_SIZE, MAX_SAFEZONE_SIZE), FieldType.SAFE_ZONE);
             safeZones++;
         }
 
@@ -162,7 +166,11 @@ public class GameMap implements Serializable {
 
                 if (isValidPosition(col, row) && isWithinCircle(col, row, centerCol, centerRow, radiusSquared) && !isOneOf(RESTRICTED_FIELDS, col, row)) {
 
-                    killPlayerInLava(row, col, tile);
+                    actionWhenSafezoneOnPlayer(row, col, tile);
+
+                    if (!killPlayerInLava(row, col, tile))
+                        continue;
+
                     map[row][col] = tile;
 
                 }
@@ -172,13 +180,27 @@ public class GameMap implements Serializable {
         }
     }
 
-    private void killPlayerInLava(int row, int col, FieldType tile) {
+
+    private void actionWhenSafezoneOnPlayer(int row, int col, FieldType tile){
+        if (PLAYER_FIELDS.contains(map[row][col]) && (tile == FieldType.SAFE_ZONE)){
+            Player player = game.findPlayerByFiledType(map[row][col]);
+            player.setLastStandingField(FieldType.SAFE_ZONE);
+        }
+    }
+
+    private boolean killPlayerInLava(int row, int col, FieldType tile) {
 
         if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA){
             Player player = game.findPlayerByFiledType(map[row][col]);
+
+            if (player.getLastStandingField() == FieldType.SAFE_ZONE)
+                return false;
+
             if (player != null)
                 game.killPlayer(player);
         }
+
+        return true;
     }
 
     public boolean checkIfFloor(Position pos) {
