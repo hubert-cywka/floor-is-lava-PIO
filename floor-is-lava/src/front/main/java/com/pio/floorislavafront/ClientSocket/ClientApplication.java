@@ -7,6 +7,8 @@ import java.net.Socket;
 
 import static common.GlobalSettings.READY_TO_RECEIVE_DATA;
 import static common.GlobalSettings.SERVER_HAS_FREE_SLOT;
+import static common.GlobalSettings.NICKNAME_ERROR_FLAG;
+import static common.GlobalSettings.SERVER_FULL_FLAG;
 
 public class ClientApplication {
     private final String host;
@@ -25,6 +27,8 @@ public class ClientApplication {
         this.debug = new Debug(isDebugActive);
         this.nickname = nickname;
 
+        SERVER_FULL_FLAG = false;
+        NICKNAME_ERROR_FLAG = false;
         connectToTheServer();
     }
 
@@ -50,8 +54,8 @@ public class ClientApplication {
                 debug.message("Server is full. Closing the connection..");
                 closeIOStreams();
                 socket.close();
+                SERVER_FULL_FLAG = true;
                 return;
-                // TODO: method which displays FULL SERVER information
             }
             debug.message("Server has free slot");
 
@@ -64,12 +68,10 @@ public class ClientApplication {
                 debug.errorMessage("Nickname Conflict");
                 closeIOStreams();
                 socket.close();
+                NICKNAME_ERROR_FLAG = true;
                 return;
-                // TODO: method which display NICKNAME CONFLICT information
             }
-
             debug.message("Server is ready");
-
         } catch (IOException | ClassNotFoundException e) {
             closeIOStreams();
             throw new RuntimeException(e);

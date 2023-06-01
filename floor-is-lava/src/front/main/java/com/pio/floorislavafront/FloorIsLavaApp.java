@@ -25,8 +25,8 @@ public class FloorIsLavaApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        DisplayHandler.initTextures();
         setPrimaryStage(stage);
+        DisplayHandler.initTextures();
         FloorIsLavaController.setScene("scenes/initial-screen-scene.fxml");
         stage.setTitle("Floor is Lava!");
         stage.show();
