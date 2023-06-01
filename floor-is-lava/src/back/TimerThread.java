@@ -29,7 +29,7 @@ public class TimerThread implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(TIMER_UPDATE_RATE);
                 if (!game.isWaitingForPlayers()) {
                     decrementTimer();
                     handleRound();
