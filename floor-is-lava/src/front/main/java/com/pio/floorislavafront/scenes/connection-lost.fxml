@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.5197399854660034" green="0.07020000368356705" blue="0.7799999713897705" opacity="0.5064935088157654" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.5215686559677124" green="0.05882352963089943" blue="0.7882353067398071" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill></Rectangle>
+      <Label layoutX="404.0" layoutY="319.0" text="SERVER CONNECTION LOST" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="85.0" />
+         </font>
+      </Label>
+      <Button layoutX="842.0" layoutY="540.0" mnemonicParsing="false" onAction="#showInitialScreen" prefHeight="95.0" prefWidth="236.0" styleClass="quit-game-button" stylesheets="@stylesheet.css" text="BACK TO MENU" />
+   </children>
+</AnchorPane>

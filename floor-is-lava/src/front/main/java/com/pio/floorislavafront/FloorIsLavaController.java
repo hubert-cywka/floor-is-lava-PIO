@@ -26,10 +26,11 @@ import static common.GlobalSettings.SERVER_FULL_FLAG;
 import static java.lang.Thread.sleep;
 
 public class FloorIsLavaController {
-    private static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
-    private static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
-    private static final String CONTROLS_SCREEN = "scenes/controls-scene.fxml";
+    public static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
+    public static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
+    public static final String CONTROLS_SCREEN = "scenes/controls-scene.fxml";
     public static final String GAME_SCREEN = "scenes/game-scene.fxml";
+    public static final String CONNECTION_LOST_SCREEN = "scenes/connection-lost.fxml";
     private final String USERNAME_NOT_VALID = "Nazwa użytkownika nie może pozostać pusta!";
     private final String USERNAME_ALREADY_EXISTS_ERROR = "Gracz o podanej nazwie użytkownika już istnieje!";
     private final String SERVER_FULL_ERROR = "Serwer jest pełny, spróbuj ponownie za chwilę!";
