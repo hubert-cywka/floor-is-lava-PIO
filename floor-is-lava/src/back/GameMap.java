@@ -280,10 +280,7 @@ public class GameMap implements Serializable {
             case LEFT -> newPosition.col--;
         }
 
-        if(!isPlayerCollision(player, newPosition)) return;
-        if(isInHole(newPosition)) return;
-        if (isOutOfBorder(newPosition))
-            return;
+        if (isCollision(newPosition)) return;
 
         if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)) {
             game.killPlayer(player);
@@ -331,26 +328,16 @@ public class GameMap implements Serializable {
         }
         System.err.println("------------------------------------------------------------------------");
     }
-    public boolean isPlayerCollision(Player player, Position newPosition){
-        FieldType fieldType = map[newPosition.row][newPosition.col];
-        switch (player.getID()) {
-            case 0 -> {
-                return fieldType != FieldType.PLAYER_1 && fieldType != FieldType.PLAYER_2 && fieldType != FieldType.PLAYER_3;
-            }
-            case 1 -> {
-                return fieldType != FieldType.PLAYER_0 && fieldType != FieldType.PLAYER_2 && fieldType != FieldType.PLAYER_3;
-            }
-            case 2 -> {
-                return fieldType != FieldType.PLAYER_0 && fieldType != FieldType.PLAYER_1 && fieldType != FieldType.PLAYER_3;
-            }
-            case 3 -> {
-                return fieldType != FieldType.PLAYER_0 && fieldType != FieldType.PLAYER_1 && fieldType != FieldType.PLAYER_2;
-            }
-            default -> {
-                return false;
-            }
-        }
+
+    private boolean isCollision(Position newPosition) {
+        return isPlayerCollision(newPosition) || isInHole(newPosition) || isOutOfBorder(newPosition);
     }
+
+    private boolean isPlayerCollision(Position newPosition) {
+        FieldType fieldType = map[newPosition.row][newPosition.col];
+        return PLAYER_FIELDS.contains(fieldType);
+    }
+
     private boolean isInHole(Position newPosition) {
         FieldType fieldType = map[newPosition.row][newPosition.col];
         return fieldType == FieldType.HOLE;
