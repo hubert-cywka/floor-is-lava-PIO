@@ -287,6 +287,9 @@ public class GameMap implements Serializable {
         if (isOutOfBorder(newPosition))
             return;
 
+        if (PLAYER_FIELDS.contains(map[newPosition.row][newPosition.col]))
+            return;
+
         if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)) {
             game.killPlayer(player);
             return;
