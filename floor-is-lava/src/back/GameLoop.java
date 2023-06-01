@@ -18,25 +18,28 @@ public class GameLoop implements Runnable {
     private final Game game;
     private final Debug debug;
 
+    private Packet packet;
+
     public GameLoop(Game game, Debug debug) {
         this.isRunning = true;
         this.game = game;
         this.debug = debug;
+
+        try {
+            this.packet = preparePackOfData();
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
     }
 
     private void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = player.getInputStream();
-        debug.message("Receiving update");
-
-        PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
-        game.movePlayer(player, playerMove.getHorizontal());
-        game.movePlayer(player, playerMove.getVertical());
+        Thread handleReceive = new Thread(new ReceiveThread(player));
+        handleReceive.start();
     }
 
     private void handleDataSend(Player player) throws IOException {
         debug.message("Sending update");
         ObjectOutputStream objectOutputStream = player.getOutputStream();
-        Packet packet = preparePackOfData();
         objectOutputStream.writeObject(packet);
     }
 
@@ -124,4 +127,34 @@ public class GameLoop implements Runnable {
         return byteStream.toByteArray();
     }
 
+    private class ReceiveThread implements Runnable{
+
+        private Player player;
+
+        public ReceiveThread(Player player){
+            this.player = player;
+        }
+
+        @Override
+        public void run() {
+            ObjectInputStream objectInputStream = player.getInputStream();
+            debug.message("Receiving update");
+
+            PlayerMove playerMove;
+            try {
+                playerMove = (PlayerMove) objectInputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            game.movePlayer(player, playerMove.getHorizontal());
+            game.movePlayer(player, playerMove.getVertical());
+
+            try {
+                packet = preparePackOfData();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 }
