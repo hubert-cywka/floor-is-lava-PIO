@@ -143,7 +143,7 @@ public class GameLoop implements Runnable {
         }
 
         @Override
-        public void run() {
+        public synchronized void run() {
             ObjectInputStream objectInputStream = player.getInputStream();
             debug.message("Receiving update");
 
