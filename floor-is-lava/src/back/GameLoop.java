@@ -24,7 +24,7 @@ public class GameLoop implements Runnable {
         this.debug = debug;
     }
 
-    private void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
+    private synchronized void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
         ObjectInputStream objectInputStream = player.getInputStream();
         debug.message("Receiving update");
 
@@ -33,7 +33,7 @@ public class GameLoop implements Runnable {
         game.movePlayer(player, playerMove.getVertical());
     }
 
-    private void handleDataSend(Player player) throws IOException {
+    private synchronized void handleDataSend(Player player) throws IOException {
         debug.message("Sending update");
         ObjectOutputStream objectOutputStream = player.getOutputStream();
         Packet packet = preparePackOfData();
@@ -61,13 +61,17 @@ public class GameLoop implements Runnable {
                     System.out.println("Failed to communicate with player " + player.getNickname());
                     debug.errorMessage(e.getMessage());
 
-                    game.removePlayer(player.getNickname());
-                    iterator.remove();
+                    synchronized (this) {
+                        game.removePlayer(player.getNickname());
+                        iterator.remove();
+                    }
                 }
             }
 
-            if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
-                game.restartGame();
+            synchronized (this) {
+                if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
+                    game.restartGame();
+                }
             }
         }
     }

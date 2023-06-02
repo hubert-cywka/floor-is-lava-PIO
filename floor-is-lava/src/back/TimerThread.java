@@ -62,14 +62,14 @@ public class TimerThread implements Runnable {
 
         handleWin();
 
-        if (!game.playersList.isEmpty()) {
+        if (game.playersList.size() >= MIN_PLAYERS) {
             game.incrementRound();
         } else {
             game.restartGame();
         }
     }
 
-    private void handleWin() {
+    private synchronized void handleWin() {
         if (game.isWaitingForPlayers()) return;
 
         int playersAlive = 0;
@@ -99,7 +99,7 @@ public class TimerThread implements Runnable {
         }
     }
 
-    private void killPlayersInLava() {
+    private synchronized void killPlayersInLava() {
 
         for (Player player : game.playersList) {
             if (player.getLastStandingField() != FieldType.SAFE_ZONE) {
