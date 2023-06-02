@@ -110,4 +110,8 @@ public class Player implements Serializable {
     public int getGamesWon() { return gamesWon; }
 
     public void setGamesWon(int gamesWon) { this.gamesWon = gamesWon; }
+
+    public void incrementGamesWon() {
+        this.gamesWon += 1;
+    }
 }

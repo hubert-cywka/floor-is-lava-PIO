@@ -59,6 +59,8 @@ public class Game implements Serializable {
         this.gameMap.generateMap();
         this.getTimer().setTimer(ROUND_TIME);
         this.resetRound();
+
+        playersList.forEach(player -> player.setGamesWon(0));
     }
 
     public Player addPlayer(String nickname, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {

@@ -35,7 +35,7 @@
             <Font name="System Bold Italic" size="96.0" />
         </font>
     </Label>
-    <Label fx:id="gameMessage" alignment="CENTER" layoutX="810.0" layoutY="167.0" prefWidth="300" text="Hi!" textAlignment="CENTER">
+    <Label fx:id="gameMessage" alignment="CENTER" layoutX="810.0" layoutY="167.0" prefWidth="300" text="Dołączyłeś do gry!" textAlignment="CENTER">
         <font>
             <Font name="System Bold Italic" size="25.0" />
         </font>
@@ -150,24 +150,24 @@
             <Font name="System Italic" size="23.0" />
         </font>
     </Label>
-    <Label fx:id="P0_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="341.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+    <Label fx:id="P0_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="340.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
         <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="P1_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="396.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+    <Label fx:id="P1_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="395.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
         <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="P2_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="453.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+    <Label fx:id="P2_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="452.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
         <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="12.0" />
         </font>
     </Label>
-    <Label fx:id="P3_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="509.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
+    <Label fx:id="P3_wins" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="508.0" prefHeight="15.0" prefWidth="44.0" text="0" textOverrun="CENTER_ELLIPSIS">
         <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="12.0" />
         </font>
     </Label>
 </AnchorPane>

@@ -113,9 +113,9 @@ public class DisplayHandler {
 
     private static String buildDisplayedMessage(boolean isWaitingForPlayers) {
         if (isWaitingForPlayers) {
-            return "Waiting for players...";
+            return "Oczekiwanie na graczy...";
         } else {
-            return "Try to not die!";
+            return "Spróbuj przeżyć!";
         }
     }
 
