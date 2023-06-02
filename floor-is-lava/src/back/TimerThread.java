@@ -62,14 +62,14 @@ public class TimerThread implements Runnable {
 
         handleWin();
 
-        if (!game.playersList.isEmpty()) {
+        if (game.playersList.size() >= MIN_PLAYERS) {
             game.incrementRound();
         } else {
             game.restartGame();
         }
     }
 
-    private void handleWin() {
+    private synchronized void handleWin() {
         if (game.isWaitingForPlayers()) return;
 
         int playersAlive = 0;
@@ -87,6 +87,7 @@ public class TimerThread implements Runnable {
             }
 
             respawnPlayers();
+            game.resetRound();
         }
     }
 
@@ -99,7 +100,7 @@ public class TimerThread implements Runnable {
         }
     }
 
-    private void killPlayersInLava() {
+    private synchronized void killPlayersInLava() {
 
         for (Player player : game.playersList) {
             if (player.getLastStandingField() != FieldType.SAFE_ZONE) {
@@ -137,7 +138,7 @@ public class TimerThread implements Runnable {
     private void generatePowerUps(int number) {
         int powerUps = 0;
         while (powerUps < number) {
-            int powerType = getRandomNumberInRange(0, 1);
+            int powerType = getRandomNumberInRange(0, 2);
             if (powerType == 1)
                 game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
             else

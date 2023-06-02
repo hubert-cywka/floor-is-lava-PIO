@@ -8,22 +8,21 @@ import common.Direction;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static common.GlobalSettings.*;
 
 public class Game implements Serializable {
 
     public GameMap gameMap;
-    public List<Player> playersList;
+    public ArrayList<Player> playersList;
     private final Timer timer;
     private int round;
     private boolean isWaitingForPlayers;
 
     public Game() {
-        this.playersList = new CopyOnWriteArrayList<Player>(); // bezpieczne zachowanie wątków gdy używane jest przez kilka na raz
+        this.playersList = new ArrayList<>();
         this.gameMap = new GameMap(this);
         timer = new Timer();
         this.isWaitingForPlayers = true;
