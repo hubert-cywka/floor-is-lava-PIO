@@ -87,6 +87,7 @@ public class TimerThread implements Runnable {
             }
 
             respawnPlayers();
+            game.resetRound();
         }
     }
 
@@ -137,7 +138,7 @@ public class TimerThread implements Runnable {
     private void generatePowerUps(int number) {
         int powerUps = 0;
         while (powerUps < number) {
-            int powerType = getRandomNumberInRange(0, 1);
+            int powerType = getRandomNumberInRange(0, 2);
             if (powerType == 1)
                 game.addPowerUpOnMap(new PowerUp(FieldType.BOOST_SPEED, game.findValidPositionOnMap()));
             else
