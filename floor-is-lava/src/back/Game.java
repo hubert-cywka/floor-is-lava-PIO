@@ -22,7 +22,7 @@ public class Game implements Serializable {
     private boolean isWaitingForPlayers;
 
     public Game() {
-        this.playersList = new ArrayList<>(); // bezpieczne zachowanie wątków gdy używane jest przez kilka na raz
+        this.playersList = new ArrayList<>();
         this.gameMap = new GameMap(this);
         timer = new Timer();
         this.isWaitingForPlayers = true;
