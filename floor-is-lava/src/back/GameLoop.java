@@ -17,63 +17,84 @@ public class GameLoop implements Runnable {
     private boolean isRunning;
     private final Game game;
     private final Debug debug;
+    private Iterator<Player> iterator;
+    ArrayList<Thread> threads;
 
     public GameLoop(Game game, Debug debug) {
         this.isRunning = true;
         this.game = game;
         this.debug = debug;
+        this.threads = new ArrayList<>();
     }
 
-    private synchronized void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = player.getInputStream();
-        debug.message("Receiving update");
 
-        PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
-        game.movePlayer(player, playerMove.getHorizontal());
-        game.movePlayer(player, playerMove.getVertical());
+    private void handleDataReceive(Player player) {
+        Thread recvThread = new Thread(new DataReceiver(player, game, iterator));
+        recvThread.start();
+        threads.add(recvThread);
     }
 
-    private synchronized void handleDataSend(Player player) throws IOException {
+    private synchronized void handleDataSend(Player player, Packet packet) {
         debug.message("Sending update");
-        ObjectOutputStream objectOutputStream = player.getOutputStream();
-        Packet packet = preparePackOfData();
-        objectOutputStream.writeObject(packet);
+        try {
+            ObjectOutputStream objectOutputStream = player.getOutputStream();
+            objectOutputStream.writeObject(packet);
+        } catch (IOException e) {
+            game.removePlayer(player.getNickname());
+            iterator.remove();
+        }
     }
 
     @Override
     public void run() {
-        while (isRunning) {
-            try {
+
+        try {
+            while (isRunning) {
+
                 Thread.sleep(REFRESH_TIME);
-            } catch (InterruptedException e) {
-                debug.errorMessage(e.getMessage());
-            }
 
-            Iterator<Player> iterator = game.playersList.iterator();
-            while (iterator.hasNext()) {
-                Player player = iterator.next();
+                sendDataToAllPlayers();
+                receiveDataFromAllPlayers();
+                waitForThreads();
 
-                try {
-                    handleDataSend(player);
-                    handleDataReceive(player);
-                } catch (IOException | ClassNotFoundException e) {
-
-                    System.out.println("Failed to communicate with player " + player.getNickname());
-                    debug.errorMessage(e.getMessage());
-
-                    synchronized (this) {
-                        game.removePlayer(player.getNickname());
-                        iterator.remove();
+                synchronized (this) {
+                    if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
+                        game.restartGame();
                     }
                 }
-            }
 
-            synchronized (this) {
-                if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
-                    game.restartGame();
-                }
             }
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
         }
+
+    }
+
+
+    private Iterator<Player> prepareIterator() {
+        return game.playersList.iterator();
+    }
+
+    private void sendDataToAllPlayers() throws IOException {
+        iterator = prepareIterator();
+        Packet packet = preparePackOfData();
+        while (iterator.hasNext()) {
+            Player player = iterator.next();
+            handleDataSend(player, packet);
+        }
+    }
+
+    private void receiveDataFromAllPlayers() {
+        iterator = prepareIterator();
+        while (iterator.hasNext()) {
+            Player player = iterator.next();
+            handleDataReceive(player);
+        }
+    }
+
+    private void waitForThreads() throws InterruptedException {
+        for (Thread thread : threads)
+            thread.join();
     }
 
 
@@ -122,5 +143,6 @@ public class GameLoop implements Runnable {
         objectStream.flush();
         return byteStream.toByteArray();
     }
+
 
 }
