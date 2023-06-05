@@ -126,7 +126,7 @@ public class DisplayHandler {
 
         if (check == 1)
         {
-            return (winner.getNickname() + " won the round!");
+            return ("Gracz " + winner.getNickname() + " wygrał rundę!");
         }
 
         if (isWaitingForPlayers) {
@@ -258,7 +258,6 @@ public class DisplayHandler {
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
-//            System.out.println("Znaleziono kontener o ID: " + containerId);
 
             Node mapNode = container.lookup("#mymap");
             if (mapNode instanceof GridPane) {
