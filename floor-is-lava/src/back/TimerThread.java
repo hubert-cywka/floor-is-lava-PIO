@@ -69,7 +69,7 @@ public class TimerThread implements Runnable {
         }
     }
 
-    private synchronized void handleWin() {
+    private synchronized void handleWin() throws InterruptedException {
         if (game.isWaitingForPlayers()) return;
 
         int playersAlive = 0;
@@ -83,6 +83,7 @@ public class TimerThread implements Runnable {
             for (Player player : game.playersList) {
                 if (player.isAlive()) {
                     player.incrementGamesWon();
+                    Thread.sleep(4000);
                 }
             }
 

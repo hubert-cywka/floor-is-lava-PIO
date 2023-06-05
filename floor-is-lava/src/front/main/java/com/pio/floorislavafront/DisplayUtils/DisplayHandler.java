@@ -111,7 +111,24 @@ public class DisplayHandler {
         return square;
     }
 
-    private static String buildDisplayedMessage(boolean isWaitingForPlayers) {
+    private static String buildDisplayedMessage(ArrayList<PlayerData> playerData, boolean isWaitingForPlayers) {
+        int check = 0;
+        PlayerData winner = null;
+        for (int i=0; i < playerData.size(); i++)
+        {
+            PlayerData data = playerData.get(i);
+            if (data.isAlive())
+            {
+                winner = playerData.get(i);
+                check++;
+            }
+        }
+
+        if (check == 1)
+        {
+            return (winner.getNickname() + " won the round!");
+        }
+
         if (isWaitingForPlayers) {
             return "Oczekiwanie na graczy...";
         } else {
@@ -237,7 +254,7 @@ public class DisplayHandler {
 
         displayTimer(time);
         displayPlayerData(playerData);
-        displayMessage(buildDisplayedMessage(isWaitingForPlayers));
+        displayMessage(buildDisplayedMessage(playerData, isWaitingForPlayers));
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
