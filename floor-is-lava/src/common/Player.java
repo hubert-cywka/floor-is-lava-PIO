@@ -20,13 +20,13 @@ public class Player implements Serializable {
     private int roundsBoostedGhost;
     private int roundsBoostedSpeed;
 
-    public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) {
+    public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream, boolean isAlive) {
         this.nickname = nickname;
         this.objectOutputStream = objectOutputStream;
         this.objectInputStream = objectInputStream;
         this.isConnected = true;
         this.ID = ID;
-        this.isAlive = true;
+        this.isAlive = isAlive;
         this.roundsBoostedGhost = 0;
         this.roundsBoostedSpeed = 0;
         this.lastStandingField = FieldType.SAFE_ZONE;
