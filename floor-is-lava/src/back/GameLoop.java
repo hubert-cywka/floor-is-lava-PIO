@@ -17,65 +17,56 @@ public class GameLoop implements Runnable {
     private boolean isRunning;
     private final Game game;
     private final Debug debug;
+    ArrayList<Thread> threads;
 
     public GameLoop(Game game, Debug debug) {
         this.isRunning = true;
         this.game = game;
         this.debug = debug;
+        this.threads = new ArrayList<>();
     }
 
-    private synchronized void handleDataReceive(Player player) throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = player.getInputStream();
-        debug.message("Receiving update");
-
-        PlayerMove playerMove = (PlayerMove) objectInputStream.readObject();
-        game.movePlayer(player, playerMove.getHorizontal());
-        game.movePlayer(player, playerMove.getVertical());
-    }
-
-    private synchronized void handleDataSend(Player player) throws IOException {
+    private synchronized void handleDataSend(Player player, Packet packet) {
         debug.message("Sending update");
-        ObjectOutputStream objectOutputStream = player.getOutputStream();
-        Packet packet = preparePackOfData();
-        objectOutputStream.writeObject(packet);
+        try {
+            ObjectOutputStream objectOutputStream = player.getOutputStream();
+            objectOutputStream.writeObject(packet);
+        } catch (IOException e) {
+            game.removePlayer(player.getNickname());
+            game.playersList.remove(player);
+        }
     }
 
     @Override
     public void run() {
-        while (isRunning) {
-            try {
+
+        try {
+            while (isRunning) {
+
                 Thread.sleep(REFRESH_TIME);
-            } catch (InterruptedException e) {
-                debug.errorMessage(e.getMessage());
-            }
 
-            Iterator<Player> iterator = game.playersList.iterator();
-            while (iterator.hasNext()) {
-                Player player = iterator.next();
+                sendDataToAllPlayers();
 
-                try {
-                    handleDataSend(player);
-                    handleDataReceive(player);
-                } catch (IOException | ClassNotFoundException e) {
-
-                    System.out.println("Failed to communicate with player " + player.getNickname());
-                    debug.errorMessage(e.getMessage());
-
-                    synchronized (this) {
-                        game.removePlayer(player.getNickname());
-                        iterator.remove();
+                synchronized (this) {
+                    if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
+                        game.restartGame();
                     }
                 }
-            }
 
-            synchronized (this) {
-                if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
-                    game.restartGame();
-                }
             }
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
         }
+
     }
 
+    private void sendDataToAllPlayers() throws IOException {
+        Packet packet = preparePackOfData();
+        for (int i = 0; i < game.playersList.size(); i++) {
+            Player player = game.playersList.get(i);
+            handleDataSend(player, packet);
+        }
+    }
 
     private Packet preparePackOfData() throws IOException {
 
@@ -122,5 +113,6 @@ public class GameLoop implements Runnable {
         objectStream.flush();
         return byteStream.toByteArray();
     }
+
 
 }

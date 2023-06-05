@@ -123,6 +123,7 @@ public class Game implements Serializable {
     public void insertPlayerToMap(Player p) {
         Position playerpos = findValidPositionOnMap();
         p.setPosition(playerpos);
+        p.setLastStandingField(FieldType.SAFE_ZONE);
         gameMap.insertPlayer(p);
     }
 
@@ -203,9 +204,13 @@ public class Game implements Serializable {
 
         String textField = fieldType.toString();
 
-        for (int i = 0; i < MAX_PLAYERS; i++) {
-            if (textField.contains(String.valueOf(i)))
-                return playersList.get(i);
+        try{
+            for (int i = 0; i < MAX_PLAYERS; i++) {
+                if (textField.contains(String.valueOf(i)))
+                    return playersList.get(i);
+            }
+        }catch (IndexOutOfBoundsException e){
+            return null;
         }
 
         return null;
