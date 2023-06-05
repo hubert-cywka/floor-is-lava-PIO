@@ -181,6 +181,10 @@ public class GameMap implements Serializable {
     private void actionWhenSafezoneOnPlayer(int row, int col, FieldType tile){
         if (PLAYER_FIELDS.contains(map[row][col]) && (tile == FieldType.SAFE_ZONE)){
             Player player = game.findPlayerByFiledType(map[row][col]);
+
+            if (player == null)
+                return;
+
             player.setLastStandingField(FieldType.SAFE_ZONE);
         }
     }
