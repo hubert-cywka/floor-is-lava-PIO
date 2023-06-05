@@ -18,6 +18,7 @@ public class GameLoop implements Runnable {
     private final Game game;
     private final Debug debug;
     ArrayList<Thread> threads;
+    public static String winner;
 
     public GameLoop(Game game, Debug debug) {
         this.isRunning = true;
@@ -74,7 +75,7 @@ public class GameLoop implements Runnable {
         int timer = prepareTimer();
         ArrayList<PlayerData> playerData = preparePlayerData();
 
-        return new Packet(map, timer, playerData, game.isWaitingForPlayers());
+        return new Packet(map, timer, playerData, game.isWaitingForPlayers(), winner);
     }
 
     private byte[] prepareMap() throws IOException {
