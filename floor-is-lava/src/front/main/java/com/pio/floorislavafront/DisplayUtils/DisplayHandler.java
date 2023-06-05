@@ -112,8 +112,19 @@ public class DisplayHandler {
     }
 
     private static String buildDisplayedMessage(ArrayList<PlayerData> playerData, boolean isWaitingForPlayers, String winnerNickname) {
-        if (winnerNickname!=null) return ("Gracz " + winnerNickname + " won the round!");
+        int check = 0;
 
+        for (int i=0; i < playerData.size(); i++)
+        {
+            PlayerData data = playerData.get(i);
+            if (data.isAlive())
+            {
+                check++;
+            }
+        }
+
+        if (check==0) return "Wszyscy nie żyją!";
+        if (winnerNickname!=null) return ("Gracz " + winnerNickname + " wygrał rundę!");
         if (isWaitingForPlayers) {
             return "Oczekiwanie na graczy...";
         } else {
