@@ -250,7 +250,6 @@ public class DisplayHandler {
 
         displayTimer(time);
         displayPlayerData(playerData);
-        System.out.println("WINNER = " + winnerNickname);
         displayMessage(buildDisplayedMessage(playerData, isWaitingForPlayers, winnerNickname));
 
         if (container instanceof AnchorPane) {
