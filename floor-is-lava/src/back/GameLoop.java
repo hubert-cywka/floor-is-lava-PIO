@@ -26,13 +26,6 @@ public class GameLoop implements Runnable {
         this.threads = new ArrayList<>();
     }
 
-
-    private void handleDataReceive(Player player) {
-        Thread recvThread = new Thread(new DataReceiver(player, game));
-        recvThread.start();
-        threads.add(recvThread);
-    }
-
     private synchronized void handleDataSend(Player player, Packet packet) {
         debug.message("Sending update");
         try {
@@ -53,8 +46,6 @@ public class GameLoop implements Runnable {
                 Thread.sleep(REFRESH_TIME);
 
                 sendDataToAllPlayers();
-//                receiveDataFromAllPlayers();
-//                waitForThreads();
 
                 synchronized (this) {
                     if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
@@ -69,31 +60,13 @@ public class GameLoop implements Runnable {
 
     }
 
-
-    private Iterator<Player> prepareIterator() {
-        return game.playersList.iterator();
-    }
-
     private void sendDataToAllPlayers() throws IOException {
         Packet packet = preparePackOfData();
-        for (int i=0; i<game.playersList.size(); i++) {
+        for (int i = 0; i < game.playersList.size(); i++) {
             Player player = game.playersList.get(i);
             handleDataSend(player, packet);
         }
     }
-
-    private void receiveDataFromAllPlayers() {
-        for (int i=0; i<game.playersList.size(); i++) {
-            Player player = game.playersList.get(i);
-            handleDataReceive(player);
-        }
-    }
-
-    private void waitForThreads() throws InterruptedException {
-        for (Thread thread : threads)
-            thread.join();
-    }
-
 
     private Packet preparePackOfData() throws IOException {
 
