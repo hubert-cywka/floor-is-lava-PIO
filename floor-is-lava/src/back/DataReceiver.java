@@ -1,5 +1,6 @@
 package back;
 
+import common.Packet;
 import common.Player;
 import common.PlayerMove;
 
@@ -12,37 +13,40 @@ public class DataReceiver implements Runnable {
     private final Player player;
     private final ObjectInputStream objectInputStream;
     private final Game game;
-    private Iterator<Player> iterator;
 
-    public DataReceiver(Player player, Game game, Iterator<Player> iterator) {
+
+    public DataReceiver(Player player, Game game) {
         this.player = player;
         this.objectInputStream = player.getInputStream();
         this.game = game;
-        this.iterator = iterator;
     }
 
     @Override
     public void run() {
 
-        PlayerMove playerMove;
-        try {
-            playerMove = (PlayerMove) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        while (true){
 
-            System.out.println("Failed to communicate with player " + player.getNickname());
+            PlayerMove playerMove;
+            try {
+                playerMove = (PlayerMove) objectInputStream.readObject();
+            } catch (IOException | ClassNotFoundException e) {
 
-            synchronized (this) {
-                game.removePlayer(player.getNickname());
-                iterator.remove();
+                System.out.println("Failed to communicate with player " + player.getNickname());
+
+                synchronized (this) {
+                    game.removePlayer(player.getNickname());
+                    game.playersList.remove(player);
+                }
+
+                return;
+
             }
 
-            return;
+            synchronized (this) {
+                game.movePlayer(player, playerMove.getHorizontal());
+                game.movePlayer(player, playerMove.getVertical());
+            }
 
-        }
-
-        synchronized (this) {
-            game.movePlayer(player, playerMove.getHorizontal());
-            game.movePlayer(player, playerMove.getVertical());
         }
 
 

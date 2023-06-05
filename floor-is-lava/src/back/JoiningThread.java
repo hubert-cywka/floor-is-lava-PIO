@@ -71,6 +71,9 @@ public class JoiningThread implements Runnable {
             sendServerStatus(READY_TO_RECEIVE_DATA);
             debug.message("READY status has been sent");
 
+            new Thread(new DataReceiver(player, game)).start();
+
+
         } catch (IOException e) {
             // Connection lost
             closeIOStreams();

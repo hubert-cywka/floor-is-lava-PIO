@@ -17,7 +17,6 @@ public class GameLoop implements Runnable {
     private boolean isRunning;
     private final Game game;
     private final Debug debug;
-    private Iterator<Player> iterator;
     ArrayList<Thread> threads;
 
     public GameLoop(Game game, Debug debug) {
@@ -29,7 +28,7 @@ public class GameLoop implements Runnable {
 
 
     private void handleDataReceive(Player player) {
-        Thread recvThread = new Thread(new DataReceiver(player, game, iterator));
+        Thread recvThread = new Thread(new DataReceiver(player, game));
         recvThread.start();
         threads.add(recvThread);
     }
@@ -41,7 +40,7 @@ public class GameLoop implements Runnable {
             objectOutputStream.writeObject(packet);
         } catch (IOException e) {
             game.removePlayer(player.getNickname());
-            iterator.remove();
+            game.playersList.remove(player);
         }
     }
 
@@ -54,8 +53,8 @@ public class GameLoop implements Runnable {
                 Thread.sleep(REFRESH_TIME);
 
                 sendDataToAllPlayers();
-                receiveDataFromAllPlayers();
-                waitForThreads();
+//                receiveDataFromAllPlayers();
+//                waitForThreads();
 
                 synchronized (this) {
                     if (game.playersList.isEmpty() && !game.isWaitingForPlayers()) {
@@ -76,18 +75,16 @@ public class GameLoop implements Runnable {
     }
 
     private void sendDataToAllPlayers() throws IOException {
-        iterator = prepareIterator();
         Packet packet = preparePackOfData();
-        while (iterator.hasNext()) {
-            Player player = iterator.next();
+        for (int i=0; i<game.playersList.size(); i++) {
+            Player player = game.playersList.get(i);
             handleDataSend(player, packet);
         }
     }
 
     private void receiveDataFromAllPlayers() {
-        iterator = prepareIterator();
-        while (iterator.hasNext()) {
-            Player player = iterator.next();
+        for (int i=0; i<game.playersList.size(); i++) {
+            Player player = game.playersList.get(i);
             handleDataReceive(player);
         }
     }
