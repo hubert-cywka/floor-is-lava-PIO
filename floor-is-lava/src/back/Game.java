@@ -123,6 +123,7 @@ public class Game implements Serializable {
     public void insertPlayerToMap(Player p) {
         Position playerpos = findValidPositionOnMap();
         p.setPosition(playerpos);
+        p.setLastStandingField(FieldType.SAFE_ZONE);
         gameMap.insertPlayer(p);
     }
 
