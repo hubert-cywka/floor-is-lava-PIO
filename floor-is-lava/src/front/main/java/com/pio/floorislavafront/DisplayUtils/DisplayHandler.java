@@ -111,24 +111,20 @@ public class DisplayHandler {
         return square;
     }
 
-    private static String buildDisplayedMessage(ArrayList<PlayerData> playerData, boolean isWaitingForPlayers) {
+    private static String buildDisplayedMessage(ArrayList<PlayerData> playerData, boolean isWaitingForPlayers, String winnerNickname) {
         int check = 0;
-        PlayerData winner = null;
+
         for (int i=0; i < playerData.size(); i++)
         {
             PlayerData data = playerData.get(i);
             if (data.isAlive())
             {
-                winner = playerData.get(i);
                 check++;
             }
         }
 
-        if (check == 1)
-        {
-            return ("Gracz " + winner.getNickname() + " wygrał rundę!");
-        }
-
+        if (check==0) return "Wszyscy nie żyją!";
+        if (winnerNickname!=null) return ("Gracz " + winnerNickname + " wygrał rundę!");
         if (isWaitingForPlayers) {
             return "Oczekiwanie na graczy...";
         } else {
@@ -247,14 +243,14 @@ public class DisplayHandler {
 
     }
 
-    public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData, boolean isWaitingForPlayers) {
+    public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData, boolean isWaitingForPlayers, String winnerNickname) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
         Node container = currentScene.lookup("#" + containerId);
 
         displayTimer(time);
         displayPlayerData(playerData);
-        displayMessage(buildDisplayedMessage(playerData, isWaitingForPlayers));
+        displayMessage(buildDisplayedMessage(playerData, isWaitingForPlayers, winnerNickname));
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;

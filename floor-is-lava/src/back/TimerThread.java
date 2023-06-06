@@ -9,6 +9,7 @@ import java.util.List;
 
 import static back.Game.getRandomNumberInRange;
 import static common.GlobalSettings.*;
+import static back.GameLoop.winner;
 
 public class TimerThread implements Runnable {
 
@@ -41,6 +42,7 @@ public class TimerThread implements Runnable {
 
     private void handleRound() throws InterruptedException {
 
+        winner = null;
         if (!isTimerZero()) {
             floodStage += 1;
             game.gameMap.generateLavaBorders(floodStage);
@@ -71,7 +73,6 @@ public class TimerThread implements Runnable {
 
     private synchronized void handleWin() throws InterruptedException {
         if (game.isWaitingForPlayers()) return;
-
         int playersAlive = 0;
         for (Player player : game.playersList) {
             if (player.isAlive()) {
@@ -83,7 +84,8 @@ public class TimerThread implements Runnable {
             for (Player player : game.playersList) {
                 if (player.isAlive()) {
                     player.incrementGamesWon();
-                    Thread.sleep(4000);
+                    winner = player.getNickname();
+                    Thread.sleep(3000);
                 }
             }
 

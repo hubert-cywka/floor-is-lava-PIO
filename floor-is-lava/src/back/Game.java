@@ -68,9 +68,10 @@ public class Game implements Serializable {
 
         int id = getFirstFreeID();
 
-        Player player = new Player(nickname, id, objectOutputStream, objectInputStream);
+        Player player = new Player(nickname, id, objectOutputStream, objectInputStream, isWaitingForPlayers);
         playersList.add(player);
         insertPlayerToMap(player);
+        if (!player.isAlive()) killPlayer(player);
 
         if (playersList.size() >= MIN_PLAYERS) {
             this.startGame();
