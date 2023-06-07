@@ -89,6 +89,7 @@ public class TimerThread implements Runnable {
                 }
             }
 
+            game.resetBoosters();
             respawnPlayers();
             game.resetRound();
         }
