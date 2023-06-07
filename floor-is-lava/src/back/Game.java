@@ -205,12 +205,12 @@ public class Game implements Serializable {
 
         String textField = fieldType.toString();
 
-        try{
+        try {
             for (int i = 0; i < MAX_PLAYERS; i++) {
                 if (textField.contains(String.valueOf(i)))
                     return playersList.get(i);
             }
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             return null;
         }
 
@@ -224,15 +224,24 @@ public class Game implements Serializable {
 
 
     public void movePlayer(Player player, Direction move) {
-        if(player.getRoundsBoostedSpeed() > 0) {
+        if (player.getRoundsBoostedSpeed() > 0) {
             gameMap.movePlayer(player, move);
             gameMap.movePlayer(player, move);
-        }else{
+        } else {
             gameMap.movePlayer(player, move);
         }
     }
 
     public Timer getTimer() {
         return timer;
+    }
+
+    public void resetBoosters() {
+
+        for (Player player : playersList) {
+            player.setRoundsBoostedGhost(0);
+            player.setRoundsBoostedSpeed(0);
+        }
+
     }
 }

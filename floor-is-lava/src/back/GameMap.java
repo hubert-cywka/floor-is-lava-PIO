@@ -178,8 +178,8 @@ public class GameMap implements Serializable {
     }
 
 
-    private void actionWhenSafezoneOnPlayer(int row, int col, FieldType tile){
-        if (PLAYER_FIELDS.contains(map[row][col]) && (tile == FieldType.SAFE_ZONE)){
+    private void actionWhenSafezoneOnPlayer(int row, int col, FieldType tile) {
+        if (PLAYER_FIELDS.contains(map[row][col]) && (tile == FieldType.SAFE_ZONE)) {
             Player player = game.findPlayerByFiledType(map[row][col]);
 
             if (player == null)
@@ -191,7 +191,7 @@ public class GameMap implements Serializable {
 
     private boolean killPlayerInLava(int row, int col, FieldType tile) {
 
-        if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA){
+        if (PLAYER_FIELDS.contains(map[row][col]) && tile == FieldType.LAVA) {
             Player player = game.findPlayerByFiledType(map[row][col]);
 
             if (player == null)
@@ -261,11 +261,11 @@ public class GameMap implements Serializable {
         return map[p.row][p.col] != FieldType.LAVA && map[p.row][p.col] != FieldType.HOLE;
     }
 
-    private FieldType getPlayerSymbol(Player player){
+    private FieldType getPlayerSymbol(Player player) {
         return FieldType.valueOf("PLAYER_" + player.getID());
     }
 
-    private void renewPlayerSymbol(Player player){
+    private void renewPlayerSymbol(Player player) {
         FieldType symbol = getPlayerSymbol(player);
         Position position = player.getPosition();
         map[position.row][position.col] = symbol;
@@ -295,12 +295,12 @@ public class GameMap implements Serializable {
             return;
         }
 
-        if(isThatField(FieldType.BOOST_SPEED, newPosition.col, newPosition.row)){
-            player.setRoundsBoostedSpeed();
+        if (isThatField(FieldType.BOOST_SPEED, newPosition.col, newPosition.row)) {
+            player.setRoundsBoostedSpeed(BOOSTER_ROUNDS);
         }
 
-        if(isThatField(FieldType.BOOST_GHOST,newPosition.col,newPosition.row)){
-            player.setRoundsBoostedGhost();
+        if (isThatField(FieldType.BOOST_GHOST, newPosition.col, newPosition.row)) {
+            player.setRoundsBoostedGhost(BOOSTER_ROUNDS);
         }
 
         updateLastStandingFieldOnMap(player);

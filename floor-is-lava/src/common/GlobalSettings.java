@@ -45,6 +45,9 @@ public class GlobalSettings {
     public static final int TIMER_UPDATE_RATE = 1000; // 1sec
     public static final int BREAK_TIME_DURING_LAVA_TIME = 3000; // 3sec
 
+    // Player
+    public static final int BOOSTER_ROUNDS = 3;
+
 
 //      *** FRONTEND ***
 
@@ -55,4 +58,5 @@ public class GlobalSettings {
     // Server-client error flags
     public static boolean NICKNAME_ERROR_FLAG = false;
     public static boolean SERVER_FULL_FLAG = false;
+
 }

@@ -52,10 +52,10 @@ public class Player implements Serializable {
         nextPlayerMove.setVertical(Direction.NO_MOVE);
     }
 
-    public void decrementPowerUpRound(){
-        if(getRoundsBoostedGhost()>0)
+    public void decrementPowerUpRound() {
+        if (getRoundsBoostedGhost() > 0)
             roundsBoostedGhost--;
-        if(getRoundsBoostedSpeed()>0)
+        if (getRoundsBoostedSpeed() > 0)
             roundsBoostedSpeed--;
     }
 
@@ -99,17 +99,29 @@ public class Player implements Serializable {
         return objectInputStream;
     }
 
-    public void setRoundsBoostedGhost() { roundsBoostedGhost+=3; }
+    public void setRoundsBoostedGhost(int rounds) {
+        roundsBoostedGhost = rounds;
+    }
 
-    public void setRoundsBoostedSpeed() { roundsBoostedSpeed+=3; }
+    public void setRoundsBoostedSpeed(int rounds) {
+        roundsBoostedSpeed = rounds;
+    }
 
-    public int getRoundsBoostedGhost() { return roundsBoostedGhost; }
+    public int getRoundsBoostedGhost() {
+        return roundsBoostedGhost;
+    }
 
-    public int getRoundsBoostedSpeed() { return roundsBoostedSpeed; }
+    public int getRoundsBoostedSpeed() {
+        return roundsBoostedSpeed;
+    }
 
-    public int getGamesWon() { return gamesWon; }
+    public int getGamesWon() {
+        return gamesWon;
+    }
 
-    public void setGamesWon(int gamesWon) { this.gamesWon = gamesWon; }
+    public void setGamesWon(int gamesWon) {
+        this.gamesWon = gamesWon;
+    }
 
     public void incrementGamesWon() {
         this.gamesWon += 1;
