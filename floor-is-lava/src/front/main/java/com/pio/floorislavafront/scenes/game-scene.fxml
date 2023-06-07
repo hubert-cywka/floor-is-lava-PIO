@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
+<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
     <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
         <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -174,4 +174,54 @@
             <Font name="System Bold" size="12.0" />
         </font>
     </Label>
+   <ImageView fitHeight="301.0" fitWidth="350.0" layoutX="1559.0" layoutY="267.0" pickOnBounds="true">
+      <image>
+         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/frame.png" />
+      </image>
+   </ImageView>
+   <Label layoutX="1620.0" layoutY="274.0" text="WZMOCNIENIA" textFill="WHITE">
+      <font>
+         <Font name="System Bold Italic" size="31.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="46.0" fitWidth="294.0" layoutX="1587.0" layoutY="359.0" pickOnBounds="true">
+      <image>
+         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/yellowframe.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="46.0" fitWidth="294.0" layoutX="1587.0" layoutY="437.0" pickOnBounds="true">
+      <image>
+         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/blueframe.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="iconSpeed" fitHeight="35.0" fitWidth="35.0" layoutX="1831.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/boost.png" />
+      </image>
+   </ImageView>
+   <Label fx:id="countSpeed" alignment="CENTER" layoutX="1589.0" layoutY="356.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="50.0" text="0">
+      <font>
+         <Font name="System Bold Italic" size="36.0" />
+      </font>
+   </Label>
+   <Label fx:id="countGhost" alignment="CENTER" layoutX="1589.0" layoutY="434.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="50.0" text="0">
+      <font>
+         <Font name="System Bold Italic" size="36.0" />
+      </font>
+   </Label>
+   <Label layoutX="1654.0" layoutY="365.0" prefHeight="17.0" prefWidth="142.0" text="SZYBKOŚĆ">
+      <font>
+         <Font name="System Bold Italic" size="22.0" />
+      </font>
+   </Label>
+   <Label layoutX="1654.0" layoutY="443.0" prefHeight="35.0" prefWidth="195.0" text="POSTAĆ DUCHA">
+      <font>
+         <Font name="System Bold Italic" size="22.0" />
+      </font>
+   </Label>
+   <ImageView fx:id="iconGhost" fitHeight="35.0" fitWidth="35.0" layoutX="1832.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../../../resources/com/pio/floorislavafront/images/stats/boost.png" />
+      </image>
+   </ImageView>
 </AnchorPane>
