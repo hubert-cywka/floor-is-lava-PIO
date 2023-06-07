@@ -9,13 +9,17 @@ public class PlayerData implements Serializable {
     private boolean isConnected;
     private int gamesWon;
     private int ID;
+    private int speedRounds;
+    private int ghostRounds;
 
-    public PlayerData(String nickname, boolean isAlive, boolean isConnected, int ID, int gamesWon) {
+    public PlayerData(String nickname, boolean isAlive, boolean isConnected, int ID, int gamesWon, int speedRounds, int ghostRounds) {
         this.nickname = nickname;
         this.isAlive = isAlive;
         this.isConnected = isConnected;
         this.ID = ID;
         this.gamesWon = gamesWon;
+        this.speedRounds = speedRounds;
+        this.ghostRounds = ghostRounds;
     }
 
     public String getNickname() {
