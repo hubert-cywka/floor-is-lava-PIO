@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static common.GlobalSettings.*;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
@@ -244,6 +245,48 @@ public class DisplayHandler {
 
     }
 
+    public static void displayActualInstancePowerups(ArrayList<PlayerData> playerData) {
+        for (int i=0; i < playerData.size(); i++)
+        {
+            PlayerData data = playerData.get(i);
+
+            if (Objects.equals(data.getNickname(), actualInstancePlayerName)) {
+                Scene currentScene = getPrimaryStage().getScene();
+                String containerId = "gamescene";
+                Node container = currentScene.lookup("#" + containerId);
+
+                if (container instanceof AnchorPane) {
+                    Node labelcont1 = container.lookup("#countSpeed");
+                    Node labelcont2 = container.lookup("#countGhost");
+                    Node iconcont1 = container.lookup("#iconSpeed");
+                    Node iconcont2 = container.lookup("#iconGhost");
+
+                    if (labelcont1 instanceof Label && labelcont2 instanceof Label && iconcont1 instanceof ImageView && iconcont2 instanceof ImageView){
+                        Label countSpeed = (Label) labelcont1;
+                        Label countGhost = (Label) labelcont2;
+                        ImageView iconSpeed = (ImageView) iconcont1;
+                        ImageView iconGhost = (ImageView) iconcont2;
+
+                        if (data.getSpeedRounds() != 0) {
+                            iconSpeed.setOpacity(100);
+                        } else {
+                            iconSpeed.setOpacity(0);
+                        }
+                        if (data.getGhostRounds() != 0) {
+                            iconGhost.setOpacity(100);
+                        } else {
+                            iconGhost.setOpacity(0);
+                        }
+
+                        countSpeed.setText(String.valueOf(data.getSpeedRounds()));
+                        countGhost.setText(String.valueOf(data.getGhostRounds()));
+                    }
+                }
+                return;
+            }
+        }
+    }
+
     public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData, boolean isWaitingForPlayers, String winnerNickname) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
@@ -251,6 +294,7 @@ public class DisplayHandler {
 
         displayTimer(time);
         displayPlayerData(playerData);
+        displayActualInstancePowerups(playerData);
         displayMessage(buildDisplayedMessage(playerData, isWaitingForPlayers, winnerNickname));
 
         if (container instanceof AnchorPane) {
