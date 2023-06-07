@@ -53,4 +53,12 @@ public class PlayerData implements Serializable {
     public int getGamesWon() { return gamesWon; }
 
     public void setGamesWon(int gamesWon) { this.gamesWon = gamesWon; }
+
+    public int getSpeedRounds() {
+        return speedRounds;
+    }
+
+    public int getGhostRounds() {
+        return ghostRounds;
+    }
 }
