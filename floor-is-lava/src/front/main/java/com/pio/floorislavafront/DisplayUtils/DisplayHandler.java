@@ -34,6 +34,7 @@ public class DisplayHandler {
     private static final InputStream PLAYER_SPRITE_BLACK_IMAGE;
     private static final InputStream PLAYER_SPRITE_PURPLE_IMAGE;
     private static final InputStream PLAYER_SPRITE_BLUE_IMAGE;
+    public static String actualInstancePlayerName;
 
     static {
         try {

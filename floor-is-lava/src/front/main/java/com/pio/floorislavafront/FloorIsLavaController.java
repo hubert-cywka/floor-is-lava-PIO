@@ -19,6 +19,7 @@ import javafx.stage.Screen;
 import java.util.regex.Pattern;
 
 import static common.Player.getNextPlayerMove;
+import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.actualInstancePlayerName;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 import static common.GlobalSettings.NICKNAME_ERROR_FLAG;
@@ -173,6 +174,7 @@ public class FloorIsLavaController {
             joinGameHelperLabel.setTextFill(Color.RED);
             return;
         }
+        actualInstancePlayerName = username;
         setScene(GAME_SCREEN);
     }
 
