@@ -288,7 +288,7 @@ public class GameMap implements Serializable {
             case LEFT -> newPosition.col--;
         }
 
-        if (isCollision(newPosition)) return;
+        if (isCollision(newPosition, player)) return;
 
         if (isThatField(FieldType.LAVA, newPosition.col, newPosition.row)) {
             game.killPlayer(player);
@@ -344,8 +344,12 @@ public class GameMap implements Serializable {
         System.err.println("------------------------------------------------------------------------");
     }
 
-    private boolean isCollision(Position newPosition) {
-        return isPlayerCollision(newPosition) || isInHole(newPosition) || isOutOfBorder(newPosition);
+    private boolean isCollision(Position newPosition, Player player) {
+
+        if (isInHole(newPosition) && player.getRoundsBoostedGhost() <= 0)
+            return true;
+
+        return isPlayerCollision(newPosition) || isOutOfBorder(newPosition);
     }
 
     private boolean isPlayerCollision(Position newPosition) {
