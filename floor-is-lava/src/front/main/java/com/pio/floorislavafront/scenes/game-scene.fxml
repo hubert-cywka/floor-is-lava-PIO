@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
+<AnchorPane fx:id="gamescene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
     <Rectangle arcHeight="5.0" arcWidth="5.0" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0">
         <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
@@ -39,7 +39,7 @@
             <Font name="System Bold Italic" size="96.0" />
         </font>
     </Label>
-    <Label fx:id="gameMessage" alignment="CENTER" layoutX="810.0" layoutY="167.0" prefWidth="300" text="Dołączyłeś do gry!" textAlignment="CENTER">
+    <Label fx:id="gameMessage" alignment="CENTER" layoutX="655.0" layoutY="167.0" prefHeight="36.0" prefWidth="611.0" text="Dołączyłeś do gry!" textAlignment="CENTER">
         <font>
             <Font name="System Bold Italic" size="25.0" />
         </font>
