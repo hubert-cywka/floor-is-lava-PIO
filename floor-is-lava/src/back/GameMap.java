@@ -296,11 +296,11 @@ public class GameMap implements Serializable {
         }
 
         if (isThatField(FieldType.BOOST_SPEED, newPosition.col, newPosition.row)) {
-            player.setRoundsBoostedSpeed(BOOSTER_ROUNDS);
+            player.addRoundsBoostedSpeed(BOOSTER_ROUNDS);
         }
 
         if (isThatField(FieldType.BOOST_GHOST, newPosition.col, newPosition.row)) {
-            player.setRoundsBoostedGhost(BOOSTER_ROUNDS);
+            player.addRoundsBoostedGhost(BOOSTER_ROUNDS);
         }
 
         updateLastStandingFieldOnMap(player);

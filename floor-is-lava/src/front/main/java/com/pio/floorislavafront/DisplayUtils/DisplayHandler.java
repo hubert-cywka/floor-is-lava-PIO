@@ -31,6 +31,8 @@ public class DisplayHandler {
     private static final ArrayList<InputStream> LAVA_SPRITE_IMAGE = new ArrayList<>();
     private static final ArrayList<InputStream> HOLE_SPRITE_IMAGE = new ArrayList<>();
     private static final ArrayList<InputStream> FLOOR_SPRITE_IMAGE = new ArrayList<>();
+    private static final InputStream BOOST_SPEED_IMAGE;
+    private static final InputStream BOOST_GHOST_IMAGE;
     private static final InputStream PLAYER_SPRITE_RED_IMAGE;
     private static final InputStream PLAYER_SPRITE_BLACK_IMAGE;
     private static final InputStream PLAYER_SPRITE_PURPLE_IMAGE;
@@ -39,6 +41,9 @@ public class DisplayHandler {
 
     static {
         try {
+            BOOST_GHOST_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("ghost.png"));
+            BOOST_SPEED_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("speed.png"));
+
             PLAYER_SPRITE_RED_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("red.png"));
             PLAYER_SPRITE_PURPLE_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("purple.png"));
             PLAYER_SPRITE_BLACK_IMAGE = new FileInputStream(SPRITE_IMAGE_BASE.concat("black.png"));
@@ -72,6 +77,8 @@ public class DisplayHandler {
     private static final ImagePattern PLAYER_SPRITE_RED = new ImagePattern(new Image(PLAYER_SPRITE_RED_IMAGE));
     private static final ImagePattern PLAYER_SPRITE_BLACK = new ImagePattern(new Image(PLAYER_SPRITE_BLACK_IMAGE));
     private static final ImagePattern PLAYER_SPRITE_PURPLE = new ImagePattern(new Image(PLAYER_SPRITE_PURPLE_IMAGE));
+    private static final ImagePattern BOOST_SPEED = new ImagePattern(new Image(BOOST_SPEED_IMAGE));
+    private static final ImagePattern BOOST_GHOST = new ImagePattern(new Image(BOOST_GHOST_IMAGE));
     private static final ArrayList<ImagePattern> FLOOR_SPRITES = new ArrayList<>();
     private static final ArrayList<ImagePattern> SAFE_ZONE_SPRITES = new ArrayList<>();
     private static final ArrayList<ImagePattern> LAVA_SPRITES = new ArrayList<>();
@@ -107,8 +114,8 @@ public class DisplayHandler {
             case FLOOR -> square.setFill(getTextureFromTexturesList(FLOOR_SPRITES, col * 2 + row * 3));
             case LAVA -> square.setFill(getRandomTextureFromTexturesList(LAVA_SPRITES));
             case HOLE -> square.setFill(getRandomTextureFromTexturesList(HOLE_SPRITES));
-            case BOOST_SPEED -> square.setFill(Color.LIGHTYELLOW);
-            case BOOST_GHOST -> square.setFill(Color.LIGHTBLUE);
+            case BOOST_SPEED -> square.setFill(BOOST_SPEED);
+            case BOOST_GHOST -> square.setFill(BOOST_GHOST);
         }
         return square;
     }

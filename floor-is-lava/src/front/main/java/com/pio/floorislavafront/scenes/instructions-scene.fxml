@@ -2,27 +2,87 @@
 
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="front.main.java.com.pio.floorislavafront.FloorIsLavaController">
     <GridPane alignment="CENTER" styleClass="initial-screen-container" stylesheets="@stylesheet.css" VBox.vgrow="ALWAYS">
-        <Pane prefHeight="535.0" prefWidth="668.0" VBox.vgrow="ALWAYS">
+        <Pane prefHeight="535.0" prefWidth="772.0" VBox.vgrow="ALWAYS">
             <styleClass>
                 <String fx:value="buttons-container" />
             </styleClass>
-            <Button layoutX="23.0" layoutY="441.0" mnemonicParsing="false" onAction="#showInitialScreen" prefHeight="65.0" prefWidth="300.0" text="WRÓĆ">
+            <Button layoutX="80.0" layoutY="441.0" mnemonicParsing="false" onAction="#showInitialScreen" prefHeight="65.0" prefWidth="300.0" text="WRÓĆ">
                 <styleClass>
                     <String fx:value="show-instructions-button" />
                     <String fx:value="button" />
                 </styleClass>
             </Button>
-            <Label layoutX="240.0" layoutY="56.0" prefHeight="45.0" prefWidth="188.0" styleClass="instructions-label" text="INSTRUKCJA" />
-            <Label layoutX="23.0" layoutY="110.0" prefHeight="56.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Czterech graczy musi zająć bezpieczną pozycję zanim skończy się czas. W drodze na odpowiednie pole staną ci przeszkody, które będziesz musiał ominąć przy pomocy różnych power-upów, takich jak przyspieszenie czy przenikanie przez ściany. Każda kolejna runda jest coraz szybsza, a osoba która przetrwa najdłużej wygrywa." textAlignment="JUSTIFY" wrapText="true" />
-            <Label layoutX="23.0" layoutY="166.0" prefHeight="56.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Każdy gracz widzi z góry planszę z innymi graczami w czasie rzeczywistym, zegar odliczający czas do końca rundy oraz aktualnie podniesione przez gracza powerupy." textAlignment="JUSTIFY" wrapText="true" />
-            <Label layoutX="23.0" layoutY="215.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Gra podzielona jest na rundy W każdej z nich wyznaczany jest bezpieczny i zagrożony obszar (zagrożony podświetlany na czerwony kolor). Odliczany jest również czas, po którym sprawdzane jest położenie każdego gracza. Jeśli ten znajduje się na bezpiecznym polu – kontynuuje rozgrywkę. W przeciwnym wypadku jego status zmieniany jest na przegranego – odpada z rozgrywki." textAlignment="JUSTIFY" wrapText="true" />
-            <Label layoutX="23.0" layoutY="285.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Poruszając się po mapie, użytkownik jest w stanie znaleźć kilka pól z efektami ułatwiającymi zabawę. Zbierając jeden z nich, aktywowany jest podniesiony efekt na określony czas. Opisane bonusy generowane są na planszy w losowych miejscach." textAlignment="JUSTIFY" wrapText="true" />
-            <Label layoutX="23.0" layoutY="331.0" prefHeight="91.0" prefWidth="622.0" styleClass="instruction-paragraph" text="Rozgrywka dobiega końca, gdy na planszy zostanie jedna osoba." textAlignment="JUSTIFY" wrapText="true" />
-         <Button layoutX="345.0" layoutY="441.0" mnemonicParsing="false" onAction="#showControlsScreen" prefHeight="65.0" prefWidth="300.0" styleClass="join-game-button" text="STEROWANIE" />
+            <Label layoutX="295.0" layoutY="14.0" prefHeight="45.0" prefWidth="188.0" styleClass="instructions-label" text="INSTRUKCJA" />
+            <Label layoutX="23.0" layoutY="68.0" prefHeight="77.0" prefWidth="736.0" styleClass="instruction-paragraph" text="Czterech graczy musi zająć bezpieczną pozycję zanim skończy się czas. W drodze na odpowiednie pole staną ci przeszkody, które będziesz musiał ominąć przy pomocy różnych power-upów, takich jak przyspieszenie czy przenikanie przez ściany. Każda kolejna runda jest coraz szybsza, a osoba która przetrwa najdłużej wygrywa. Rozgrywka dobiega końca, gdy na planszy zostanie jedna osoba." textAlignment="JUSTIFY" wrapText="true" />
+            <Label layoutX="23.0" layoutY="135.0" prefHeight="56.0" prefWidth="736.0" styleClass="instruction-paragraph" text="Każdy gracz widzi z góry planszę z innymi graczami w czasie rzeczywistym, zegar odliczający czas do końca rundy oraz aktualnie podniesione przez gracza powerupy." textAlignment="JUSTIFY" wrapText="true" />
+            <Label layoutX="23.0" layoutY="177.0" prefHeight="91.0" prefWidth="736.0" styleClass="instruction-paragraph" text="Gra podzielona jest na rundy W każdej z nich wyznaczany jest bezpieczny i zagrożony obszar (zagrożony podświetlany na czerwony kolor). Odliczany jest również czas, po którym sprawdzane jest położenie każdego gracza. Jeśli ten znajduje się na bezpiecznym polu – kontynuuje rozgrywkę. W przeciwnym wypadku jego status zmieniany jest na przegranego – odpada z rozgrywki." textAlignment="JUSTIFY" wrapText="true" />
+            <Label layoutX="23.0" layoutY="244.0" prefHeight="91.0" prefWidth="736.0" styleClass="instruction-paragraph" text="Poruszając się po mapie, użytkownik jest w stanie znaleźć kilka pól z efektami ułatwiającymi zabawę. Zbierając jeden z nich, aktywowany jest podniesiony efekt na określony czas. Opisane bonusy generowane są na planszy w losowych miejscach." textAlignment="JUSTIFY" wrapText="true" />
+         <Button layoutX="402.0" layoutY="441.0" mnemonicParsing="false" onAction="#showControlsScreen" prefHeight="65.0" prefWidth="300.0" styleClass="join-game-button" text="STEROWANIE" />
+         <Pane layoutX="23.0" layoutY="330.0">
+            <children>
+               <ImageView fitHeight="45.0" fitWidth="33.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../resources/com/pio/floorislavafront/images/sprites/floor1.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="39.0" prefHeight="45.0" prefWidth="182.0" text="Podłoga - jest bezpieczna dopóki zegar nie odliczy do 0" textFill="WHITE" wrapText="true" />
+            </children>
+         </Pane>
+         <Pane layoutX="23.0" layoutY="375.0">
+            <children>
+               <ImageView fitHeight="45.0" fitWidth="33.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../resources/com/pio/floorislavafront/images/sprites/safe_zone1.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="39.0" prefHeight="45.0" prefWidth="205.0" text="Bezpieczna strefa - pojawia się na początku każdej rundy" textFill="WHITE" wrapText="true" />
+            </children>
+         </Pane>
+         <Pane layoutX="280.0" layoutY="330.0">
+            <children>
+               <ImageView fitHeight="45.0" fitWidth="33.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../resources/com/pio/floorislavafront/images/sprites/hole1.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="39.0" layoutY="-7.0" prefHeight="56.0" prefWidth="170.0" text="Dziura - blokuje drogę ucieczki, jeśli utkniesz w niej gdy mapę zaleje lawa - zginiesz" textFill="WHITE" wrapText="true" />
+            </children>
+         </Pane>
+         <Pane layoutX="267.0" layoutY="375.0">
+            <children>
+               <ImageView fitHeight="45.0" fitWidth="33.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../resources/com/pio/floorislavafront/images/sprites/lava1.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="53.0" prefHeight="45.0" prefWidth="182.0" text="Lawa - lepiej się do niej nie zbliżaj" textFill="WHITE" wrapText="true" />
+            </children>
+         </Pane>
+         <Pane layoutX="512.0" layoutY="330.0">
+            <children>
+               <ImageView fitHeight="45.0" fitWidth="33.0" layoutX="20.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../resources/com/pio/floorislavafront/images/sprites/speed.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="59.0" prefHeight="45.0" prefWidth="182.0" text="Błyskawica - po jej zebraniu skaczesz o 2 pola zamiast 1" textFill="WHITE" wrapText="true" />
+            </children>
+         </Pane>
+         <Pane layoutX="512.0" layoutY="375.0">
+            <children>
+               <ImageView fitHeight="45.0" fitWidth="33.0" layoutX="20.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../resources/com/pio/floorislavafront/images/sprites/ghost.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="59.0" prefHeight="45.0" prefWidth="182.0" text="Duch - pozwala na przechodzenie przez ściany" textFill="WHITE" wrapText="true" />
+            </children>
+         </Pane>
         </Pane>
         <columnConstraints>
             <ColumnConstraints />

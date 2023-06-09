@@ -107,6 +107,15 @@ public class Player implements Serializable {
         roundsBoostedSpeed = rounds;
     }
 
+    public void addRoundsBoostedGhost(int rounds) {
+        roundsBoostedGhost += rounds;
+    }
+
+    public void addRoundsBoostedSpeed(int rounds) {
+        roundsBoostedSpeed += rounds;
+    }
+
+
     public int getRoundsBoostedGhost() {
         return roundsBoostedGhost;
     }
