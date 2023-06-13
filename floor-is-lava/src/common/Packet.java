@@ -10,6 +10,7 @@ public class Packet implements Serializable {
     private final ArrayList<PlayerData> playerData;
     private final boolean isWaitingForPlayers;
     private final String winnerNickname;
+    private String receiverNickname;
 
     public Packet(byte[] map, int timer, ArrayList<PlayerData> playerData, boolean isWaitingForPlayers, String winnerNickname) {
         this.map = map;
@@ -37,4 +38,8 @@ public class Packet implements Serializable {
     public boolean isWaitingForPlayers() {
         return isWaitingForPlayers;
     }
+
+    public String getReceiverNickname() {return this.receiverNickname;}
+
+    public void setReceiverNickname(String receiverNickname) {this.receiverNickname = receiverNickname;}
 }

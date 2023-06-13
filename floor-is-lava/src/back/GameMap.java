@@ -151,6 +151,30 @@ public class GameMap implements Serializable {
         return map[row][col] == field;
     }
 
+
+    public void pickupNearbyPowerup(Player player, int col, int row) {
+        ArrayList<FieldType> nearbyFields = new ArrayList<>(Arrays.asList(map[row][col], map[row][col - 1], map[row][col + 1], map[row - 1][col], map[row + 1][col]));
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if ((x + col >= 0) && (x + col < WIDTH) && (y + row >= 0) && (y + row < HEIGHT)) {
+                    if (map[y + row][x + col] == FieldType.BOOST_GHOST) {
+                        player.addRoundsBoostedGhost(BOOSTER_ROUNDS);
+                        map[y + row][x + col] = FieldType.FLOOR;
+                    } else if (map[y + row][x + col] == FieldType.BOOST_SPEED) {
+                        player.addRoundsBoostedSpeed(BOOSTER_ROUNDS);
+                        map[y + row][x + col] = FieldType.FLOOR;
+                    }
+                }
+            }
+        }
+
+        if (nearbyFields.contains(FieldType.BOOST_GHOST)) {
+            player.addRoundsBoostedGhost(BOOSTER_ROUNDS);
+        } else if (nearbyFields.contains(FieldType.BOOST_SPEED)) {
+            player.addRoundsBoostedSpeed(BOOSTER_ROUNDS);
+        }
+    }
+
     public void insertZone(int centerCol, int centerRow, int radiusWidth, int radiusHeight, FieldType tile) {
         int radiusSquared = radiusWidth * radiusHeight;
         int startCol = centerCol - radiusWidth;
@@ -295,14 +319,7 @@ public class GameMap implements Serializable {
             return;
         }
 
-        if (isThatField(FieldType.BOOST_SPEED, newPosition.col, newPosition.row)) {
-            player.addRoundsBoostedSpeed(BOOSTER_ROUNDS);
-        }
-
-        if (isThatField(FieldType.BOOST_GHOST, newPosition.col, newPosition.row)) {
-            player.addRoundsBoostedGhost(BOOSTER_ROUNDS);
-        }
-
+        pickupNearbyPowerup(player, newPosition.col, newPosition.row);
         updateLastStandingFieldOnMap(player);
 
         player.setLastStandingField(map[newPosition.row][newPosition.col]);
