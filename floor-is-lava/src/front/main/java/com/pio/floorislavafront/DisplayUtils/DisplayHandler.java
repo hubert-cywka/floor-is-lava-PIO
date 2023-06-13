@@ -3,7 +3,9 @@ package front.main.java.com.pio.floorislavafront.DisplayUtils;
 import back.Game;
 import back.GameLoop;
 import common.FieldType;
+import common.Packet;
 import common.PlayerData;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -11,9 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -98,6 +104,69 @@ public class DisplayHandler {
 
     private static ImagePattern getTextureFromTexturesList(ArrayList<ImagePattern> textures, int seed) {
         return textures.get(seed % textures.size());
+    }
+
+    private static void buildPlayerSprite(FieldType field, int col, int row, AnchorPane playersMap, ArrayList<PlayerData> playerData, String currentPlayerNickname) {
+        ImageView sprite = new ImageView();
+        Label name = new Label();
+        int playerId = 0;
+
+        switch (field) {
+            case PLAYER_0:
+                sprite.setImage(PLAYER_SPRITE_BLUE.getImage());
+                playerId = 0;
+                break;
+
+            case PLAYER_1:
+                sprite.setImage(PLAYER_SPRITE_RED.getImage());
+                playerId = 1;
+                break;
+
+            case PLAYER_2:
+                sprite.setImage(PLAYER_SPRITE_BLACK.getImage());
+                playerId = 2;
+                break;
+
+            case PLAYER_3:
+                sprite.setImage(PLAYER_SPRITE_PURPLE.getImage());
+                playerId = 3;
+                break;
+        }
+
+        name.setText(playerData.get(playerId).getNickname());
+        double spriteWidth = 2 * SQUARE_SIZE;
+        double spriteHeight = 3 * SQUARE_SIZE;
+        double minNameWidth = 200;
+        double baseLeftAnchor = (playersMap.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2);
+
+        if (currentPlayerNickname.equals(playerData.get(playerId).getNickname())) {
+            Ellipse highlight = new Ellipse();
+            highlight.setRadiusX(spriteWidth);
+            highlight.setRadiusY(spriteHeight / 4);
+            highlight.setFill(Color.YELLOW);
+            highlight.setOpacity(0.65);
+            playersMap.getChildren().add(highlight);
+
+            AnchorPane.setBottomAnchor(highlight, (HEIGHT - row - 0.5) * SQUARE_SIZE * 1.0);
+            AnchorPane.setLeftAnchor(highlight, baseLeftAnchor + (col - 0.5) * SQUARE_SIZE - spriteWidth / 2);
+        }
+
+        sprite.setFitHeight(spriteHeight);
+        sprite.setFitWidth(spriteWidth);
+
+        playersMap.getChildren().add(sprite);
+        playersMap.getChildren().add(name);
+
+
+        AnchorPane.setBottomAnchor(sprite, (HEIGHT - row) * SQUARE_SIZE * 1.0);
+        AnchorPane.setLeftAnchor(sprite, baseLeftAnchor + (col - 0.5) * SQUARE_SIZE);
+
+        name.setMinWidth(minNameWidth);
+        name.setTextFill(Color.WHITE);
+        name.setStyle("-fx-alignment: center;");
+
+        AnchorPane.setBottomAnchor(name, (HEIGHT - row) * SQUARE_SIZE * 1.0 + SQUARE_SIZE + spriteHeight);
+        AnchorPane.setLeftAnchor(name, baseLeftAnchor + (col + 0.5) * SQUARE_SIZE - name.getMinWidth() / 2);
     }
 
     private static Rectangle createSquare(FieldType fieldType, int col, int row) {
@@ -294,15 +363,17 @@ public class DisplayHandler {
         }
     }
 
-    public static void gameHandler(FieldType[][] map, int time, ArrayList<PlayerData> playerData, boolean isWaitingForPlayers, String winnerNickname) {
+    public static void gameHandler(FieldType[][] map, Packet packet) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
         Node container = currentScene.lookup("#" + containerId);
 
-        displayTimer(time);
+        ArrayList<PlayerData> playerData = packet.getPlayerData();
+
+        displayTimer(packet.getTimer());
         displayPlayerData(playerData);
         displayActualInstancePowerups(playerData);
-        displayMessage(buildDisplayedMessage(playerData, isWaitingForPlayers, winnerNickname));
+        displayMessage(buildDisplayedMessage(playerData, packet.isWaitingForPlayers(), packet.getWinnerNickname()));
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
@@ -316,17 +387,25 @@ public class DisplayHandler {
             GridPane myMap = new GridPane();
             myMap.setId("mymap");
 
+            Pane playersMap = new GridPane();
+            playersMap.setId("playersMap");
+
+            myContainer.getChildren().add(myMap);
+            myContainer.getChildren().add(playersMap);
+
+            AnchorPane.setBottomAnchor(myMap, 10.0);
+            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
+            myMap.setPrefSize(WIDTH * SQUARE_SIZE, HEIGHT * SQUARE_SIZE);
+
             for (int row = 0; row < HEIGHT; row++) {
                 for (int col = 0; col < WIDTH; col++) {
                     Rectangle square = createSquare(map[row][col], col, row);
                     myMap.add(square, col, row);
+                    if (PLAYER_FIELDS.contains(map[row][col])) {
+                        buildPlayerSprite(map[row][col], col, row, myContainer, playerData, packet.getReceiverNickname());
+                    }
                 }
             }
-
-            AnchorPane.setBottomAnchor(myMap, 10.0);
-            AnchorPane.setLeftAnchor(myMap, (myContainer.getWidth() / 2 - (SQUARE_SIZE * WIDTH) / 2));
-            myContainer.getChildren().add(myMap);
-
 
         } else {
             System.err.println("Nie znaleziono kontenera o ID: " + containerId);

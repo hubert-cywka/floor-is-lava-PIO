@@ -4,10 +4,8 @@ import common.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import static common.GlobalSettings.MAX_PLAYERS;
 import static common.GlobalSettings.REFRESH_TIME;
@@ -65,6 +63,7 @@ public class GameLoop implements Runnable {
         Packet packet = preparePackOfData();
         for (int i = 0; i < game.playersList.size(); i++) {
             Player player = game.playersList.get(i);
+            packet.setReceiverNickname(player.getNickname());
             handleDataSend(player, packet);
         }
     }
