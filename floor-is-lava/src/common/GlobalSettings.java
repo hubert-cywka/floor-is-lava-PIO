@@ -13,8 +13,8 @@ public class GlobalSettings {
     public static final int REFRESH_TIME = 100;
 
     // Game
-    public static final int MAX_PLAYERS = 4;
-    public static final int MIN_PLAYERS = 2;
+    public static final int MAX_PLAYERS = 5;
+    public static final int MIN_PLAYERS = 2;git
     public static final int ROUND_TIME = 5;
 
     // JoiningThread
@@ -54,9 +54,5 @@ public class GlobalSettings {
 
     // DisplayHandler
     public static final int SQUARE_SIZE = 10;
-
-    // Server-client error flags
-    public static boolean NICKNAME_ERROR_FLAG = false;
-    public static boolean SERVER_FULL_FLAG = false;
 
 }
