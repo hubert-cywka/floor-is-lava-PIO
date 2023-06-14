@@ -22,19 +22,13 @@ import static common.Player.getNextPlayerMove;
 import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.actualInstancePlayerName;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
-import static common.GlobalSettings.NICKNAME_ERROR_FLAG;
-import static common.GlobalSettings.SERVER_FULL_FLAG;
-import static java.lang.Thread.sleep;
 
 public class FloorIsLavaController {
     public static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
     public static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
     public static final String CONTROLS_SCREEN = "scenes/controls-scene.fxml";
-    public static final String GAME_SCREEN = "scenes/game-scene.fxml";
     public static final String CONNECTION_LOST_SCREEN = "scenes/connection-lost.fxml";
     private final String USERNAME_NOT_VALID = "Nazwa użytkownika nie może pozostać pusta!";
-    private final String USERNAME_ALREADY_EXISTS_ERROR = "Gracz o podanej nazwie użytkownika już istnieje!";
-    private final String SERVER_FULL_ERROR = "Serwer jest pełny, spróbuj ponownie za chwilę!";
     private final String SERVER_ADDRESS_NOT_VALID = "Adres serwera jest nieprawidłowy. Poprawny format to X.X.X.X:XXXX, np.: 192.168.0.1:8080";
     private final String USERNAME_HELPER_TEXT = "Jak się chcesz nazywać?";
     private final String SERVER_ADDRESS_HELPER_TEXT = "Podaj adres serwera w formacie X.X.X.X:XXXX";
@@ -161,21 +155,7 @@ public class FloorIsLavaController {
         Thread connectionThread = new Thread(new ConnectionInitializer(ipAddress, port, username));
         connectionThread.start();
 
-        // checking if server is full and if user nickname is available
-        // sleep() to wait for backend info about server status
-        sleep(100);
-        if(SERVER_FULL_FLAG){
-            joinGameHelperLabel.setText(SERVER_FULL_ERROR);
-            joinGameHelperLabel.setTextFill(Color.RED);
-            return;
-        }
-        if(NICKNAME_ERROR_FLAG){
-            joinGameHelperLabel.setText(USERNAME_ALREADY_EXISTS_ERROR);
-            joinGameHelperLabel.setTextFill(Color.RED);
-            return;
-        }
         actualInstancePlayerName = username;
-        setScene(GAME_SCREEN);
     }
 
     @FXML
