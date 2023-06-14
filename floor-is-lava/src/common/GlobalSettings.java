@@ -13,8 +13,8 @@ public class GlobalSettings {
     public static final int REFRESH_TIME = 100;
 
     // Game
-    public static final int MAX_PLAYERS = 5;
-    public static final int MIN_PLAYERS = 2;git
+    public static final int MAX_PLAYERS = 4;
+    public static final int MIN_PLAYERS = 2;
     public static final int ROUND_TIME = 5;
 
     // JoiningThread
