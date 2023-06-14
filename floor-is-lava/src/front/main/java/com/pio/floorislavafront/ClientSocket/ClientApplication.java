@@ -34,7 +34,8 @@ public class ClientApplication {
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showServerNotAvailableScene();
+            return;
         }
         debug.message("Connected to the server");
 
@@ -121,6 +122,12 @@ public class ClientApplication {
     private void showGameSceneScene(){
         Platform.runLater(() -> {
             FloorIsLavaController.setScene("scenes/game-scene.fxml");
+        });
+    }
+
+    private void showServerNotAvailableScene(){
+        Platform.runLater(() -> {
+            FloorIsLavaController.setScene("scenes/server-not-available-scene.fxml");
         });
     }
 }
