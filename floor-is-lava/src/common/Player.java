@@ -11,7 +11,7 @@ public class Player implements Serializable {
     private final ObjectOutputStream objectOutputStream;
     private final ObjectInputStream objectInputStream;
     public Position position;
-    private boolean isAlive;
+    private static boolean isAlive;
     private FieldType lastStandingField;
     private static boolean isConnected;
     private final int ID;
@@ -63,11 +63,11 @@ public class Player implements Serializable {
         return ID;
     }
 
-    public void setAlive(boolean alive) {
+    public static void setAlive(boolean alive) {
         isAlive = alive;
     }
 
-    public boolean isAlive() {
+    public static boolean isAlive() {
         return isAlive;
     }
 
@@ -114,7 +114,6 @@ public class Player implements Serializable {
     public void addRoundsBoostedSpeed(int rounds) {
         roundsBoostedSpeed += rounds;
     }
-
 
     public int getRoundsBoostedGhost() {
         return roundsBoostedGhost;

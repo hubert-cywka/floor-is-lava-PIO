@@ -4,7 +4,9 @@ import back.Game;
 import back.GameLoop;
 import common.FieldType;
 import common.Packet;
+import common.Player;
 import common.PlayerData;
+import front.main.java.com.pio.floorislavafront.FloorIsLavaController;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -363,6 +365,24 @@ public class DisplayHandler {
         }
     }
 
+    private static void updatePlayerData(ArrayList<PlayerData> playerData, String nickname) {
+        PlayerData currentPlayer = playerData.stream().filter(data -> data.getNickname().equals(nickname)).findFirst().orElse(null);
+        if (currentPlayer != null) {
+            boolean previousAlive = Player.isAlive();
+
+            Player.setAlive(currentPlayer.isAlive());
+            if (!currentPlayer.isAlive()) {
+                FloorIsLavaController.handleMovementStop();
+            }
+
+            if (!currentPlayer.isAlive() && previousAlive) {
+                FloorIsLavaController.playDeathSound();
+            }
+        } else {
+            Player.setAlive(false);
+        }
+    }
+
     public static void gameHandler(FieldType[][] map, Packet packet) {
         Scene currentScene = getPrimaryStage().getScene();
         String containerId = "gamescene";
@@ -374,6 +394,8 @@ public class DisplayHandler {
         displayPlayerData(playerData);
         displayActualInstancePowerups(playerData);
         displayMessage(buildDisplayedMessage(playerData, packet.isWaitingForPlayers(), packet.getWinnerNickname()));
+
+        updatePlayerData(playerData, packet.getReceiverNickname());
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;

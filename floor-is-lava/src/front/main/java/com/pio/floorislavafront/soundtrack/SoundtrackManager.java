@@ -9,6 +9,7 @@ public class SoundtrackManager {
     private final String BASE_SOUNDTRACK_PATH = "src/front/main/resources/com/pio/floorislavafront/music/";
     public final String SOUNDTRACK_AMBIENT = BASE_SOUNDTRACK_PATH.concat("ambient");
     public final String SOUNDTRACK_INSPIRING = BASE_SOUNDTRACK_PATH.concat("inspiring");
+    private final double MAX_VOLUME = 0.3;
 
     private Playlist ambientPlaylist;
     private Playlist inspiringPlaylist;
@@ -30,7 +31,7 @@ public class SoundtrackManager {
 
     public void initSong() {
         this.mediaPlayer.setOnEndOfMedia(this::playNextSong);
-        this.mediaPlayer.setVolume(isMute ? 0 : 1);
+        this.mediaPlayer.setVolume(isMute ? 0 : MAX_VOLUME);
         this.mediaPlayer.play();
     }
 
@@ -75,7 +76,7 @@ public class SoundtrackManager {
             this.mediaPlayer.setVolume(0);
             this.isMute = true;
         } else {
-            this.mediaPlayer.setVolume(1);
+            this.mediaPlayer.setVolume(MAX_VOLUME);
             this.isMute = false;
         }
     }
