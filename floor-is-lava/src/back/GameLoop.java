@@ -95,7 +95,7 @@ public class GameLoop implements Runnable {
             player = game.findPlayerById(i);
 
             if (player == null) {
-                playerData.add(new PlayerData("---", false, false, -1, 0,0,0));
+                playerData.add(new PlayerData("---", false, false, -1, 0,0,0, false));
                 continue;
             }
 
@@ -105,8 +105,9 @@ public class GameLoop implements Runnable {
             int wins = player.getGamesWon();
             int speed = player.getRoundsBoostedSpeed();
             int ghost = player.getRoundsBoostedGhost();
+            boolean isMoving = player.isMoving();
 
-            playerData.add(new PlayerData(nickname, aliveStatus, true, id, wins, speed, ghost));
+            playerData.add(new PlayerData(nickname, aliveStatus, true, id, wins, speed, ghost, isMoving));
         }
 
         return playerData;

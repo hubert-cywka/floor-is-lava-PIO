@@ -11,14 +11,15 @@ public class Player implements Serializable {
     private final ObjectOutputStream objectOutputStream;
     private final ObjectInputStream objectInputStream;
     public Position position;
-    private boolean isAlive;
+    private  boolean isAlive;
     private FieldType lastStandingField;
     private static boolean isConnected;
     private final int ID;
     private int gamesWon;
     private static final PlayerMove nextPlayerMove = new PlayerMove(Direction.NO_MOVE, Direction.NO_MOVE);
-    private int roundsBoostedGhost;
-    private int roundsBoostedSpeed;
+    private  int roundsBoostedGhost;
+    private  int roundsBoostedSpeed;
+    private boolean isMoving;
 
     public Player(String nickname, int ID, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream, boolean isAlive) {
         this.nickname = nickname;
@@ -31,6 +32,7 @@ public class Player implements Serializable {
         this.roundsBoostedSpeed = 0;
         this.lastStandingField = FieldType.SAFE_ZONE;
         this.gamesWon = 0;
+        this.isMoving = false;
         position = new Position(-1, -1);
     }
 
@@ -115,7 +117,6 @@ public class Player implements Serializable {
         roundsBoostedSpeed += rounds;
     }
 
-
     public int getRoundsBoostedGhost() {
         return roundsBoostedGhost;
     }
@@ -135,4 +136,8 @@ public class Player implements Serializable {
     public void incrementGamesWon() {
         this.gamesWon += 1;
     }
+
+    public boolean isMoving() {return this.isMoving;}
+
+    public void setMoving(boolean isMoving) { this.isMoving = isMoving;}
 }

@@ -3,21 +3,14 @@ package front.main.java.com.pio.floorislavafront.ClientSocket;
 import common.FieldType;
 import common.Packet;
 import common.Player;
-import common.PlayerData;
-import front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler;
 import javafx.application.Platform;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
 import static front.main.java.com.pio.floorislavafront.DisplayUtils.DisplayHandler.*;
-import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaController.*;
 
 public class DataTransferThread implements Runnable {

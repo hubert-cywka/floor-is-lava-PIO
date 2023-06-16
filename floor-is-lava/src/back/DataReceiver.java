@@ -43,6 +43,7 @@ public class DataReceiver implements Runnable {
             }
 
             synchronized (this) {
+                player.setMoving(false);
                 game.movePlayer(player, playerMove.getHorizontal());
                 game.movePlayer(player, playerMove.getVertical());
             }

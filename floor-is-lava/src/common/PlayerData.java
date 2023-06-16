@@ -5,14 +5,15 @@ import java.io.Serializable;
 public class PlayerData implements Serializable {
 
     private String nickname;
-    private boolean isAlive;
     private boolean isConnected;
     private int gamesWon;
     private int ID;
+    private boolean isAlive;
     private int speedRounds;
     private int ghostRounds;
+    private boolean isMoving;
 
-    public PlayerData(String nickname, boolean isAlive, boolean isConnected, int ID, int gamesWon, int speedRounds, int ghostRounds) {
+    public PlayerData(String nickname, boolean isAlive, boolean isConnected, int ID, int gamesWon, int speedRounds, int ghostRounds, boolean isMoving) {
         this.nickname = nickname;
         this.isAlive = isAlive;
         this.isConnected = isConnected;
@@ -20,6 +21,7 @@ public class PlayerData implements Serializable {
         this.gamesWon = gamesWon;
         this.speedRounds = speedRounds;
         this.ghostRounds = ghostRounds;
+        this.isMoving = isMoving;
     }
 
     public String getNickname() {
@@ -60,5 +62,13 @@ public class PlayerData implements Serializable {
 
     public int getGhostRounds() {
         return ghostRounds;
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
     }
 }
