@@ -27,6 +27,7 @@ public class FloorIsLavaApp extends Application {
     public void start(Stage stage) {
         setPrimaryStage(stage);
         DisplayHandler.initTextures();
+        DisplayHandler.initSounds();
         FloorIsLavaController.setScene("scenes/initial-screen-scene.fxml");
         stage.setTitle("Floor is Lava!");
         stage.show();

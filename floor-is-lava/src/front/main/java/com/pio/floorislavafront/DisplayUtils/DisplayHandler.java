@@ -1,13 +1,10 @@
 package front.main.java.com.pio.floorislavafront.DisplayUtils;
 
-import back.Game;
-import back.GameLoop;
 import common.FieldType;
 import common.Packet;
 import common.Player;
 import common.PlayerData;
 import front.main.java.com.pio.floorislavafront.FloorIsLavaController;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -16,23 +13,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 import static common.GlobalSettings.*;
 import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimaryStage;
 
 public class DisplayHandler {
+    private static ArrayList<PlayerData> previousPlayerData;
+
     private static final String SPRITE_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/sprites/";
     private static final String STATS_IMAGE_BASE = "src/front/main/resources/com/pio/floorislavafront/images/stats/";
     private static final ArrayList<InputStream> SAFE_ZONE_SPRITE_IMAGE = new ArrayList<>();
@@ -46,6 +43,24 @@ public class DisplayHandler {
     private static final InputStream PLAYER_SPRITE_PURPLE_IMAGE;
     private static final InputStream PLAYER_SPRITE_BLUE_IMAGE;
     public static String actualInstancePlayerName;
+
+    private static final String BASE_SOUND_EFFECTS_PATH = "sound-effects/";
+    private static final AudioClip hurt = new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("hurt.mp3")).toExternalForm());
+
+    private static final ArrayList<AudioClip> playersSteps = new ArrayList();
+    private static final ArrayList<AudioClip> playersFastSteps =  new ArrayList();
+
+    public static void initSounds() {
+        playersSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("footsteps1.mp3")).toExternalForm()));
+        playersSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("footsteps2.mp3")).toExternalForm()));
+        playersSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("footsteps3.mp3")).toExternalForm()));
+        playersSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("footsteps4.mp3")).toExternalForm()));
+
+        playersFastSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("boosted-footsteps1.mp3")).toExternalForm()));
+        playersFastSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("boosted-footsteps2.mp3")).toExternalForm()));
+        playersFastSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("boosted-footsteps3.mp3")).toExternalForm()));
+        playersFastSteps.add(new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("boosted-footsteps4.mp3")).toExternalForm()));
+    }
 
     static {
         try {
@@ -365,22 +380,57 @@ public class DisplayHandler {
         }
     }
 
-    private static void updatePlayerData(ArrayList<PlayerData> playerData, String nickname) {
-        PlayerData currentPlayer = playerData.stream().filter(data -> data.getNickname().equals(nickname)).findFirst().orElse(null);
-        if (currentPlayer != null) {
-            boolean previousAlive = Player.isAlive();
-
-            Player.setAlive(currentPlayer.isAlive());
-            if (!currentPlayer.isAlive()) {
-                FloorIsLavaController.handleMovementStop();
-            }
-
-            if (!currentPlayer.isAlive() && previousAlive) {
-                FloorIsLavaController.playDeathSound();
-            }
+    public static void playFootsteps(int id, boolean speed, boolean ghost) {
+       if (id < 0) return;
+        if (speed) {
+            playersFastSteps.get(id).play();
         } else {
-            Player.setAlive(false);
+            playersSteps.get(id).play();
         }
+    }
+
+    public static void updateFootstepsSound(int id, boolean speed, boolean ghost) {
+        if (id < 0) return;
+        playersSteps.get(id).stop();
+        playersFastSteps.get(id).stop();
+        playFootsteps(id, speed, ghost);
+    }
+
+    public static void playDeathSound() {
+        hurt.play();
+    }
+
+    public static void handleMovementStop(int id) {
+        if (id < 0) return;
+        playersSteps.get(id).stop();
+        playersFastSteps.get(id).stop();
+    }
+
+    private static void handleSoundEffects(ArrayList<PlayerData> playerData) {
+        if (previousPlayerData == null || previousPlayerData.isEmpty()) return;
+        playerData.forEach(currentPlayer -> {
+            Optional<PlayerData> maybePlayerData = previousPlayerData.stream().filter(player -> Objects.equals(player.getNickname(), currentPlayer.getNickname())).findFirst();
+            if (maybePlayerData.isPresent()) {
+                PlayerData previousCurrentPlayerData = maybePlayerData.get();
+
+                boolean previousAlive = previousCurrentPlayerData.isAlive();
+                boolean previousMoving = previousCurrentPlayerData.isMoving();
+                int previousSpeed = previousCurrentPlayerData.getSpeedRounds();
+                int previousGhost = previousCurrentPlayerData.getGhostRounds();
+
+                 if (!previousMoving && currentPlayer.isMoving()) {
+                    playFootsteps(currentPlayer.getID(), currentPlayer.getSpeedRounds() > 0, currentPlayer.getGhostRounds() > 0);
+                } else if (!currentPlayer.isMoving()) {
+                    handleMovementStop(currentPlayer.getID());
+                 } else if (previousGhost != currentPlayer.getGhostRounds() || previousSpeed != currentPlayer.getSpeedRounds()) {
+                    updateFootstepsSound(currentPlayer.getID(), currentPlayer.getSpeedRounds() > 0, currentPlayer.getGhostRounds() > 0);
+                }
+
+                if (!currentPlayer.isAlive() && previousAlive) {
+                    playDeathSound();
+                }
+            }
+        });
     }
 
     public static void gameHandler(FieldType[][] map, Packet packet) {
@@ -395,7 +445,7 @@ public class DisplayHandler {
         displayActualInstancePowerups(playerData);
         displayMessage(buildDisplayedMessage(playerData, packet.isWaitingForPlayers(), packet.getWinnerNickname()));
 
-        updatePlayerData(playerData, packet.getReceiverNickname());
+        handleSoundEffects(playerData);
 
         if (container instanceof AnchorPane) {
             AnchorPane myContainer = (AnchorPane) container;
@@ -432,5 +482,7 @@ public class DisplayHandler {
         } else {
             System.err.println("Nie znaleziono kontenera o ID: " + containerId);
         }
+
+        previousPlayerData = playerData;
     }
 }

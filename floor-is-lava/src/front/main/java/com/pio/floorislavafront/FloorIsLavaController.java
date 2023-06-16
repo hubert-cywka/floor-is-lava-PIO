@@ -2,6 +2,7 @@ package front.main.java.com.pio.floorislavafront;
 
 import common.Direction;
 import common.Player;
+import common.PlayerData;
 import front.main.java.com.pio.floorislavafront.ClientSocket.ConnectionInitializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -25,7 +26,6 @@ import static front.main.java.com.pio.floorislavafront.FloorIsLavaApp.getPrimary
 
 
 public class FloorIsLavaController {
-    private static final String BASE_SOUND_EFFECTS_PATH = "sound-effects/";
     public static final String INITIAL_SCREEN = "scenes/initial-screen-scene.fxml";
     public static final String INSTRUCTIONS_SCREEN = "scenes/instructions-scene.fxml";
     public static final String CONTROLS_SCREEN = "scenes/controls-scene.fxml";
@@ -36,9 +36,6 @@ public class FloorIsLavaController {
     private final String SERVER_ADDRESS_HELPER_TEXT = "Podaj adres serwera w formacie X.X.X.X:XXXX";
     private final String INPUT_VALIDATION_SUCCESS = "Wszystko OK!";
     private final Pattern SERVER_ADDRESS_PATTERN = Pattern.compile("^\\d{1,3}[.]\\d{1,3}[.]\\d{1,3}[.]\\d{1,3}[:]\\d{1,4}$");
-    private static final AudioClip steps = new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("steps.mp3")).toExternalForm());
-    private static final AudioClip hurt = new AudioClip(FloorIsLavaController.class.getResource(BASE_SOUND_EFFECTS_PATH.concat("hurt.mp3")).toExternalForm());
-    private static boolean isAlreadyMoving = false;
 
     @FXML
     Label joinGameHelperLabel;
@@ -52,24 +49,6 @@ public class FloorIsLavaController {
     @FXML
     ImageView leaveGameButton;
 
-    private static void playFootsteps() {
-        if (!isAlreadyMoving && Player.isAlive()) {
-            steps.play();
-            isAlreadyMoving = true;
-        }
-    }
-
-    public static void playDeathSound() {
-        hurt.play();
-    }
-
-    public static void handleMovementStop() {
-        if (getNextPlayerMove().getHorizontal() == Direction.NO_MOVE && getNextPlayerMove().getVertical() == Direction.NO_MOVE || !Player.isAlive()) {
-            steps.stop();
-            isAlreadyMoving = false;
-        }
-    }
-
     private static void handleNextPlayerMove(KeyCode code) {
         switch (code) {
             case UP, W -> getNextPlayerMove().setVertical(Direction.UP);
@@ -77,7 +56,6 @@ public class FloorIsLavaController {
             case RIGHT, D -> getNextPlayerMove().setHorizontal(Direction.RIGHT);
             case LEFT, A -> getNextPlayerMove().setHorizontal(Direction.LEFT);
         }
-        playFootsteps();
     }
 
     private static void initKeyListeners() {
@@ -96,14 +74,8 @@ public class FloorIsLavaController {
 
         getPrimaryStage().getScene().setOnKeyReleased((KeyEvent event) -> {
             switch (event.getCode()) {
-                case UP, DOWN, W, S -> {
-                    getNextPlayerMove().setVertical(Direction.NO_MOVE);
-                    handleMovementStop();
-                }
-                case LEFT, RIGHT, A, D -> {
-                    getNextPlayerMove().setHorizontal(Direction.NO_MOVE);
-                    handleMovementStop();
-                }
+                case UP, DOWN, W, S -> getNextPlayerMove().setVertical(Direction.NO_MOVE);
+                case LEFT, RIGHT, A, D -> getNextPlayerMove().setHorizontal(Direction.NO_MOVE);
             }
         });
     }

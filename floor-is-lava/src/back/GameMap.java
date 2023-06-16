@@ -296,7 +296,6 @@ public class GameMap implements Serializable {
     }
 
     public void movePlayer(Player player, Direction move) {
-
         if (!player.isAlive())
             return;
 
@@ -325,7 +324,7 @@ public class GameMap implements Serializable {
         player.setLastStandingField(map[newPosition.row][newPosition.col]);
         map[newPosition.row][newPosition.col] = playerSymbol;
         player.setPosition(newPosition);
-
+        player.setMoving(true);
     }
 
     private boolean isOutOfBorder(Position position) {
